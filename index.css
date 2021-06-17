@@ -13,7 +13,7 @@
 
 html
 {
-  scroll-behavior:none;
+  scroll-behavior:smooth;
 }
 
 body
