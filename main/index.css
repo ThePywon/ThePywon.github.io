@@ -78,6 +78,11 @@ button
   margin:30px auto;
 }
 
+#small
+{
+  width:75%;
+}
+
 #menuDesc
 {
   margin:auto;
