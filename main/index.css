@@ -1,4 +1,4 @@
-::selection 
+::selection
 {
   color:black;
   background:lime;
@@ -66,7 +66,7 @@ button
   background-color:#000900;
   border-bottom:10px solid #000900;
   margin:auto;
-  width:80%;
+  width:100%;
 }
 
 #main hr
