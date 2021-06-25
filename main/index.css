@@ -69,7 +69,7 @@ button
   width:100%;
 }
 
-#main hr
+.line
 {
   height:2px;
   border-width:0px;
