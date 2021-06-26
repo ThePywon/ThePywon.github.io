@@ -69,19 +69,13 @@ button
   width:100%;
 }
 
-.line
+#main hr
 {
   height:2px;
   border-width:0px;
   background-color:lime;
   width:100%;
   margin:30px auto;
-}
-
-#small
-{
-  width:75%;
-  background-color:#009900;
 }
 
 #menuDesc
