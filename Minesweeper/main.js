@@ -30,7 +30,7 @@ function Start()
 {
   //Clear the field and states
   document.getElementById("field").innerHTML = "";
-  document.getElementById("face").src = "Assets/Images/Smiley.png";
+  document.getElementById("face").src = "../Assets/Images/Smiley.png";
   isDead = false;
   win = false;
   first = true;
@@ -105,14 +105,14 @@ document.addEventListener("mousedown", function(event){
     var position = getElementPos(event);
 
     if(grid[position.x][position.y] != 2 && grid[position.x][position.y] != 3 && grid[position.x][position.y] != 4)
-      document.getElementById("face").src = "Assets/Images/Danger.png";
+      document.getElementById("face").src = "../Assets/Images/Danger.png";
   }
 }, false);
 
 //Reset the face's image on release of click
 document.body.onmouseup = function(event){
   if(event.button == 0 && !isDead && !win)
-    document.getElementById("face").src = "Assets/Images/Smiley.png";
+    document.getElementById("face").src = "../Assets/Images/Smiley.png";
 };
 
 //Handle spot revealing
@@ -223,7 +223,7 @@ function reveal(pos)
   if(checkWin())
   {
     win = true;
-    document.getElementById("face").src = "Assets/Images/Swag.png";
+    document.getElementById("face").src = "../Assets/Images/Swag.png";
     alert("You won!\nYour time: " + timer + " seconds!");
   }
 }
@@ -250,7 +250,7 @@ function toggleFlag(pos)
     {
       grid[pos.x][pos.y] = 3;
       var flag = document.createElement("img");
-      flag.src = "Assets/Images/Flag.png";
+      flag.src = "../Assets/Images/Flag.png";
       flag.style.width = 12 + "px";
       flag.style.height = 12 + "px";
       flag.style.position = "absolute";
@@ -262,7 +262,7 @@ function toggleFlag(pos)
     {
       grid[pos.x][pos.y] = 4;
       var flag = document.createElement("img");
-      flag.src = "Assets/Images/Flag.png";
+      flag.src = "../Assets/Images/Flag.png";
       flag.style.width = 12 + "px";
       flag.style.height = 12 + "px";
       flag.style.position = "absolute";
@@ -294,14 +294,14 @@ function death()
       if(grid[x][y] == 1)
       {
         var mine = document.createElement("img");
-        mine.src = "Assets/Images/Mine.png";
+        mine.src = "../Assets/Images/Mine.png";
         mine.style.width = 12 + "px";
         mine.style.height = 12 + "px";
         mine.style.position = "absolute";
         elements[x][y].appendChild(mine);
       }
 
-  document.getElementById("face").src = "Assets/Images/Death.png";
+  document.getElementById("face").src = "../Assets/Images/Death.png";
   isDead = true;
 }
 
