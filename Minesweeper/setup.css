@@ -1,0 +1,40 @@
+body
+{
+  background-color:lightgrey;
+}
+
+#main
+{
+  width:500px;
+  height:300px;
+  margin:auto;
+  margin-top:10%;
+  margin-bottom:10%;
+  background-color:lightgrey;
+  text-align:center;
+  border-left:3px solid darkgrey;
+  border-top:3px solid darkgrey;
+  border-right:3px solid white;
+  border-bottom:3px solid white;
+}
+
+#main h1
+{
+  color:grey;
+}
+
+#sizeX, #sizeY, #amount
+{
+  width:40px;
+  border-radius:2px;
+}
+
+#sizeX:focus, #sizeY:focus, #amount:focus
+{
+  border:2px solid lightblue;
+}
+
+#sizeX:invalid, #sizeY:invalid, #amount:invalid
+{
+  border:3px solid #ff3333;
+}
