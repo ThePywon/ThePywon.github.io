@@ -1,8 +1,8 @@
 @font-face
 {
  font-family:"bomb";
- src: url('Assets/Fonts/TickingTimebombBB.ttf') format('truetype'),
-      url('Assets/Fonts/TickingTimebombBB.woff') format('woff')
+ src: url('../Assets/Fonts/TickingTimebombBB.ttf') format('truetype'),
+      url('../Assets/Fonts/TickingTimebombBB.woff') format('woff')
 }
 
 body
