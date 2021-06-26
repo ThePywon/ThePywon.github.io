@@ -1,0 +1,152 @@
+@font-face
+{
+ font-family:"bomb";
+ src: url('Assets/Fonts/TickingTimebombBB.ttf') format('truetype'),
+      url('Assets/Fonts/TickingTimebombBB.woff') format('woff')
+}
+
+body
+{
+  background-color:lightgrey;
+}
+
+#main
+{
+  height:500px;
+  padding:5px;
+  margin:auto;
+}
+
+#ui
+{
+  height:29px;
+  padding:5px;
+  margin-bottom:10px;
+  display:flex;
+  flex-wrap:nowrap;
+}
+
+.wrap
+{
+  width:100%;
+}
+
+#ui button
+{
+  width:27px;
+  height:27px;
+  padding:0px;
+  margin:auto;
+  display:block;
+  background-color:lightgrey;
+  border-left:3px solid white;
+  border-top:3px solid white;
+  border-right:3px solid darkgrey;
+  border-bottom:3px solid darkgrey;
+  border-radius:1px;
+  box-shadow:0 0 0 2pt darkgrey;
+}
+
+#ui button:hover
+{
+  padding:1px;
+  border-left:2px solid darkgrey;
+  border-top:2px solid darkgrey;
+  border-right:2px solid white;
+  border-bottom:2px solid white;
+}
+
+#ui button:active
+{
+  border-radius:2px;
+  border:2px solid lightblue;
+  box-shadow:0 0 0 1pt blue;
+}
+
+#face
+{
+  display:inline-block;
+  vertical-align:middle;
+  width:17px;
+  height:17px;
+  image-rendering:pixelated;
+}
+
+#timer, #flags
+{
+  height:29px;
+  width:50px;
+  color:red;
+  background-color:black;
+  text-align:center;
+  font-family:bomb;
+  font-size:34px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+#flags
+{
+  margin-left:auto;
+  margin-right:0px;
+}
+
+#ui, #field, #setupDiv
+{
+  border-left:3px solid darkgrey;
+  border-top:3px solid darkgrey;
+  border-right:3px solid white;
+  border-bottom:3px solid white;
+}
+
+#field
+{
+  display:inline-flex;
+  flex-wrap:wrap;
+}
+
+.spot
+{
+  position:relative;
+  width:12px;
+  height:12px;
+  margin:0px;
+  padding:0px;
+  background-color:lightgrey;
+  border-left:3px solid white;
+  border-top:3px solid white;
+  border-right:3px solid darkgrey;
+  border-bottom:3px solid darkgrey;
+}
+
+.spot:active
+{
+  border-left:3px solid darkgrey;
+  border-top:3px solid darkgrey;
+  border-right:3px solid white;
+  border-bottom:3px solid white;
+}
+
+.revealed
+{
+  background-color:lightgrey;
+  width:18px;
+  height:18px;
+  text-align:center;
+  font-weight:bold;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.mine
+{
+  width:12px;
+  height:12px;
+  position:relative;
+  background-color:red;
+  padding:3px;
+}
