@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Minesweeper</title>
+  <link rel="stylesheet" href="setup.css"/>
+  <link rel="icon" href="Assets/Icons/Mine.ico"/>
+</head>
+<body>
+  <div id="main">
+    <form action="main.html">
+      <h1>Dimensions</h1>
+      <input id="sizeX" onkeypress="resetLimit()" onpaste="resetLimit()" oninput="resetLimit()" min="9" max="50" value="15" step="1" pattern="\d*" required type="number"/> x
+      <input id="sizeY" onkeypress="resetLimit()" onpaste="resetLimit()" oninput="resetLimit()" min="9" max="50" value="15" step="1" pattern="\d*" required type="number"/>
+      <br/>
+      <h1>Mine amount</h1>
+      <input id="amount" value="50" step="1" pattern="\d*" required type="number"/>
+      <br/>
+      <br/>
+      <br/>
+      <input onclick="setTimeout(function(){resetLimit()},50)" type="reset" value="Default"/>
+      <input onclick="setup()" type="submit" value="Submit"/>
+    </form>
+  </div>
+  <script src="setup.js"></script>
+</body>
+</html>
