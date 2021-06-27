@@ -126,12 +126,17 @@ h2, h3
   margin:auto;
 }
 
+.hidden
+{
+  visibility:none;
+}
+
 .circle
 {
   border-radius:50%;
 }
 
-#description div div div
+.center div
 {
   display:inline-block;
   margin:10px;
@@ -161,6 +166,54 @@ a:hover
 #bio
 {
   margin-bottom:100px;
+}
+
+#panels
+{
+  position:relative;
+  overflow:hidden;
+  height:400px;
+  width:400px;
+  margin:auto;
+  border:2px solid lime;
+}
+
+#panels .element
+{
+  position:absolute;
+  margin:0px;
+  height:400px;
+  width:400px;
+}
+
+.arrow
+{
+  position:absolute;
+  margin:0px;
+  width:20px;
+  height:20px;
+  padding:10px;
+  bottom:190px;
+  border-radius:4px;
+  text-align:center;
+  transition:color 0.25s ease, background-color 0.25s ease;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.arrow:hover
+{
+  color:black;
+  background-color:rgba(0, 255, 0, 0.5);
+}
+
+.arrow:active
+{
+  background-color:lime;
 }
 
 #socials
