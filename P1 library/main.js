@@ -1,4 +1,4 @@
-/*P1 document*/
+/*P1 Library*/
 
 //Get references
 const Console = document.getElementById("Console");
@@ -11,6 +11,7 @@ var Keydown = function(event){};
 var Keyup = function(event){};
 var OnMessage = function(message){};
 var OnError = function(message){};
+var Start = function(){};
 window.interval = 50;
 window.timeout = 50;
 
@@ -420,18 +421,11 @@ class InputLog
 
   delete()
   {
-    try
-    {
-      this.display.remove();
-      this._isValid = false;
-      var Logs = document.getElementById("Logs");
-      if(Logs.innerHTML.replace(/\n/g, "").replace(/ /g, "") === "")
-        Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
-    }
-    catch(error)
-    {
-      new Exception(error);
-    }
+    this.display.remove();
+    this._isValid = false;
+    var Logs = document.getElementById("Logs");
+    if(Logs.innerHTML.replace(/\n/g, "").replace(/ /g, "") === "")
+      Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
   }
 }
 
@@ -1366,11 +1360,14 @@ async function execute(data)
   {
     //Create script element
     var game = document.createElement("script");
+    game.onerror = function(error){new Exception(error)};
     game.innerHTML = fileContent;
 
     //Execute the file
     new Log("Successfully executed '" + data.fileName + "'!", "lime", true, "GreenCheckmark.png");
     document.getElementById("Games").appendChild(game);
+    Start();
+    _Update = setInterval(_u1, window.interval);
   }
   else new Exception("Execution error", "File extension was invalid.\nExpected value: 'p1'");
 }
@@ -1450,45 +1447,35 @@ function handleCommands(message)
       {
         "run":function(args)
         {
-          if(args.length == 0)
-          {
-            var msg = "";
-            for(command in commands)
-              if(command == "help")
-                msg += commands[command].syntax + "\n" + commands[command].desc;
-              else
-                msg += "\n\n" + commands[command].syntax + "\n" + commands[command].desc;
-            new Log(msg, "darkgrey", true, "Gear.png");
-          }
-          else
-            new Exception("Console command", "Invalid argument amount. Expected 0 arguments.");
+          var msg = "";
+          for(command in commands)
+            if(command == "help")
+              msg += commands[command].syntax + "\n" + commands[command].desc;
+            else
+              msg += "\n\n" + commands[command].syntax + "\n" + commands[command].desc;
+          new Log(msg, "darkgrey", true, "Gear.png");
         },
         "syntax":"Help",
+        "argAmount":0,
         "desc":"Bring up a help message."
       },
       "execute":
       {
         "run":function(args){
-          if(args.length == 0)
-          {
-            var input = new InputLog("file", "Please input a file to execute.", ".p1");
-            input.onsubmit = function(data){execute(data);};
-          }
-          else
-            new Exception("Console command", "Invalid argument amount. Expected 0 arguments.");
+          var input = new InputLog("file", "Please input a file to execute.", ".p1");
+          input.onsubmit = function(data){execute(data);};
         },
         "syntax":"Execute",
+        "argAmount":0,
         "desc":"Execute a .p1 file of your choice."
       },
       "clear":
       {
         "run":function(args){
-          if(args.length === 0)
-            clearConsole();
-          else
-            new Exception("Console command", "Invalid argument amount. Expected 0 arguments.");
+          clearConsole();
         },
         "syntax":"Clear",
+        "argAmount":0,
         "desc":"Clear the console."
       }
     };
@@ -1505,7 +1492,10 @@ function handleCommands(message)
     for(command in commands)
       if(command == args[0].toLowerCase())
       {
-        commands[command].run(args.slice(1));
+        if(commands[command].argAmount < args.length-1)
+          new Exception("Console command", "Invalid argument amount. Expected 0 arguments.");
+        else
+          commands[command].run(args.slice(1));
         return;
       }
 
