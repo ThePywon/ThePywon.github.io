@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>Pywon Console</title>
+    <link rel="icon" href="../Assets/Icons/PywonLogo.RoundedEdges.ico"/>
+    <link rel="stylesheet" href="main.css"/>
+  </head>
+  <body>
+    <div id="Content">
+
+    </div>
+    <div id="Console">
+      <div id="Logs">
+        <p id="BlankLog">
+          There are no logs yet.
+        </p>
+      </div>
+      <textarea id="ConsoleTA" placeholder="Type here..." maxlength="55" oninput="correctTextArea()"></textarea>
+      <span id="ConsoleToggle" onclick="toggleConsole()">
+        <img src="../Assets/Images/BlackDownArrow.png"/>
+      </span>
+    </div>
+    <div id="Games">
+
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
