@@ -316,11 +316,13 @@ class Log
 
 class InputLog
 {
-  constructor(type, header, accept)
+  constructor(type, header, addition)
   {
     this._isValid = true;
+    if(type.toString().toLowerCase() == "button" || type.toString().toLowerCase() == "reset")
+      type = "submit";
     if(type !== undefined)
-      this.type = type.toString();
+      this.type = type.toString().toLowerCase();
     else
       new Exception("Invalid value", "Passed value 'type' returned undefined!", this);
 
@@ -336,10 +338,10 @@ class InputLog
         this.header = "Input request";
       }
 
-    if(accept !== undefined)
-      this.accept = accept;
+    if(addition !== undefined)
+      this.addition = addition;
     else
-      this.accept = "";
+      this.addition = "";
 
     InputLog.prototype.toString = function()
     {
@@ -362,6 +364,7 @@ class InputLog
   {
     var Instance = this;
 
+    var HasSubmit = true;
 
     var BlankLog = document.getElementById("BlankLog");
 
@@ -390,27 +393,43 @@ class InputLog
     this.display.appendChild(icon);
     icon.src = "../Assets/Images/Gear.png";
 
-    var text = document.createElement("p");
-    this.display.appendChild(text);
-    text.style.color = "darkgrey";
-    text.innerHTML = this.header;
+    this.text = document.createElement("p");
+    this.display.appendChild(this.text);
+    this.text.style.color = "darkgrey";
+    this.text.innerHTML = this.header;
 
     this.input = document.createElement("input");
     this.display.appendChild(this.input);
     this.input.style.fontFamily = "Prompt";
     this.input.style.color = "darkgrey";
     this.input.type = this.type;
-    this.input.accept = this.accept;
     this.input.required = true;
 
-    this.submit = document.createElement("input");
-    this.display.appendChild(this.submit);
-    this.submit.style.fontFamily = "Prompt";
-    this.submit.style.color = "darkgrey";
-    this.submit.style.backgroundColor = "grey";
-    this.submit.style.border = "2px solid darkgrey";
-    this.submit.style.borderRadius = "3px";
-    this.submit.type = "submit";
+    if(this.type == "file")
+      this.input.accept = this.addition;
+    else if(this.type == "submit")
+    {
+      this.input.required = false;
+      this.input.style.display = "block";
+      this.input.value = this.addition;
+      HasSubmit = false;
+    }
+    else if(this.type == "checkbox" || this.type == "radio")
+      this.input.required = false;
+    else if(this.type == "color")
+      this.input.onchange = function(){Instance.setColor(Instance.input.value);};
+
+    if(HasSubmit)
+    {
+      this.submit = document.createElement("input");
+      this.display.appendChild(this.submit);
+      this.submit.style.fontFamily = "Prompt";
+      this.submit.style.color = "darkgrey";
+      this.submit.style.backgroundColor = "grey";
+      this.submit.style.border = "2px solid darkgrey";
+      this.submit.style.borderRadius = "3px";
+      this.submit.type = "submit";
+    }
 
     this.display.scrollIntoView(true);
 
@@ -419,34 +438,78 @@ class InputLog
 
   populateData()
   {
+    this.data = {};
     if(this.type == "file")
-    this.data = {
-      "dataType": this.type,
-      "file": this.input.files[0],
-      "filePath": this.input.value,
-      "fileName": this.input.value.split("\\").pop(),
-      "fileExt": this.input.value.split("\\").pop().split(".").pop()
-    };
+      this.data = {
+        "file": this.input.files[0],
+        "filePath": this.input.value,
+        "fileName": this.input.value.split("\\").pop(),
+        "fileExt": this.input.value.split("\\").pop().split(".").pop(),
+        "lastModified": this.input.files[0].lastModified
+      };
+    else if(this.type == "submit")
+    {
+      var current = new Date();
+      this.data = {
+        "date": current.getFullYear() + "-" + (current.getMonth()+1) + "-" + current.getDate(),
+        "time": current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds()
+      };
+    }
+    else if(this.type == "checkbox" || this.type == "radio")
+      this.data.checked = this.input.checked;
+    else if(this.type == "color")
+      this.data = {
+        "hex": this.input.value,
+        "rgb": "rgb(" + parseInt("0x" + this.input.value.slice(1,3)) + ", " + parseInt("0x" + this.input.value.slice(3,5)) + ", " + parseInt("0x" + this.input.value.slice(5,7)) + ")",
+        "red": parseInt("0x" + this.input.value.slice(1,3)),
+        "green": parseInt("0x" + this.input.value.slice(3,5)),
+        "blue": parseInt("0x" + this.input.value.slice(5,7))
+      };
+    else if(this.type == "date")
+      this.data = {
+        "date": this.input.value,
+        "year": this.input.value.split("-")[0],
+        "month": this.input.value.split("-")[1],
+        "day": this.input.value.split("-")[2]
+      };
+    else if(this.type == "email" || this.type == "number" || this.type == "password" || this.type == "range" || this.type == "search" || this.type == "text" || this.type == "url")
+      this.data.value = this.input.value;
+    else if(this.type == "time")
+      this.data = {
+        "time": this.input.value,
+        "hours": this.input.value.split(":")[0],
+        "minutes": this.input.value.split(":")[1]
+      };
+    this.data.dataType = this.type;
   }
 
   checkValidity()
   {
-    if(this.type != "file")
+    if(this.type != "file" || this.addition == "")
       return true;
 
-    const validExts = this.accept.replace(".", "").split(",");
+    const validExts = this.addition.replace(".", "").split(",");
 
     for(var i in validExts)
       if(this.data.fileExt == validExts[i])
         return true;
 
-    new Exception("Invalid filetype", "Extension ." + this.data.fileExt + " does not match any accepted extensions.\nAccepted extensions: " + this.accept);
+    new Exception("Invalid filetype", "Extension ." + this.data.fileExt + " does not match any accepted extensions.\nAccepted extensions: " + this.addition);
     return false;
   }
 
   onsubmit(data)
   {
 
+  }
+
+  setColor(color)
+  {
+    this.text.style.color = color;
+    this.display.style.borderLeft = "2px solid " + color;
+    this.input.style.color = color;
+    this.submit.style.color = color;
+    this.submit.style.borderColor = color;
   }
 
   delete()
