@@ -375,13 +375,16 @@ class InputLog
     this.display.className = "Log";
     this.display.style.borderLeft = "2px solid darkgrey";
 
-    this.display.onsubmit = function(){Instance.delete(); if(Instance.type == "file")Instance.data = {
-        "dataType": Instance.type,
-        "file": Instance.input.files[0],
-        "filePath": Instance.input.value,
-        "fileName": Instance.input.value.split("\\").pop(),
-        "fileExt": Instance.input.value.split("\\").pop().split(".").pop()
-      }; Instance.onsubmit(Instance.data); return false;};
+    this.display.onsubmit = function()
+    {
+      Instance.populateData();
+      if(Instance.checkValidity())
+      {
+        Instance.delete();
+        Instance.onsubmit(Instance.data);
+      }
+      return false;
+    };
 
     var icon = document.createElement("img");
     this.display.appendChild(icon);
@@ -412,6 +415,33 @@ class InputLog
     this.display.scrollIntoView(true);
 
     setTimeout(function(){OnMessage(Instance);}, window.timeout);
+  }
+
+  populateData()
+  {
+    if(this.type == "file")
+    this.data = {
+      "dataType": this.type,
+      "file": this.input.files[0],
+      "filePath": this.input.value,
+      "fileName": this.input.value.split("\\").pop(),
+      "fileExt": this.input.value.split("\\").pop().split(".").pop()
+    };
+  }
+
+  checkValidity()
+  {
+    if(this.type != "file")
+      return true;
+
+    const validExts = this.accept.replace(".", "").split(",");
+
+    for(var i in validExts)
+      if(this.data.fileExt == validExts[i])
+        return true;
+
+    new Exception("Invalid filetype", "Extension ." + this.data.fileExt + " does not match any accepted extensions.\nAccepted extensions: " + this.accept);
+    return false;
   }
 
   onsubmit(data)
@@ -1351,25 +1381,23 @@ class Sprite
 }
 
 //Start a javascript file of your choice (has to be in the 'Games' directory)
-async function execute(data)
+async function execute(file, gameName)
 {
   //Get file data
-  const fileContent = await data.file.text();
+  const fileContent = await file.text();
 
-  if(data.fileExt == "p1")
-  {
-    //Create script element
-    var game = document.createElement("script");
-    game.onerror = function(error){new Exception(error)};
-    game.innerHTML = fileContent;
+  //Create script element
+  var game = document.createElement("script");
+  game.onerror = function(error){new Exception(error)};
+  game.innerHTML = fileContent;
 
-    //Execute the file
-    new Log("Successfully executed '" + data.fileName + "'!", "lime", true, "GreenCheckmark.png");
-    document.getElementById("Games").appendChild(game);
-    Start();
-    _Update = setInterval(_u1, window.interval);
-  }
-  else new Exception("Execution error", "File extension was invalid.\nExpected value: 'p1'");
+  //Execute the file
+  new Log("Successfully executed '" + gameName + "'!", "lime", true, "GreenCheckmark.png");
+  document.getElementById("Games").appendChild(game);
+  Start();
+  Update();
+  clearInterval(_Update);
+  _Update = setInterval(_u1, window.interval);
 }
 
 //Console functions
@@ -1400,7 +1428,7 @@ document.addEventListener('keydown', function(event) {
   //Handle commands + lock textarea
   if(event.keyCode == 13) {
     lockTextArea();
-    handleCommands(popTextArea());
+    handleCommand(popTextArea());
   }
 });
 
@@ -1438,7 +1466,7 @@ function correctTextArea()
 }
 
 //Console commands
-function handleCommands(message)
+function handleCommand(message)
 {
   if(message.startsWith("/"))
   {
@@ -1456,18 +1484,18 @@ function handleCommands(message)
           new Log(msg, "darkgrey", true, "Gear.png");
         },
         "syntax":"Help",
-        "argAmount":0,
-        "desc":"Bring up a help message."
+        "desc":"Bring up a help message.",
+        "argAmount":0
       },
       "execute":
       {
         "run":function(args){
           var input = new InputLog("file", "Please input a file to execute.", ".p1");
-          input.onsubmit = function(data){execute(data);};
+          input.onsubmit = function(data){execute(data.file, data.fileName);};
         },
         "syntax":"Execute",
-        "argAmount":0,
-        "desc":"Execute a .p1 file of your choice."
+        "desc":"Execute a .p1 file of your choice.",
+        "argAmount":0
       },
       "clear":
       {
@@ -1475,8 +1503,8 @@ function handleCommands(message)
           clearConsole();
         },
         "syntax":"Clear",
-        "argAmount":0,
-        "desc":"Clear the console."
+        "desc":"Clear the console.",
+        "argAmount":0
       }
     };
 
@@ -1492,10 +1520,30 @@ function handleCommands(message)
     for(command in commands)
       if(command == args[0].toLowerCase())
       {
-        if(commands[command].argAmount < args.length-1)
-          new Exception("Console command", "Invalid argument amount. Expected 0 arguments.");
+        if(commands[command].argAmount !== undefined)
+        {
+          if(commands[command].argAmount < args.length-1)
+            new Exception("Console command", "Invalid argument amount. Expected " + commands[command].argAmount + " arguments.");
+          else
+            commands[command].run(args.slice(1));
+        }
         else
-          commands[command].run(args.slice(1));
+        {
+          var min = commands[command].argMin;
+          if(min === undefined)
+            min = 0;
+          var max = commands[command].argMax;
+          if(max === undefined)
+          {
+            new Exception("Console command", "Invalid command data for command '" + command + "'");
+            return;
+          }
+
+          if(min > args.length-1 || max < args.length-1)
+            new Exception("Console command", "Invalid argument amount. Expected " + min + " to " + max + " arguments.");
+          else
+            commands[command].run(args.slice(1));
+        }
         return;
       }
 
