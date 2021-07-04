@@ -14,6 +14,7 @@ var OnError = function(message){};
 var Start = function(){};
 window.interval = 50;
 window.timeout = 50;
+window.lastClicked = null;
 
 //Message classes
 class Exception
@@ -195,7 +196,7 @@ class Log
     if(color !== undefined)
       this.color = color;
     else this.color = "white";
-    if(this.scroll !== undefined)
+    if(scroll !== undefined)
       this.scroll = scroll;
     else this.scroll = true;
     this.url = url;
@@ -244,7 +245,8 @@ class Log
     this.text.style.color = this.color;
     this.text.innerHTML = this.content;
 
-    this.display.scrollIntoView(this.scroll);
+    if(this.scroll)
+      this.display.scrollIntoView();
 
     var Instance = this;
     setTimeout(function(){OnMessage(Instance);}, window.timeout);
@@ -520,6 +522,133 @@ class InputLog
     if(Logs.innerHTML.replace(/\n/g, "").replace(/ /g, "") === "")
       Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
   }
+
+  isValid()
+  {
+    return this._isValid;
+  }
+}
+
+class Popup
+{
+  constructor(header, callback = function(result){}, options = ["yes", "no"], img, color = "white")
+  {
+    this._isValid = true;
+    if(header !== undefined)
+      this.header = header.toString().replace(/\n/g, "<br/>");
+    else
+      new Exception("Invalid value", "Passed value 'header' returned undefined!", this);
+
+    try
+    {
+      if(options.length > 0)
+        this.options = options;
+      else
+      {
+        new Exception("Invalid value", "Passed value 'options' did not have a proper length.", this);
+        return;
+      }
+    }
+    catch(error)
+    {
+      new Exception("Unexpected value", "Passed value 'options' was not an instance of Array.", this);
+      return;
+    }
+
+    this.callback = callback;
+    this.img = img;
+    this.color = color;
+
+    Popup.prototype.toString = function()
+    {
+      return this.header;
+    }
+
+    Popup.prototype.valueOf = function()
+    {
+      if(this._isValid)
+        return "Popup";
+      else
+        return "<a style='color:red;'>[Popup]</a>";
+    }
+
+    if(this._isValid)
+      this.init();
+  }
+
+  init()
+  {
+    var Instance = this;
+
+    this.background = document.createElement("div");
+    this.background.style.position = "absolute";
+    this.background.style.left = 0;
+    this.background.style.bottom = 0;
+    this.background.style.width = window.innerWidth;
+    this.background.style.height = window.innerHeight;
+    this.background.style.backgroundColor = "rgba(255, 255, 255, 0.25)";
+
+    this.display = document.createElement("div");
+    this.background.appendChild(this.display);
+    this.display.style.margin = "200px auto auto";
+    this.display.style.padding = 10;
+    this.display.style.width = 300;
+    this.display.style.textAlign = "center";
+    this.display.style.fontFamily = "Prompt";
+    this.display.style.backgroundColor = this.color;
+    this.display.style.borderRadius = "10px";
+    this.display.style.opacity = 0;
+    this.display.style.transition = "opacity 0.25s ease";
+    setTimeout(function(){Instance.show();}, 50);
+
+    if(this.img !== undefined)
+    {
+      this.icon = document.createElement("img");
+      this.display.appendChild(this.icon);
+      this.icon.style.width = 32;
+      this.icon.style.height = 32;
+      this.icon.style.margin = "auto";
+      this.icon.style.display = "block";
+      this.icon.src = "../Assets/Images/" + this.img;
+    }
+
+    this.text = document.createElement("p");
+    this.display.appendChild(this.text);
+    this.text.style.margin = "10px";
+    this.text.innerHTML = this.header;
+
+    for(var i = 0; i < this.options.length; i++)
+    {
+      var input = document.createElement("input");
+      this.display.appendChild(input);
+      input.style.margin = 10;
+      input.type = "button";
+      input.value = this.options[i];
+      input.id = "popup_select";
+    }
+
+    var popupUpdate = setInterval(function(){
+      if(window.lastClicked.id == "popup_select")
+      {
+        Instance.callback(window.lastClicked.value);
+        Instance.hide();
+        clearInterval(popupUpdate);
+        return;
+      }
+    }, 0);
+  }
+
+  show()
+  {
+    document.body.appendChild(this.background);
+    this.display.style.opacity = 1;
+  }
+
+  hide()
+  {
+    this.background.remove();
+    this.display.style.opacity = 0;
+  }
 }
 
 //Data classes
@@ -709,6 +838,11 @@ class Vector2
       new Exception("Invalid value", "Cannot create a new instance of Vector2 because this instance of Vector2 was invalid.", this);
       return null;
     }
+  }
+
+  one()
+  {
+    return new Vector2(1, 1);
   }
 
   equals(other)
@@ -1317,23 +1451,29 @@ class Box
 
     this._isValid = true;
     this.color = color;
-    if(position.valueOf() == "Vector2")
+    if(position !== undefined && position.valueOf() == "Vector2")
     {
       this.position = position;
     }
     else
     {
       this.position = new Vector2();
-      new Exception("Unexpected value", "Passed value 'position' was not a value of type Vector2.\nValue type: " + position.valueOf(), this);
+      if(position !== undefined)
+        new Exception("Unexpected value", "Passed value 'position' was not a value of type Vector2.\nValue type: " + position.valueOf(), this);
+      else
+        new Exception("Invalid value", "Passed value 'position' returned undefined!\nExpected value of type Vector2.", this);
     }
-    if(size.valueOf() == "Vector2")
+    if(size !== undefined && size.valueOf() == "Vector2")
     {
       this.size = size;
     }
     else
     {
       this.size = new Vector2();
-      new Exception("Unexpected value", "Passed value 'size' was not a value of type Vector2.\nValue type: " + size.valueOf(), this);
+      if(size !== undefined)
+        new Exception("Unexpected value", "Passed value 'size' was not a value of type Vector2.\nValue type: " + size.valueOf(), this);
+      else
+        new Exception("Invalid value", "Passed value 'size' returned undefined!\nExpected value of type Vector2.", this);
     }
 
     Box.prototype.toString = function()
@@ -1446,21 +1586,44 @@ class Sprite
 //Start a javascript file of your choice (has to be in the 'Games' directory)
 async function execute(file, gameName)
 {
-  //Get file data
-  const fileContent = await file.text();
+  if(document.getElementById("Games").innerHTML.replace(/\n/g, "").replace(/ /g, "") == "")
+  {
+    //Get file data
+    const fileContent = await file.text();
 
-  //Create script element
-  var game = document.createElement("script");
-  game.onerror = function(error){new Exception(error)};
-  game.innerHTML = fileContent;
+    //Create script element
+    var game = document.createElement("script");
+    game.innerHTML = fileContent;
 
-  //Execute the file
-  new Log("Successfully executed '" + gameName + "'!", "lime", true, "GreenCheckmark.png");
-  document.getElementById("Games").appendChild(game);
-  Start();
-  Update();
-  clearInterval(_Update);
-  _Update = setInterval(_u1, window.interval);
+    //Execute the file
+    new Log("Successfully executed '" + gameName + "'!", "lime", true, "GreenCheckmark.png");
+    document.getElementById("Games").appendChild(game);
+    Start();
+    Update();
+    clearInterval(_Update);
+    _Update = setInterval(_u1, window.interval);
+  }
+  else
+  {
+    new Popup("Are you sure you want to execute another file?\n(doing this will interupt any other file's execution)", async function(result){if(result == "no"){new Log("Execution aborted.", "yellow", true, "YellowWarning.png");return;}
+      //Get file data
+      const fileContent = await file.text();
+
+      //Create script element
+      var game = document.createElement("script");
+      game.innerHTML = fileContent;
+
+      //Execute the file
+      new Log("Successfully executed '" + gameName + "'!", "lime", true, "GreenCheckmark.png");
+      content.innerHTML = "";
+      document.getElementById("Games").innerHTML = "";
+      document.getElementById("Games").appendChild(game);
+      Start();
+      Update();
+      clearInterval(_Update);
+      _Update = setInterval(_u1, window.interval);
+    }, ["yes", "no"], "YellowWarning.png");
+  }
 }
 
 //Console functions
@@ -1503,6 +1666,16 @@ document.addEventListener('keyup', function(event) {
   if(event.keyCode == 13) {
     unlockTextArea();
   }
+});
+
+//Get last clicked element
+document.addEventListener('click', function(event) {
+  //Get the event target element
+  event = event || window.event;
+  var target = event.target || event.srcElement;
+
+  //Return it
+  window.lastClicked = target;
 });
 
 //Console TextArea functions
@@ -1753,7 +1926,7 @@ function collision(element1, element2)
     var overlap = !(Rect1.right < Rect2.left || Rect1.left > Rect2.right || Rect1.bottom < Rect2.top || Rect1.top > Rect2.bottom)
 
     if(overlap)
-      return {other:element2};
+      return true;
     else
       return false;
   }
