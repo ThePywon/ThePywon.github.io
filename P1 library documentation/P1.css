@@ -1,1 +1,142 @@
+@font-face
+{
+ font-family: "sans";
+ src: url('../Assets/Fonts/ComingSans.woff') format('woff'),
+      url('../Assets/Fonts/ComingSans.ttf') format('truetype')
+}
 
+@font-face
+{
+  font-family: "code";
+  src: url("../Assets/Fonts/SourceCodePro-Regular.woff") format("woff"),
+       url("../Assets/Fonts/SourceCodePro-Regular.ttf") format("truetype");
+}
+
+body
+{
+  background-color:black;
+}
+
+#menu
+{
+  display:inline-block;
+  border-right:2px solid lime;
+  height:100%;
+  width:15%;
+  margin-left:0px;
+  font-family:code;
+  color:lime;
+  overflow-y:scroll;
+}
+
+h3
+{
+  text-align:center;
+}
+
+#menu p, #menu h3, img
+{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#menu p
+{
+  transition:color 0.125s ease, background-color 0.125s ease;
+  padding:5px;
+  margin:5px auto;
+  cursor:pointer;
+}
+
+#menu p:hover
+{
+  color:black;
+  background-color:lime;
+}
+
+#main
+{
+  display:inline-block;
+  position:absolute;
+  top:0px;
+  font-family:code;
+  color:white;
+  overflow-y:scroll;
+  height:100%;
+  width:84%;
+  text-align:center;
+}
+
+#main h1
+{
+  font-size:40px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.codeBlock, .board
+{
+  width:502px;
+  margin:auto;
+  padding:0px;
+  text-align:left;
+  position:relative;
+}
+
+.codeBlock
+{
+  background-color:#232323;
+  border:2px solid #111111;
+  border-radius:5px;
+}
+
+.board img
+{
+  width:20px;
+  height:20px;
+  margin-top:5px;
+}
+
+.board .titles
+{
+  background-color:#232323;
+  border-top:2px solid #111111;
+  border-left:2px solid #111111;
+  border-bottom:2px solid #111111;
+  border-radius:5px;
+  width:248px;
+  position:absolute;
+  left:0px;
+}
+
+.board .descriptions
+{
+  background-color:#232323;
+  border-top:2px solid #111111;
+  border-right:2px solid #111111;
+  border-bottom:2px solid #111111;
+  border-radius:5px;
+  width:250px;
+  position:absolute;
+  right:0px;
+}
+
+.board .titles div
+{
+  border-right:2px solid #111111;
+}
+
+.board .titles div, .board .descriptions p
+{
+  margin:0px;
+  height:150px;
+  border-bottom:2px solid #111111;
+}
