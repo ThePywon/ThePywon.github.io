@@ -94,11 +94,6 @@ class Exception
     if(Logs.innerHTML === "")
       Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
   }
-
-  isValid()
-  {
-    return this._isValid;
-  }
 }
 
 class Warning
@@ -177,11 +172,6 @@ class Warning
     if(Logs.innerHTML === "")
       Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
   }
-
-  isValid()
-  {
-    return this._isValid;
-  }
 }
 
 class Log
@@ -237,7 +227,7 @@ class Log
     {
       this.icon = document.createElement("img");
       this.display.appendChild(this.icon);
-      this.icon.src = "../Assets/Images/" + this.url;
+      this.icon.src = this.url;
     }
 
     this.text = document.createElement("p");
@@ -413,7 +403,10 @@ class InputLog
     {
       this.input.required = false;
       this.input.style.display = "block";
-      this.input.value = this.addition;
+      if(this.addition !== "")
+        this.input.value = this.addition;
+      else
+        this.input.value = "button";
       HasSubmit = false;
     }
     else if(this.type == "checkbox" || this.type == "radio")
@@ -609,7 +602,7 @@ class Popup
       this.icon.style.height = 32;
       this.icon.style.margin = "auto";
       this.icon.style.display = "block";
-      this.icon.src = "../Assets/Images/" + this.img;
+      this.icon.src = this.img;
     }
 
     this.text = document.createElement("p");
@@ -793,6 +786,11 @@ class Dir2D
       return null;
     }
   }
+
+  isValid()
+  {
+    return this._isValid;
+  }
 }
 
 class Vector2
@@ -838,11 +836,6 @@ class Vector2
       new Exception("Invalid value", "Cannot create a new instance of Vector2 because this instance of Vector2 was invalid.", this);
       return null;
     }
-  }
-
-  one()
-  {
-    return new Vector2(1, 1);
   }
 
   equals(other)
@@ -1596,7 +1589,7 @@ async function execute(file, gameName)
     game.innerHTML = fileContent;
 
     //Execute the file
-    new Log("Successfully executed '" + gameName + "'!", "lime", true, "GreenCheckmark.png");
+    new Log("Successfully executed '" + gameName + "'!", "lime", true, "../Assets/Images/GreenCheckmark.png");
     document.getElementById("Games").appendChild(game);
     Start();
     Update();
@@ -1605,7 +1598,7 @@ async function execute(file, gameName)
   }
   else
   {
-    new Popup("Are you sure you want to execute another file?\n(doing this will interupt any other file's execution)", async function(result){if(result == "no"){new Log("Execution aborted.", "yellow", true, "YellowWarning.png");return;}
+    new Popup("Are you sure you want to execute another file?\n(doing this will interupt any other file's execution)", async function(result){if(result == "no"){new Log("Execution aborted.", "yellow", true, "../Assets/Images/YellowWarning.png");return;}
       //Get file data
       const fileContent = await file.text();
 
@@ -1614,7 +1607,7 @@ async function execute(file, gameName)
       game.innerHTML = fileContent;
 
       //Execute the file
-      new Log("Successfully executed '" + gameName + "'!", "lime", true, "GreenCheckmark.png");
+      new Log("Successfully executed '" + gameName + "'!", "lime", true, "../Assets/Images/GreenCheckmark.png");
       content.innerHTML = "";
       document.getElementById("Games").innerHTML = "";
       document.getElementById("Games").appendChild(game);
@@ -1622,7 +1615,7 @@ async function execute(file, gameName)
       Update();
       clearInterval(_Update);
       _Update = setInterval(_u1, window.interval);
-    }, ["yes", "no"], "YellowWarning.png");
+    }, ["yes", "no"], "../Assets/Images/YellowWarning.png");
   }
 }
 
