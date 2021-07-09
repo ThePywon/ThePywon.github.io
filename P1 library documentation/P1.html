@@ -1,9 +1,688 @@
 <html>
-  <head>
-    <title>P1 API</title>
-    <link rel="icon" href="../Games/Test/Assets/Icons/PywonLogo.RoundedEdges.ico"/>
-  </head>
-  <body>
-    
-  </body>
+<head>
+  <title>P1 api</title>
+  <link rel="stylesheet" href="P1.css"/>
+  <link rel="icon" href="../Assets/Icons/PywonLogo.RoundedEdges.ico"/>
+</head>
+<body>
+  <div id="menu">
+    <h3>Console objects</h3>
+      <p onclick="show(0)">Log object</p>
+      <p onclick="show(1)">Exception object</p>
+      <p onclick="show(2)">Warning object</p>
+      <p onclick="show(3)">InputLog object</p>
+      <p onclick="show(4)">Popup object</p>
+    <h3>Data objects</h3>
+      <p onclick="show(5)">Dir2D object</p>
+      <p onclick="show(6)">Vector2 object</p>
+      <p onclick="show(7)">Vector3 object</p>
+    <h3>Other objects</h3>
+      <p onclick="show(8)">Circle object</p>
+      <p onclick="show(9)">Line object</p>
+      <p onclick="show(10)">Box object</p>
+      <p onclick="show(11)">Sprite object</p>
+    <h3>Events</h1>
+      <p onclick="show(12)">Start event</p>
+      <p onclick="show(13)">Update event</p>
+      <p onclick="show(14)">Keydown event</p>
+      <p onclick="show(15)">Keyup event</p>
+      <p onclick="show(16)">OnMessage event</p>
+      <p onclick="show(17)">OnError event</p>
+    <h3>Random functions</h3>
+      <p onclick="show(18)">random function</p>
+      <p onclick="show(19)">randomColor function</p>
+      <p onclick="show(20)">randomStr function</p>
+      <p onclick="show(21)">choose function</p>
+    <h3>Math functions</h3>
+      <p onclick="show(22)">normalize function</h3>
+      <p onclick="show(23)">clamp function</h3>
+    <h3>Other functions</h3>
+      <p onclick="show(24)">readOnly function</p>
+      <p onclick="show(25)">isElement function</p>
+      <p onclick="show(26)">collision function</p>
+  </div>
+  <div id="main">
+    <div class="slide">
+      <h1>Log object</h1>
+      <p>The Log object is as simple as it sounds. It is a log. You can use it to debug and it will be shown on the console.</p><br/><br/>
+      <p class="codeBlock">
+        <a style="color:lightblue;">constructor</a>(content, color, scroll, url)
+      </p><br/>
+      <p>The parameter 'content' will hold the text that will be logged.<br/>The expected value type is a String.<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>
+      <p>The parameter 'color' determines the color of the border and text of the log.<br/>The expected value type is also a string, you can put whatever working CSS color.</p><br/>
+      <p>The parameter 'scroll' determines either or not it should scroll to the log once logged.<br/>The expected value type is a bool.</p><br/>
+      <p>The last parameter, 'url' determines the src attribute of the image in the log. If none is passed, there will be no image.<br/>The expected value type is a String.</p><br/><br/><br/><br/>
+      <h3>Simple example:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"Hello!"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Log_object-Example1.png"/><br/><br/><br/>
+      <h3>Color usage:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"Hello!"</a>, <a style="color:#55ff55;">"lime"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Log_object-Example2.png"/><br/><br/><br/>
+      <h3>Adding an image:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"Hello!"</a>, <a style="color:#55ff55;">"lime"</a>, <a style="color:blue;">true</a>, <a style="color:#55ff55;">"../Assets/Images/GreenCheckmark.png"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Log_object-Example3.png"/><br/><br/><br/><br/><br/><br/>
+      <h2>Some properties you can play with.</h2><br/>
+      <div class="board">
+        <div class="titles">
+          <div>content</div>
+          <div>color</div>
+          <div>scroll</div>
+          <div>
+            url
+            <img src="../Assets/Images/Gear.png"/>
+          </div>
+          <div>
+            _isValid
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+          <div>
+            display
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+          <div>
+            text
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+          <div>
+            icon
+            <img src="../Assets/Images/YellowWarning.png"/>
+            <img src="../Assets/Images/Gear.png"/>
+          </div>
+        </div><!--
+     --><div class="descriptions">
+          <p>Holds the content of the log. Changing it <a style="color:red;">DOES NOT</a> affect the actual content of the log.</p>
+          <p>Holds the current color of the log. Changing it <a style="color:red;">DOES NOT</a> affect the actual color of the log.</p>
+          <p>Determines if the log gets scrolled to once logged. Changing it <a style="color:red;">DOES NOT</a> affect the actual log.</p>
+          <p>Holds the link to the image of the log if there is one. Changing it <a style="color:red;">DOES NOT</a> affect the actual image of the log.</p>
+          <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+          <p>Holds the log hitself as an HTML element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+          <p>Holds the HTML paragraph element where the content of the log is displayed. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+          <p>Holds the HTML image element in case the log has an image. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+        </div>
+      </div><br/><br/><br/><br/>
+      <h2>Some functions you can play with.</h2><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">print</a>()</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/RedX.png"/></h3>
+      <p>Is called upon initialisation of the log.<br/>Prints the log in the console.<br/>Usage of this function is <a style="color:red;">NOT RECOMMENDED</a>.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">edit</a>(content)</span></h3>
+      <p>Can be used to edit the log's content.<br/>The log's content property will be updated accordingly.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">setColor</a>(color)</span></h3>
+      <p>Can be used to edit the log's color.<br/>Any working CSS color can be used.<br/>The log's color property will be updated accordingly.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">setImage</a>(url)</span></h3>
+      <p>Can be used to edit the log's image.<br/>If there is none, it will create one.<br/>The log's url property will be updated accordingly.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">delete</a>()</span></h3>
+      <p>Can be used to delete the log entirely.<br/>Doing that is irreversible and the object will be marked 'invalid' from this point on.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">isValid</a>()</span></h3>
+      <p>Returns the '_isValid' property of the object.<br/>Result should be a bool.</p><br/><br/>
+    </div>
+    <div class="slide">
+      <h1>Exception object</h1>
+      <p>This object's use is to debug and report errors. It can be pretty usefull in a try catch to report the error to the console.</p><br/><br/>
+      <p class="codeBlock">
+        <a style="color:lightblue;">constructor</a>(type, content, reference = <a style="color:#5555ff;">null</a>)
+      </p><br/>
+      <p>The parameter 'type' will give more precisions as to what type of error this is.<br/>The expected value type is a String.<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>
+      <p>The parameter 'content' determines the content of the logged Exception.<br/>The expected value type is also a string.<br/>If the value is undefined, the variable 'type' will be used as the content instead.</p><br/>
+      <p>The last parameter, 'reference' determines the object from wich it was called.<br/>The expected value type is an Object.<br/>This variable can make it easier for users to know where the error occured.</p><br/><br/>
+      <h3>Simple example:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Exception</a>(<a style="color:#55ff55;">"Error!"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Exception_object-Example1.png"/><br/><br/><br/>
+      <h3>Type usage:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Exception</a>(<a style="color:#55ff55;">"Type"</a>, <a style="color:#55ff55;">"Error!"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Exception_object-Example2.png"/><br/><br/><br/>
+      <h3>Adding an reference:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">class</a> <a style="color:blue;">someObject</a>{<br/>
+          &nbsp;&nbsp;<a style="color:lightblue;">constructor</a>(){<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<a style="color:red;">new</a> <a style="color:orange;">Exception</a>(<a style="color:#55ff55;">"Type"</a>, <a style="color:#55ff55;">"Error!"</a>, <a style="color:red;">this</a>);<br/>
+        &nbsp;&nbsp;}<br/>
+      }<br/><br/>
+      <a style="color:red;">new</a> <a style="color:blue;">someObject</a>();
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Exception_object-Example3.png"/><br/><br/><br/><br/><br/><br/>
+      <h2>Some properties you can play with.</h2><br/>
+      <div class="board">
+        <div class="titles">
+          <div>content</div>
+          <div>type</div>
+          <div>
+            reference
+            <img src="../Assets/Images/Gear.png"/>
+          </div>
+          <div>
+            _isValid
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+          <div>
+            display
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+        </div><!--
+     --><div class="descriptions">
+          <p>Holds the content of the exception. Changing it <a style="color:red;">DOES NOT</a> affect the actual content of the exception.</p>
+          <p>Holds the type of the exception. Changing it <a style="color:red;">DOES NOT</a> affect the actual type of the exception.</p>
+          <p>Holds the referenced object from when it got logged (null if none was put in). Changing it <a style="color:red;">DOES NOT</a> affect the actual exception.</p>
+          <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+          <p>Holds the exception hitself as an HTML element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+        </div>
+      </div><br/><br/><br/><br/>
+      <h2>Some functions you can play with.</h2><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">print</a>()</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/RedX.png"/></h3>
+      <p>Is called upon initialisation of the exception.<br/>Prints the exception in the console.<br/>Usage of this function is <a style="color:red;">NOT RECOMMENDED</a>.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">delete</a>()</span></h3>
+      <p>Can be used to delete the exception entirely.<br/>It can be put back by calling <span class="codeBlock"><a style="color:lightblue;">print</a>()</span>.</p><br/><br/>
+    </div>
+    <div class="slide">
+      <h1>Warning object</h1>
+      <p>This object's use is to debug and warn users.</p><br/><br/>
+      <p class="codeBlock">
+        <a style="color:lightblue;">constructor</a>(type, content, reference = <a style="color:#5555ff;">null</a>)
+      </p><br/>
+      <p>The parameter 'type' will give more precisions as to what type of warning this is.<br/>The expected value type is a String.<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>
+      <p>The parameter 'content' determines the content of the logged Warning.<br/>The expected value type is also a string.<br/>If the value is undefined, the variable 'type' will be used as the content instead.</p><br/>
+      <p>The last parameter, 'reference' determines the object from wich it was called.<br/>The expected value type is an Object.<br/>This variable can make it easier for users to know where the warning occured.</p><br/><br/>
+      <h3>Simple example:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Warning</a>(<a style="color:#55ff55;">"You have been warned!"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Warning_object-Example1.png"/><br/><br/><br/>
+      <h3>Type usage:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Warning</a>(<a style="color:#55ff55;">"Type"</a>, <a style="color:#55ff55;">"You have been warned!"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Warning_object-Example2.png"/><br/><br/><br/>
+      <h3>Adding an reference:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">class</a> <a style="color:blue;">someObject</a>{<br/>
+          &nbsp;&nbsp;<a style="color:lightblue;">constructor</a>(){<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<a style="color:red;">new</a> <a style="color:orange;">Warning</a>(<a style="color:#55ff55;">"Type"</a>, <a style="color:#55ff55;">"You have been warned!"</a>, <a style="color:red;">this</a>);<br/>
+        &nbsp;&nbsp;}<br/>
+      }<br/><br/>
+      <a style="color:red;">new</a> <a style="color:blue;">someObject</a>();
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Warning_object-Example3.png"/><br/><br/><br/><br/><br/><br/>
+      <h2>Some properties you can play with.</h2><br/>
+      <div class="board">
+        <div class="titles">
+          <div>content</div>
+          <div>type</div>
+          <div>
+            reference
+            <img src="../Assets/Images/Gear.png"/>
+          </div>
+          <div>
+            _isValid
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+          <div>
+            display
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+        </div><!--
+     --><div class="descriptions">
+          <p>Holds the content of the warning. Changing it <a style="color:red;">DOES NOT</a> affect the actual content of the warning.</p>
+          <p>Holds the type of the warning. Changing it <a style="color:red;">DOES NOT</a> affect the actual type of the warning.</p>
+          <p>Holds the referenced object from when it got logged (null if none was put in). Changing it <a style="color:red;">DOES NOT</a> affect the actual warning.</p>
+          <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+          <p>Holds the warning hitself as an HTML element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+        </div>
+      </div><br/><br/><br/><br/>
+      <h2>Some functions you can play with.</h2><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">print</a>()</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/RedX.png"/></h3>
+      <p>Is called upon initialisation of the warning.<br/>Prints the warning in the console.<br/>Usage of this function is <a style="color:red;">NOT RECOMMENDED</a>.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">delete</a>()</span></h3>
+      <p>Can be used to delete the warning entirely.<br/>It can be put back by calling <span class="codeBlock"><a style="color:lightblue;">print</a>()</span>.</p><br/><br/>
+    </div>
+    <div class="slide">
+      <h1>InputLog object</h1>
+      <p>This object's use is to get an input from the user (text, checkbox, color, file, etc...).</p><br/><br/>
+      <p class="codeBlock">
+        <a style="color:lightblue;">constructor</a>(type, header, addition)
+      </p><br/>
+      <p>The parameter 'type' will be directly passed in the input tag. It determines the type of input wanted.<br/>The expected value type is a String.<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>
+      <p>The parameter 'header' determines the header of the InputLog.<br/>The expected value type is also a string.<br/>If the value is undefined, it will be replaced by '{type} input request'.</p><br/>
+      <p>The last parameter, 'addition' is only used in a few occurences. When the type is a button (button, reset, submit) or a file.<br/>In the case of a button type, it will be passed directly as the value of the button.<br/>Otherwise, in the case of a file, it directly replaces the 'accept' parameter of the input tag.<br/>The expected value type is a String too.</p><br/><br/>
+      <h3>Simple example:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">InputLog</a>(<a style="color:#55ff55;">"button"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/InputLog_object-Example1.png"/><br/><br/><br/>
+      <h3>Header:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">InputLog</a>(<a style="color:#55ff55;">"button"</a>, <a style="color:#55ff55;">"Header"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/InputLog_object-Example2.png"/><br/><br/><br/>
+      <h3>Using the addition:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">InputLog</a>(<a style="color:#55ff55;">"button"</a>, <a style="color:#55ff55;">"Header"</a>, <a style="color:#55ff55;">"Click me!"</a>);<br/>
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/InputLog_object-Example3.png"/><br/><br/><br/><br/><br/><br/>
+      <h2>Some properties you can play with.</h2><br/>
+      <div class="board">
+        <div class="titles">
+          <div>header</div>
+          <div>type</div>
+          <div>
+            addition
+            <img src="../Assets/Images/Gear.png"/>
+          </div>
+          <div>
+            _isValid
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+          <div>
+            display
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+          <div>
+            text
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+          <div>
+            input
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+          <div>
+            submit
+            <img src="../Assets/Images/YellowWarning.png"/>
+            <img src="../Assets/Images/Gear.png"/>
+          </div>
+          <div>
+            data
+            <img src="../Assets/Images/Gear.png"/>
+          </div>
+        </div><!--
+     --><div class="descriptions">
+          <p>Holds the header of the input log. Changing it <a style="color:red;">DOES NOT</a> affect the actual header of the input log.</p>
+          <p>Holds the type of the input log. Changing it <a style="color:red;">DOES NOT</a> affect the actual type of the input log.</p>
+          <p>Holds the addition for the input log. Changing it <a style="color:red;">DOES NOT</a> affect the actual addition.</p>
+          <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+          <p>Holds the input log hitself as an HTML element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+          <p>Holds the input log's header as an HTML element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+          <p>Holds the input log's HTML input element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+          <p>Holds the input log's HTML submit element (only there if the input type isn't a button type). Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+          <p>Holds the input log's data. (only populated once it gets submitted). Changing it <a style="color:red;">DOES NOT</a> affect the input log.</p>
+        </div>
+      </div><br/><br/><br/><br/>
+      <h2>Some functions you can play with.</h2><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">print</a>()</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/RedX.png"/></h3>
+      <p>Is called upon initialisation of the input log.<br/>Prints the input log in the console.<br/>Usage of this function is <a style="color:red;">NOT RECOMMENDED</a>.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">populateData</a>()</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/RedX.png"/></h3>
+      <p>Is called once the input log gets submitted.<br/>Populates the input log's data.<br/>Usage of this function is <a style="color:red;">NOT RECOMMENDED</a>.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">checkValidity</a>()</span></h3>
+      <p>Checks if the inputed file corresponds to the passed addition (only file extensions supported)<br/>If the type is not a file or that the addition is not defined, it simply returns true.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">onSubmit</a>(data)</span></h3>
+      <p>Doesn't do anything on its own, but can be redefined and used that way.<br/>It is passed the object's 'data' property right after calling <span class="codeBlock"><a style="color:lightblue;">populateData</a>()</span>.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">setColor</a>(color)</span></h3>
+      <p>Is called once the inputed value is changed if the type is color.<br/>It sets the input log's color.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">delete</a>()</span></h3>
+      <p>Can be used to delete the input log entirely.<br/>Doing that is irreversible and the object will be marked 'invalid' from this point on.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">isValid</a>()</span></h3>
+      <p>Returns the '_isValid' property of the object.<br/>Result should be a bool.</p><br/><br/>
+    </div>
+    <div class="slide">
+      <h1>Popup object</h1>
+      <p>This object's use is to create a popup and get a response from the user.</p><br/><br/>
+      <p class="codeBlock">
+        <a style="color:lightblue;">constructor</a>(header, callback = <a style="color:#5555ff;">function</a>(result){}, options = [<a style="color:#55ff55;">"yes"</a>, <a style="color:#55ff55;">"no"</a>], img, color = <a style="color:#55ff55;">"white"</a>)
+      </p><br/>
+      <p>The parameter 'header' determines the header of the Popup.<br/>The expected value type is a String.<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>
+      <p>The parameter 'callback' is called once the user selects a response.<br/>The expected value type is a function.<br/>The passed value 'result' corresponds to the user's response.</p><br/>
+      <p>The parameter 'options' determines the response options the user will have once faced with the Popup.<br/>The expected value type is an Array of Strings.</p><br/>
+      <p>The parameter 'img' is passed directly in the src attribute of the Popup's image.<br/>The expected value type is a String.<br/>If no value is passed, there will be no image.</p><br/>
+      <p>The parameter 'color' is passed directly in the background-color attribute of the Popup's display.<br/>The expected value type is a String, any valid CSS color works.</p><br/>
+      <h3>Simple example:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Popup</a>(<a style="color:#55ff55;">"Header"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Popup_object-Example1.png"/><br/><br/><br/>
+      <h3>Using the callback:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Popup</a>(<a style="color:#55ff55;">"Header"</a>, <a style="color:#5555ff;">function</a>(result)<br/>
+        {<br/>
+          &nbsp;<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"You have selected "</a> <a style="color:red;">+</a> result <a style="color:red;">+</a> <a style="color:#55ff55;">"!"</a>);<br/>
+        });
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Popup_object-Example1.png"/><br/><br/><br/>
+      <img src="../Assets/Images/Popup_object-Example2.png"/><br/><br/><br/>
+      <h3>Changing the options:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Popup</a>(<a style="color:#55ff55;">"Header"</a>, <a style="color:#5555ff;">function</a>(result)<br/>
+        {<br/>
+          &nbsp;<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"You have selected "</a> <a style="color:red;">+</a> result <a style="color:red;">+</a> <a style="color:#55ff55;">"!"</a>);<br/>
+        },<br/>
+        options = [<a style="color:#55ff55;">"yes"</a>, <a style="color:#55ff55;">"no"</a>, <a style="color:#55ff55;">"maybe"</a>]);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Popup_object-Example3.png"/><br/><br/><br/>
+      <img src="../Assets/Images/Popup_object-Example4.png"/><br/><br/><br/>
+      <h3>Adding an image:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Popup</a>(<a style="color:#55ff55;">"Header"</a>, <a style="color:#5555ff;">function</a>(result)<br/>
+        {<br/>
+          &nbsp;<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"You have selected "</a> <a style="color:red;">+</a> result <a style="color:red;">+</a> <a style="color:#55ff55;">"!"</a>);<br/>
+        },<br/>
+        options = [<a style="color:#55ff55;">"yes"</a>, <a style="color:#55ff55;">"no"</a>, <a style="color:#55ff55;">"maybe"</a>],<br/>
+        <a style="color:#55ff55;">"../Assets/Images/Smiley.png"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Popup_object-Example5.png"/><br/><br/><br/>
+      <img src="../Assets/Images/Popup_object-Example6.png"/><br/><br/><br/>
+      <h3>Changing the color:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">new</a> <a style="color:orange;">Popup</a>(<a style="color:#55ff55;">"Header"</a>, <a style="color:#5555ff;">function</a>(result)<br/>
+        {<br/>
+          &nbsp;<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"You have selected "</a> <a style="color:red;">+</a> result <a style="color:red;">+</a> <a style="color:#55ff55;">"!"</a>);<br/>
+        },<br/>
+        options = [<a style="color:#55ff55;">"yes"</a>, <a style="color:#55ff55;">"no"</a>, <a style="color:#55ff55;">"maybe"</a>],<br/>
+        <a style="color:#55ff55;">"../Assets/Images/Smiley.png"</a>, <a style="color:#55ff55;">"lightgrey"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Popup_object-Example7.png"/><br/><br/><br/>
+      <img src="../Assets/Images/Popup_object-Example2.png"/><br/><br/><br/><br/><br/><br/>
+      <h2>Some properties you can play with.</h2><br/>
+      <div class="board">
+        <div class="titles">
+          <div>header</div>
+          <div>callback</div>
+          <div>options</div>
+          <div>
+            img
+            <img src="../Assets/Images/Gear.png"/>
+          </div>
+          <div>color</div>
+          <div>
+            _isValid
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+          <div>
+            background
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+          <div>
+            display
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+          <div>
+            text
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+          <div>
+            icon
+            <img src="../Assets/Images/YellowWarning.png"/>
+            <img src="../Assets/Images/Gear.png"/>
+          </div>
+        </div><!--
+     --><div class="descriptions">
+          <p>Holds the header of the popup. Changing it <a style="color:red;">DOES NOT</a> affect the actual header of the popup.</p>
+          <p>Holds the callback function of the popup. It is called once the user responds.</p>
+          <p>Holds the popup's response options. Changing it <a style="color:red;">DOES NOT</a> affect the actual options of the popup.</p>
+          <p>Holds the popup's image url (if there even is an image in the first place). Changing it <a style="color:red;">DOES NOT</a> affect the actual image of the popup.</p>
+          <p>Holds the color of the popup. Changing it <a style="color:red;">DOES NOT</a> affect the actual color of the popup.</p>
+          <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+          <p>Holds the popup's background as an HTML element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+          <p>Holds the popup hitself as an HTML element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+          <p>Holds the popup's header as an HTML element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+          <p>Holds the popup's HTML image element (if there was a link passed in). Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+        </div>
+      </div><br/><br/><br/><br/>
+      <h2>Some functions you can play with.</h2><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">init</a>()</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/RedX.png"/></h3>
+      <p>Is called upon initialisation of the popup.<br/>Creates the nessecary HTMLElements for the popup.<br/>Usage of this function is <a style="color:red;">NOT RECOMMENDED</a>.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">show</a>()</span></h3>
+      <p>Is called upon initialisation of the popup.<br/>Displays the popup.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">hide</a>()</span></h3>
+      <p>Is called once the user responds.<br/>Hides the popup.</p><br/><br/>
+    </div>
+    <div class="slide">
+      <h1>Dir2D object</h1>
+      <p>This object's use is to store/transform/use a direction (left, up, right, down and none).</p><br/><br/>
+      <p class="codeBlock">
+        <a style="color:lightblue;">constructor</a>(val = <a style="color:#55ff55;">"none"</a>)
+      </p><br/>
+      <p>The parameter 'val' determines the value of the Dir2D.<br/>The expected value type is a String.<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>
+      <h3>Simple example:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> dir = <a style="color:red;">new</a> <a style="color:orange;">Dir2D</a>();<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(dir);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Dir2D_object-Example1.png"/><br/><br/><br/>
+      <h3>Setting a value:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> dir = <a style="color:red;">new</a> <a style="color:orange;">Dir2D</a>(<a style="color:#55ff55;">"left"</a>);<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(dir);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Dir2D_object-Example2.png"/><br/><br/><br/><br/><br/><br/>
+      <h2>Some properties you can play with.</h2><br/>
+      <div class="board">
+        <div class="titles">
+          <div>value</div>
+          <div>axis</div>
+          <div>
+            _isValid
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+        </div><!--
+     --><div class="descriptions">
+          <p>Holds the value of the Dir2D.</p>
+          <p>Holds the axis for the Dir2D's value.</p>
+          <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+        </div>
+      </div><br/><br/><br/><br/>
+      <h2>Some functions you can play with.</h2><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">new</a>()</span></h3>
+      <p>Returns a new instance of Dir2D with the same values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">equals</a>(dir)</span></h3>
+      <p>Compares the current Dir2D with another and returns the result.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">invert</a>()</span></h3>
+      <p>Returns a new instance of Dir2D with the opposite values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">toVector2</a>()</span></h3>
+      <p>Returns a new instance of Vector2 corresponding to the value of the current Dir2D.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">toDeg</a>()</span></h3>
+      <p>Returns an integer representing the value of the current Dir2D in degrees.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">isValid</a>()</span></h3>
+      <p>Returns the '_isValid' property of the object.<br/>Result should be a bool.</p><br/><br/>
+    </div>
+    <div class="slide">
+      <h1>Vector2 object</h1>
+      <p>This object's use is to store/transform/use a 2D position.</p><br/><br/>
+      <p class="codeBlock">
+        <a style="color:lightblue;">constructor</a>(x = <a style="color:#5555ff;">0</a>, y = <a style="color:#5555ff;">0</a>)
+      </p><br/>
+      <p>The parameter 'x' determines the horizontal position of the Vector2.<br/>The expected value type is a number.</p><br/>
+      <p>The parameter 'y' determines the vertical position of the Vector2.<br/>The expected value type is also a number.</p><br/>
+      <h3>Simple example:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> v2 = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>();<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(v2);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Vector2_object-Example1.png"/><br/><br/><br/>
+      <h3>Setting a value:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> v2 = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">2</a>, <a style="color:#5555ff;">3</a>);<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(v2);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Vector2_object-Example2.png"/><br/><br/><br/><br/><br/><br/>
+      <h2>Some properties you can play with.</h2><br/>
+      <div class="board">
+        <div class="titles">
+          <div>x</div>
+          <div>y</div>
+          <div>
+            _isValid
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+        </div><!--
+     --><div class="descriptions">
+          <p>Holds the current horizontal position of the Vector2.</p>
+          <p>Holds the current vertical position of the Vector2.</p>
+          <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+        </div>
+      </div><br/><br/><br/><br/>
+      <h2>Some functions you can play with.</h2><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">new</a>()</span></h3>
+      <p>Returns a new instance of Vector2 with the same values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">equals</a>(other)</span></h3>
+      <p>Compares the current Vector2 with another and returns the result.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">add</a>(value)</span></h3>
+      <p>Adds two Vector2 (or one Vector2 and a number) together and returns a new instance of Vector2 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">sub</a>(value)</span></h3>
+      <p>Substracts two Vector2 (or one Vector2 and a number) together and returns a new instance of Vector2 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">multi</a>(value)</span></h3>
+      <p>Multiplies two Vector2 (or one Vector2 and a number) together and returns a new instance of Vector2 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">div</a>(value)</span></h3>
+      <p>Divides two Vector2 (or one Vector2 and a number) together and returns a new instance of Vector2 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">dist</a>(other)</span></h3>
+      <p>Returns the distance between two Vector2.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">isValid</a>()</span></h3>
+      <p>Returns the '_isValid' property of the object.<br/>Result should be a bool.</p><br/><br/>
+    </div>
+    <div class="slide">
+      <h1>Vector3 object</h1>
+      <p>This object's use is to store/transform/use a 3D position.</p><br/><br/>
+      <p class="codeBlock">
+        <a style="color:lightblue;">constructor</a>(x = <a style="color:#5555ff;">0</a>, y = <a style="color:#5555ff;">0</a>, z = <a style="color:#5555ff;">0</a>)
+      </p><br/>
+      <p>The parameter 'x' determines the horizontal position of the Vector3.<br/>The expected value type is a number.</p><br/>
+      <p>The parameter 'y' determines the vertical position of the Vector3.<br/>The expected value type is also a number.</p><br/>
+      <p>The parameter 'z' determines the remaining axis position of the Vector3.<br/>The expected value type is again a number.</p><br/>
+      <h3>Simple example:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> v3 = <a style="color:red;">new</a> <a style="color:orange;">Vector3</a>();<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(v3);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Vector3_object-Example1.png"/><br/><br/><br/>
+      <h3>Setting a value:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> v3 = <a style="color:red;">new</a> <a style="color:orange;">Vector3</a>(<a style="color:#5555ff;">1</a>, <a style="color:#5555ff;">2</a>, <a style="color:#5555ff;">3</a>);<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(v3);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Vector3_object-Example2.png"/><br/><br/><br/><br/><br/><br/>
+      <h2>Some properties you can play with.</h2><br/>
+      <div class="board">
+        <div class="titles">
+          <div>x</div>
+          <div>y</div>
+          <div>z</div>
+          <div>
+            _isValid
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+        </div><!--
+     --><div class="descriptions">
+          <p>Holds the current horizontal position of the Vector3.</p>
+          <p>Holds the current vertical position of the Vector3.</p>
+          <p>Holds the current remaining axis position of the Vector3.</p>
+          <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+        </div>
+      </div><br/><br/><br/><br/>
+      <h2>Some functions you can play with.</h2><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">new</a>()</span></h3>
+      <p>Returns a new instance of Vector3 with the same values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">equals</a>(other)</span></h3>
+      <p>Compares the current Vector3 with another and returns the result.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">add</a>(value)</span></h3>
+      <p>Adds two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">sub</a>(value)</span></h3>
+      <p>Substracts two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">multi</a>(value)</span></h3>
+      <p>Multiplies two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">div</a>(value)</span></h3>
+      <p>Divides two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">dist</a>(other)</span></h3>
+      <p>Returns the distance between two Vector3.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">isValid</a>()</span></h3>
+      <p>Returns the '_isValid' property of the object.<br/>Result should be a bool.</p><br/><br/>
+    </div>
+    <div class="slide">
+      <h1>Vector3 object</h1>
+      <p>This object's use is to store/transform/use a 3D position.</p><br/><br/>
+      <p class="codeBlock">
+        <a style="color:lightblue;">constructor</a>(x = <a style="color:#5555ff;">0</a>, y = <a style="color:#5555ff;">0</a>, z = <a style="color:#5555ff;">0</a>)
+      </p><br/>
+      <p>The parameter 'x' determines the horizontal position of the Vector3.<br/>The expected value type is a number.</p><br/>
+      <p>The parameter 'y' determines the vertical position of the Vector3.<br/>The expected value type is also a number.</p><br/>
+      <p>The parameter 'z' determines the remaining axis position of the Vector3.<br/>The expected value type is again a number.</p><br/>
+      <h3>Simple example:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> v3 = <a style="color:red;">new</a> <a style="color:orange;">Vector3</a>();<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(v3);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Vector3_object-Example1.png"/><br/><br/><br/>
+      <h3>Setting a value:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> v3 = <a style="color:red;">new</a> <a style="color:orange;">Vector3</a>(<a style="color:#5555ff;">1</a>, <a style="color:#5555ff;">2</a>, <a style="color:#5555ff;">3</a>);<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(v3);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Vector3_object-Example2.png"/><br/><br/><br/><br/><br/><br/>
+      <h2>Some properties you can play with.</h2><br/>
+      <div class="board">
+        <div class="titles">
+          <div>x</div>
+          <div>y</div>
+          <div>z</div>
+          <div>
+            _isValid
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+        </div><!--
+     --><div class="descriptions">
+          <p>Holds the current horizontal position of the Vector3.</p>
+          <p>Holds the current vertical position of the Vector3.</p>
+          <p>Holds the current remaining axis position of the Vector3.</p>
+          <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+        </div>
+      </div><br/><br/><br/><br/>
+      <h2>Some functions you can play with.</h2><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">new</a>()</span></h3>
+      <p>Returns a new instance of Vector3 with the same values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">equals</a>(other)</span></h3>
+      <p>Compares the current Vector3 with another and returns the result.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">add</a>(value)</span></h3>
+      <p>Adds two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">sub</a>(value)</span></h3>
+      <p>Substracts two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">multi</a>(value)</span></h3>
+      <p>Multiplies two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">div</a>(value)</span></h3>
+      <p>Divides two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">dist</a>(other)</span></h3>
+      <p>Returns the distance between two Vector3.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">isValid</a>()</span></h3>
+      <p>Returns the '_isValid' property of the object.<br/>Result should be a bool.</p><br/><br/>
+    </div>
+  </div>
+  <script src="P1.js"></script>
+</body>
 </html>
