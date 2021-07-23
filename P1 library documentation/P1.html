@@ -624,61 +624,132 @@
       <p>Returns the '_isValid' property of the object.<br/>Result should be a bool.</p><br/><br/>
     </div>
     <div class="slide">
-      <h1>Vector3 object</h1>
-      <p>This object's use is to store/transform/use a 3D position.</p><br/><br/>
+      <h1>Circle object</h1>
+      <p>This object's use is to place a circle at a desired position.</p><br/><br/>
       <p class="codeBlock">
-        <a style="color:lightblue;">constructor</a>(x = <a style="color:#5555ff;">0</a>, y = <a style="color:#5555ff;">0</a>, z = <a style="color:#5555ff;">0</a>)
+        <a style="color:lightblue;">constructor</a>(position, width, color = <a style="color:#55ff55;">"white"</a>)
       </p><br/>
-      <p>The parameter 'x' determines the horizontal position of the Vector3.<br/>The expected value type is a number.</p><br/>
-      <p>The parameter 'y' determines the vertical position of the Vector3.<br/>The expected value type is also a number.</p><br/>
-      <p>The parameter 'z' determines the remaining axis position of the Vector3.<br/>The expected value type is again a number.</p><br/>
+      <p>The parameter 'position' determines the position of the Circle.<br/>The expected value type is a Vector2.<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>
+      <p>The parameter 'width' determines the diameter of the Circle.<br/>The expected value type is a number.<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>
+      <p>The parameter 'color' determines the color of the Circle.<br/>The expected value type is a string, any working CSS color works.</p><br/>
       <h3>Simple example:</h3>
       <p class="codeBlock">
-        <a style="color:red;">var</a> v3 = <a style="color:red;">new</a> <a style="color:orange;">Vector3</a>();<br/>
-        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(v3);
+        <a style="color:red;">var</a> center = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:magenta;">window</a>.innerWidth<a style="color:red;">/</a><a style="color:#5555ff;">2</a>, <a style="color:magenta;">window</a>.innerHeight<a style="color:red;">/</a><a style="color:#5555ff;">2</a>);<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Circle</a>(center, <a style="color:#5555ff;">25</a>);
       </p><br/>
       <h3>Result:</h3>
-      <img src="../Assets/Images/Vector3_object-Example1.png"/><br/><br/><br/>
-      <h3>Setting a value:</h3>
+      <img src="../Assets/Images/Circle_object-Example1.png"/><br/><br/><br/>
+      <h3>Adding color:</h3>
       <p class="codeBlock">
-        <a style="color:red;">var</a> v3 = <a style="color:red;">new</a> <a style="color:orange;">Vector3</a>(<a style="color:#5555ff;">1</a>, <a style="color:#5555ff;">2</a>, <a style="color:#5555ff;">3</a>);<br/>
-        <a style="color:red;">new</a> <a style="color:orange;">Log</a>(v3);
+        <a style="color:red;">var</a> center = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:magenta;">window</a>.innerWidth<a style="color:red;">/</a><a style="color:#5555ff;">2</a>, <a style="color:magenta;">window</a>.innerHeight<a style="color:red;">/</a><a style="color:#5555ff;">2</a>);<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Circle</a>(center, <a style="color:#5555ff;">25</a>, <a style="color:#55ff55;">"magenta"</a>);
       </p><br/>
       <h3>Result:</h3>
-      <img src="../Assets/Images/Vector3_object-Example2.png"/><br/><br/><br/><br/><br/><br/>
+      <img src="../Assets/Images/Circle_object-Example2.png"/><br/><br/><br/><br/><br/><br/>
       <h2>Some properties you can play with.</h2><br/>
       <div class="board">
         <div class="titles">
-          <div>x</div>
-          <div>y</div>
-          <div>z</div>
+          <div>position</div>
+          <div>width</div>
+          <div>color</div>
           <div>
             _isValid
             <img src="../Assets/Images/RedX.png"/>
           </div>
+          <div>
+            display
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
         </div><!--
      --><div class="descriptions">
-          <p>Holds the current horizontal position of the Vector3.</p>
-          <p>Holds the current vertical position of the Vector3.</p>
-          <p>Holds the current remaining axis position of the Vector3.</p>
+          <p>Holds the current position of the circle. (only updates after <span class="codeBlock"><a style="color:lightblue;">update</a>()</span> is called.)</p>
+          <p>Holds the current diameter of the circle. (only updates after <span class="codeBlock"><a style="color:lightblue;">update</a>()</span> is called.)</p>
+          <p>Holds the current color of the circle. (only updates after <span class="codeBlock"><a style="color:lightblue;">update</a>()</span> is called.)</p>
           <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+          <p>Holds the circle hitself as an HTML element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
         </div>
       </div><br/><br/><br/><br/>
       <h2>Some functions you can play with.</h2><br/><br/>
-      <h3><span class="codeBlock"><a style="color:lightblue;">new</a>()</span></h3>
-      <p>Returns a new instance of Vector3 with the same values.</p><br/><br/>
-      <h3><span class="codeBlock"><a style="color:lightblue;">equals</a>(other)</span></h3>
-      <p>Compares the current Vector3 with another and returns the result.</p><br/><br/>
-      <h3><span class="codeBlock"><a style="color:lightblue;">add</a>(value)</span></h3>
-      <p>Adds two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
-      <h3><span class="codeBlock"><a style="color:lightblue;">sub</a>(value)</span></h3>
-      <p>Substracts two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
-      <h3><span class="codeBlock"><a style="color:lightblue;">multi</a>(value)</span></h3>
-      <p>Multiplies two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
-      <h3><span class="codeBlock"><a style="color:lightblue;">div</a>(value)</span></h3>
-      <p>Divides two Vector3 (or one Vector3 and a number) together and returns a new instance of Vector3 with thoses values.</p><br/><br/>
-      <h3><span class="codeBlock"><a style="color:lightblue;">dist</a>(other)</span></h3>
-      <p>Returns the distance between two Vector3.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">init</a>()</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/RedX.png"/></h3>
+      <p>Is called upon initialisation of the popup.<br/>Creates the nessecary HTMLElements for the popup.<br/>Usage of this function is <a style="color:red;">NOT RECOMMENDED</a>.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">update</a>()</span></h3>
+      <p>Is called upon initialisation of the popup.<br/>Updates the circle to correspond with the current properties.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">delete</a>()</span></h3>
+      <p>Can be used to delete the circle entirely.<br/>Doing that is irreversible and the object will be marked 'invalid' from this point on.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">isValid</a>()</span></h3>
+      <p>Returns the '_isValid' property of the object.<br/>Result should be a bool.</p><br/><br/>
+    </div>
+    <div class="slide">
+      <h1>Line object</h1>
+      <p>This object's use is to place a line going from one point to another.</p><br/><br/>
+      <p class="codeBlock">
+        <a style="color:lightblue;">constructor</a>(start, end, width = <a style="color:#5555ff;">1</a>, color = <a style="color:#55ff55;">"white"</a>)
+      </p><br/>
+      <p>The parameter 'start' determines the start position of the Line.<br/>The expected value type is a Vector2.<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>
+      <p>The parameter 'end' determines the start position of the Line.<br/>The expected value type is a Vector2.<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>
+      <p>The parameter 'width' determines the width of the Line.<br/>The expected value type is a number.</p><br/>
+      <p>The parameter 'color' determines the color of the Line.<br/>The expected value type is a string, any working CSS color works.</p><br/>
+      <h3>Simple example:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> start = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">250</a>, <a style="color:#5555ff;">250</a>);<br/>
+        <a style="color:red;">var</a> end = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">500</a>, <a style="color:#5555ff;">500</a>);<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Line</a>(start, end);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Line_object-Example1.png"/><br/><br/><br/>
+      <h3>Changing width:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> start = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">250</a>, <a style="color:#5555ff;">250</a>);<br/>
+        <a style="color:red;">var</a> end = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">500</a>, <a style="color:#5555ff;">500</a>);<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Line</a>(start, end, <a style="color:#5555ff">5</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Line_object-Example2.png"/><br/><br/><br/>
+      <h3>Add a color:</h3>
+      <p class="codeBlock">
+        <a style="color:red;">var</a> start = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">250</a>, <a style="color:#5555ff;">250</a>);<br/>
+        <a style="color:red;">var</a> end = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">500</a>, <a style="color:#5555ff;">500</a>);<br/>
+        <a style="color:red;">new</a> <a style="color:orange;">Line</a>(start, end, <a style="color:#5555ff;">5</a>, <a style="color:#55ff55;">"orange"</a>);
+      </p><br/>
+      <h3>Result:</h3>
+      <img src="../Assets/Images/Line_object-Example3.png"/><br/><br/><br/><br/><br/><br/>
+      <h2>Some properties you can play with.</h2><br/>
+      <div class="board">
+        <div class="titles">
+          <div>start</div>
+          <div>end</div>
+          <div>width</div>
+          <div>color</div>
+          <div>
+            _isValid
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+          <div>
+            display
+            <img src="../Assets/Images/YellowWarning.png"/>
+          </div>
+          <div>
+            point
+            <img src="../Assets/Images/RedX.png"/>
+          </div>
+        </div><!--
+     --><div class="descriptions">
+          <p>Holds the current start position of the line. (only updates after <span class="codeBlock"><a style="color:lightblue;">update</a>()</span> is called.)</p>
+          <p>Holds the current end position of the line. (only updates after <span class="codeBlock"><a style="color:lightblue;">update</a>()</span> is called.)</p>
+          <p>Holds the current width of the line. (only updates after <span class="codeBlock"><a style="color:lightblue;">update</a>()</span> is called.)</p>
+          <p>Holds the current color of the line. (only updates after <span class="codeBlock"><a style="color:lightblue;">update</a>()</span> is called.)</p>
+          <p>Holds the current valid state of the object. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can get changed to false upon hitting some specific errors.</p>
+          <p>Holds the circle hitself as an HTML element. Changing it is <a style="color:red;">NOT RECOMMENDED</a>. It can be used to implement some special <a style="color:magenta">style</a> to it.</p>
+          <p>Holds the HTMLElement wich acts as a rotation point for the line. Changing it is <a style="color:red;">NOT RECOMMENDED</a>.</p>
+        </div>
+      </div><br/><br/><br/><br/>
+      <h2>Some functions you can play with.</h2><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">init</a>()</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/RedX.png"/></h3>
+      <p>Is called upon initialisation of the circle.<br/>Creates the nessecary HTMLElements for the popup.<br/>Usage of this function is <a style="color:red;">NOT RECOMMENDED</a>.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">update</a>()</span></h3>
+      <p>Is called upon initialisation of the circle.<br/>Updates the circle to correspond with the current properties.</p><br/><br/>
+      <h3><span class="codeBlock"><a style="color:lightblue;">delete</a>()</span></h3>
+      <p>Can be used to delete the circle entirely.<br/>Doing that is irreversible and the object will be marked 'invalid' from this point on.</p><br/><br/>
       <h3><span class="codeBlock"><a style="color:lightblue;">isValid</a>()</span></h3>
       <p>Returns the '_isValid' property of the object.<br/>Result should be a bool.</p><br/><br/>
     </div>
