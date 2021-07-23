@@ -4,7 +4,7 @@
 const Console = document.getElementById("Console");
 const TextArea = document.getElementById("ConsoleTA");
 const Toggle = document.getElementById("ConsoleToggle");
-const content = document.getElementById("Content");
+const ctx = document.getElementById("Content").getContext("2d");
 
 //Defaults
 var Keydown = function(event){};
@@ -2031,20 +2031,7 @@ var sprite;
         return "<a style='color:red;'>[Circle]</a>";
     }
 
-    var update = function()
-    {
-      var display = this.display;
-      display.style.width = this.width;
-      display.style.height = this.width;
-      display.style.backgroundColor = this.color;
-      display.style.left = this.position.x - this.width/2;
-      display.style.bottom = this.position.y - this.width/2;
-    }
-    Object.defineProperty(this, "update", {
-      enumerable: true, get: function(){return update;}, set: Warn
-    });
-
-    var init = function()
+    var draw = function()
     {
       if(!this.isValid)
       {
@@ -2052,31 +2039,17 @@ var sprite;
         return;
       }
 
-      var display = document.createElement("span");
-      try
-      {
-        Object.defineProperty(this, "display", {
-          enumerable: true, get: function(){return display;}, set: Warn
-        });
-      }
-      catch(error)
-      {
-        display.remove();
-        new Exception("Double call", "Cannot call function 'init' after it was already called once.");
-        return;
-      }
-      content.appendChild(display);
-      display.style.display = "block";
-      display.style.position = "absolute";
-      display.style.borderRadius = "50%";
-      this.update();
+      ctx.beginPath();
+      ctx.arc(this.position.x, this.position.y, this.width/2, 0, 2*Math.PI);
+      ctx.fillStyle = this.color;
+      ctx.fill();
     }
-    Object.defineProperty(this, "init", {
-      enumerable: true, get: function(){return init;}, set: Warn
+    Object.defineProperty(this, "draw", {
+      enumerable: true, get: function(){return draw;}, set: Warn
     });
 
     if(this.isValid)
-      this.init();
+      this.draw();
 
     var _delete = function(){this.display.remove();}
     Object.defineProperty(this, "delete", {
@@ -2169,73 +2142,26 @@ var sprite;
         return "<a style='color:red;'>[Line]</a>";
     }
 
-    var init = function()
+    var draw = function()
     {
       if(!this.isValid)
       {
-        new Exception("Invalid value", "Cannot initialise the object because this instance is invalid.", this);
+        new Exception("Invalid value", "Cannot draw the object because this instance is invalid.", this);
         return;
       }
 
-      var point = document.createElement("a");
-      try
-      {
-        Object.defineProperty(this, "point", {
-          enumerable: true, get: function(){return point;}, set: Warn
-        });
-      }
-      catch(error)
-      {
-        point.remove();
-        new Exception("Double call", "Cannot call function 'init' after it was already called once.");
-        return;
-      }
-      content.appendChild(point);
-      var display = document.createElement("div");
-      Object.defineProperty(this, "display", {
-        enumerable: true, get: function(){return display;}, set: Warn
-      });
-      point.appendChild(display);
-      point.style.position = "absolute";
-      display.style.position = "absolute";
-
-      this.update();
+      ctx.moveTo(this.start.x, this.start.y);
+      ctx.lineTo(this.end.x, this.end.y);
+      ctx.lineWidth = this.width;
+      ctx.strokeStyle = this.color;
+      ctx.stroke();
     }
-    Object.defineProperty(this, "init", {
-      enumerable: true, get: function(){return init;}, set: Warn
-    });
-
-    var update = function()
-    {
-      if(!this.isValid)
-      {
-        new Exception("Invalid value", "Cannot update the object because this instance is invalid.", this);
-        return;
-      }
-
-      var point = this.point;
-      var display = this.display;
-      var start = this.start;
-      var end = this.end;
-      var width = this.width;
-      point.style.left = start.x;
-      point.style.bottom = start.y;
-      display.style.height = start.dist(end) + width * 2;
-      display.style.width = this.width;
-      display.style.left = 0 - this.width/2;
-      display.style.bottom = 0 - this.width/2;
-      display.style.backgroundColor = this.color;
-      var rad = Math.acos((end.y-start.y)/start.dist(end));
-      if(end.x < start.x)
-        rad *= -1;
-      point.style.transform = "rotate(" + rad + "rad)";
-    }
-    Object.defineProperty(this, "update", {
-      enumerable: true, get: function(){return update;}, set: Warn
+    Object.defineProperty(this, "draw", {
+      enumerable: true, get: function(){return draw;}, set: Warn
     });
 
     if(this.isValid)
-      this.init();
+      this.draw();
 
     var _delete = function(){this.display.remove();};
     Object.defineProperty(this, "delete", {
@@ -2318,50 +2244,23 @@ var sprite;
         return "<a style='color:red;'>[Box]</a>";
     }
 
-    var update = function()
-    {
-      var display = this.display;
-      display.style.backgroundColor = this.color;
-      display.style.width = this.size.x;
-      display.style.height = this.size.y;
-      display.style.left = this.position.x - this.size.x/2;
-      display.style.bottom = this.position.y - this.size.y/2;
-    }
-    Object.defineProperty(this, "update", {
-      enumerable: true, get: function(){return update;}, set: Warn
-    });
-
-    var init = function()
+    var draw = function()
     {
       if(!this.isValid)
       {
-        new Exception("Invalid value", "Cannot initialise the object because this instance is invalid.", this);
+        new Exception("Invalid value", "Cannot draw the object because this instance is invalid.", this);
         return;
       }
 
-      var display = document.createElement("div");
-      try
-      {
-        Object.defineProperty(this, "display", {
-          enumerable: true, get: function(){return display;}, set: Warn
-        });
-      }
-      catch(error)
-      {
-        display.remove();
-        new Exception("Double call", "Cannot call function 'init' after it was already called once.");
-        return;
-      }
-      content.appendChild(display);
-      display.style.position = "absolute";
-      this.update();
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.position.x-size.x/2, this.position.y-size.y/2, this.position.x+this.size.x/2, this.position.y+size.y/2);
     }
-    Object.defineProperty(this, "init", {
-      enumerable: true, get: function(){return init;}, set: Warn
+    Object.defineProperty(this, "draw", {
+      enumerable: true, get: function(){return draw;}, set: Warn
     });
 
     if(this.isValid)
-      this.init();
+      this.draw();
 
     var _delete = function(){this.display.remove();}
     Object.defineProperty(this, "delete", {
@@ -2444,17 +2343,18 @@ var sprite;
         return "<a style='color:red;'>[Sprite]</a>";
     }
 
-    var update = function()
+    var draw = function()
     {
-      var display = this.display;
-      display.src = this.url;
-      display.style.width = this.size.x;
-      display.style.height = this.size.y;
-      display.style.left = this.position.x - this.size.x/2;
-      display.style.bottom = this.position.y - this.size.y/2;
+      if(!this.isValid)
+      {
+        new Exception("Invalid value", "Cannot draw the object because this instance is invalid.", this);
+        return;
+      }
+
+      ctx.drawImage(this.img, this.position.x-this.size.x/2, this.position.y-this.size.y/2, this.position.x+this.size.x/2, this.position.y+this.size.y/2);
     }
-    Object.defineProperty(this, "update", {
-      enumerable: true, get: function(){return update;}, set: Warn
+    Object.defineProperty(this, "draw", {
+      enumerable: true, get: function(){return draw;}, set: Warn
     });
 
     var init = function()
@@ -2465,23 +2365,21 @@ var sprite;
         return;
       }
 
-      var display = document.createElement("img");
+      var img = new Image();
       try
       {
-        Object.defineProperty(this, "display", {
-          enumerable: true, get: function(){return display;}, set: Warn
+        Object.defineProperty(this, "img", {
+          enumerable: true, get: function(){return img;}, set: Warn
         });
       }
       catch(error)
       {
-        display.remove();
         new Exception("Double call", "Cannot call function 'init' after it was already called once.");
         return;
       }
-      content.appendChild(display);
-      readOnly(display);
-      display.style.position = "absolute";
-      this.update();
+      var Instance = this;
+      img.src = this.url;
+      img.onload = function(){Instance.draw();}
     }
     Object.defineProperty(this, "init", {
       enumerable: true, get: function(){return init;}, set: Warn
@@ -2740,15 +2638,18 @@ const handleCommand = function(message)
 
 //Handle update
 var Update = function(){};
+var Draw = function(){};
 var _Update;
 const _u1 = function(){
   clearInterval(_Update);
   Update();
+  Draw();
   _Update = setInterval(_u2, window.interval);
 };
 const _u2 = function(){
   clearInterval(_Update);
   Update();
+  Draw();
   _Update = setInterval(_u1, window.interval);
 };
 
@@ -2916,4 +2817,10 @@ const collision = function(element1, element2)
     new Exception("Unexpected value", "Cannot calculate collision with the passed values because one or more of the passed values weren't values of type HTMLElement nor any similar class type.");
     return false;
   }
+}
+
+const clearDraw = function()
+{
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, 1500, 800);
 }
