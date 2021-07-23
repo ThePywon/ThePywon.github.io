@@ -26,4 +26,4 @@ function show(index)
   }
 }
 
-show(8);
+show(9);
