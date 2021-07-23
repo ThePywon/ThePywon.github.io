@@ -16,529 +16,1031 @@ window.interval = 50;
 window.timeout = 50;
 window.lastClicked = null;
 
-//Message classes
-class Exception
-{
-  constructor(type, content, reference = null)
+var keycode = {};
+
+(function(){
+  function Warn(){new Warning("Protection level", "Cannot set property due to its protection level.");}
+
+  Object.defineProperty(keycode, "leftArrow", {
+    enumerable: true, get: function(){return 37;}, set: Warn
+  });
+  Object.defineProperty(keycode, "upArrow", {
+    enumerable: true, get: function(){return 38;}, set: Warn
+  });
+  Object.defineProperty(keycode, "rightArrow", {
+    enumerable: true, get: function(){return 39;}, set: Warn
+  });
+  Object.defineProperty(keycode, "downArrow", {
+    enumerable: true, get: function(){return 40;}, set: Warn
+  });
+  Object.defineProperty(keycode, "space", {
+    enumerable: true, get: function(){return 32;}, set: Warn
+  });
+  Object.defineProperty(keycode, "escape", {
+    enumerable: true, get: function(){return 27;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f1", {
+    enumerable: true, get: function(){return 112;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f2", {
+    enumerable: true, get: function(){return 113;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f3", {
+    enumerable: true, get: function(){return 114;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f4", {
+    enumerable: true, get: function(){return 115;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f5", {
+    enumerable: true, get: function(){return 116;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f6", {
+    enumerable: true, get: function(){return 117;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f7", {
+    enumerable: true, get: function(){return 118;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f8", {
+    enumerable: true, get: function(){return 119;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f9", {
+    enumerable: true, get: function(){return 120;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f10", {
+    enumerable: true, get: function(){return 121;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f11", {
+    enumerable: true, get: function(){return 122;}, set: Warn
+  });
+  Object.defineProperty(keycode, "f12", {
+    enumerable: true, get: function(){return 123;}, set: Warn
+  });
+  Object.defineProperty(keycode, "backquote", {
+    enumerable: true, get: function(){return 191;}, set: Warn
+  });
+  Object.defineProperty(keycode, "digit1", {
+    enumerable: true, get: function(){return 49;}, set: Warn
+  });
+  Object.defineProperty(keycode, "digit2", {
+    enumerable: true, get: function(){return 50;}, set: Warn
+  });
+  Object.defineProperty(keycode, "digit3", {
+    enumerable: true, get: function(){return 51;}, set: Warn
+  });
+  Object.defineProperty(keycode, "digit4", {
+    enumerable: true, get: function(){return 52;}, set: Warn
+  });
+  Object.defineProperty(keycode, "digit5", {
+    enumerable: true, get: function(){return 53;}, set: Warn
+  });
+  Object.defineProperty(keycode, "digit6", {
+    enumerable: true, get: function(){return 54;}, set: Warn
+  });
+  Object.defineProperty(keycode, "digit7", {
+    enumerable: true, get: function(){return 55;}, set: Warn
+  });
+  Object.defineProperty(keycode, "digit8", {
+    enumerable: true, get: function(){return 56;}, set: Warn
+  });
+  Object.defineProperty(keycode, "digit9", {
+    enumerable: true, get: function(){return 57;}, set: Warn
+  });
+  Object.defineProperty(keycode, "digit0", {
+    enumerable: true, get: function(){return 48;}, set: Warn
+  });
+  Object.defineProperty(keycode, "minus", {
+    enumerable: true, get: function(){return 173;}, set: Warn
+  });
+  Object.defineProperty(keycode, "equal", {
+    enumerable: true, get: function(){return 61;}, set: Warn
+  });
+  Object.defineProperty(keycode, "A", {
+    enumerable: true, get: function(){return 65;}, set: Warn
+  });
+  Object.defineProperty(keycode, "B", {
+    enumerable: true, get: function(){return 66;}, set: Warn
+  });
+  Object.defineProperty(keycode, "C", {
+    enumerable: true, get: function(){return 67;}, set: Warn
+  });
+  Object.defineProperty(keycode, "D", {
+    enumerable: true, get: function(){return 68;}, set: Warn
+  });
+  Object.defineProperty(keycode, "E", {
+    enumerable: true, get: function(){return 69;}, set: Warn
+  });
+  Object.defineProperty(keycode, "F", {
+    enumerable: true, get: function(){return 70;}, set: Warn
+  });
+  Object.defineProperty(keycode, "G", {
+    enumerable: true, get: function(){return 71;}, set: Warn
+  });
+  Object.defineProperty(keycode, "H", {
+    enumerable: true, get: function(){return 72;}, set: Warn
+  });
+  Object.defineProperty(keycode, "I", {
+    enumerable: true, get: function(){return 73;}, set: Warn
+  });
+  Object.defineProperty(keycode, "J", {
+    enumerable: true, get: function(){return 74;}, set: Warn
+  });
+  Object.defineProperty(keycode, "K", {
+    enumerable: true, get: function(){return 75;}, set: Warn
+  });
+  Object.defineProperty(keycode, "L", {
+    enumerable: true, get: function(){return 76;}, set: Warn
+  });
+  Object.defineProperty(keycode, "M", {
+    enumerable: true, get: function(){return 77;}, set: Warn
+  });
+  Object.defineProperty(keycode, "N", {
+    enumerable: true, get: function(){return 78;}, set: Warn
+  });
+  Object.defineProperty(keycode, "O", {
+    enumerable: true, get: function(){return 79;}, set: Warn
+  });
+  Object.defineProperty(keycode, "P", {
+    enumerable: true, get: function(){return 80;}, set: Warn
+  });
+  Object.defineProperty(keycode, "Q", {
+    enumerable: true, get: function(){return 81;}, set: Warn
+  });
+  Object.defineProperty(keycode, "R", {
+    enumerable: true, get: function(){return 82;}, set: Warn
+  });
+  Object.defineProperty(keycode, "S", {
+    enumerable: true, get: function(){return 83;}, set: Warn
+  });
+  Object.defineProperty(keycode, "T", {
+    enumerable: true, get: function(){return 84;}, set: Warn
+  });
+  Object.defineProperty(keycode, "U", {
+    enumerable: true, get: function(){return 85;}, set: Warn
+  });
+  Object.defineProperty(keycode, "V", {
+    enumerable: true, get: function(){return 86;}, set: Warn
+  });
+  Object.defineProperty(keycode, "W", {
+    enumerable: true, get: function(){return 87;}, set: Warn
+  });
+  Object.defineProperty(keycode, "X", {
+    enumerable: true, get: function(){return 88;}, set: Warn
+  });
+  Object.defineProperty(keycode, "Y", {
+    enumerable: true, get: function(){return 89;}, set: Warn
+  });
+  Object.defineProperty(keycode, "Z", {
+    enumerable: true, get: function(){return 90;}, set: Warn
+  });
+  Object.defineProperty(keycode, "home", {
+    enumerable: true, get: function(){return 36;}, set: Warn
+  });
+  Object.defineProperty(keycode, "end", {
+    enumerable: true, get: function(){return 35;}, set: Warn
+  });
+  Object.defineProperty(keycode, "delete", {
+    enumerable: true, get: function(){return 46;}, set: Warn
+  });
+  Object.defineProperty(keycode, "Tab", {
+    enumerable: true, get: function(){return 9;}, set: Warn
+  });
+  Object.defineProperty(keycode, "capslock", {
+    enumerable: true, get: function(){return 20;}, set: Warn
+  });
+  Object.defineProperty(keycode, "leftShift", {
+    enumerable: true, get: function(){return 16;}, set: Warn
+  });
+  Object.defineProperty(keycode, "leftCtrl", {
+    enumerable: true, get: function(){return 17;}, set: Warn
+  });
+  Object.defineProperty(keycode, "leftAlt", {
+    enumerable: true, get: function(){return 18;}, set: Warn
+  });
+  Object.defineProperty(keycode, "rightShift", {
+    enumerable: true, get: function(){return 16;}, set: Warn
+  });
+  Object.defineProperty(keycode, "rightCtrl", {
+    enumerable: true, get: function(){return 192;}, set: Warn
+  });
+  Object.defineProperty(keycode, "rightAlt", {
+    enumerable: true, get: function(){return 18;}, set: Warn
+  });
+  Object.defineProperty(keycode, "tab", {
+    enumerable: true, get: function(){return 9;}, set: Warn
+  });
+  Object.defineProperty(keycode, "leftOS", {
+    enumerable: true, get: function(){return 91;}, set: Warn
+  });
+  Object.defineProperty(keycode, "backspace", {
+    enumerable: true, get: function(){return 8;}, set: Warn
+  });
+  Object.defineProperty(keycode, "enter", {
+    enumerable: true, get: function(){return 13;}, set: Warn
+  });
+  Object.defineProperty(keycode, "leftBracket", {
+    enumerable: true, get: function(){return 160;}, set: Warn
+  });
+  Object.defineProperty(keycode, "rightBracket", {
+    enumerable: true, get: function(){return 221;}, set: Warn
+  });
+  Object.defineProperty(keycode, "backslash", {
+    enumerable: true, get: function(){return 220;}, set: Warn
+  });
+  Object.defineProperty(keycode, "semicolon", {
+    enumerable: true, get: function(){return 59;}, set: Warn
+  });
+  Object.defineProperty(keycode, "quote", {
+    enumerable: true, get: function(){return 192;}, set: Warn
+  });
+  Object.defineProperty(keycode, "comma", {
+    enumerable: true, get: function(){return 188;}, set: Warn
+  });
+  Object.defineProperty(keycode, "period", {
+    enumerable: true, get: function(){return 190;}, set: Warn
+  });
+  Object.defineProperty(keycode, "slash", {
+    enumerable: true, get: function(){return 191;}, set: Warn
+  });
+  Object.defineProperty(keycode, "pageUp", {
+    enumerable: true, get: function(){return 33;}, set: Warn
+  });
+  Object.defineProperty(keycode, "pageDown", {
+    enumerable: true, get: function(){return 34;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numlock", {
+    enumerable: true, get: function(){return 144;}, set: Warn
+  });
+  Object.defineProperty(keycode, "divide", {
+    enumerable: true, get: function(){return 111;}, set: Warn
+  });
+  Object.defineProperty(keycode, "multiply", {
+    enumerable: true, get: function(){return 106;}, set: Warn
+  });
+  Object.defineProperty(keycode, "subtract", {
+    enumerable: true, get: function(){return 109;}, set: Warn
+  });
+  Object.defineProperty(keycode, "add", {
+    enumerable: true, get: function(){return 107;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numpad1", {
+    enumerable: true, get: function(){return 97;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numpad2", {
+    enumerable: true, get: function(){return 98;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numpad3", {
+    enumerable: true, get: function(){return 99;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numpad4", {
+    enumerable: true, get: function(){return 100;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numpad5", {
+    enumerable: true, get: function(){return 101;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numpad6", {
+    enumerable: true, get: function(){return 102;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numpad7", {
+    enumerable: true, get: function(){return 103;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numpad8", {
+    enumerable: true, get: function(){return 104;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numpad9", {
+    enumerable: true, get: function(){return 105;}, set: Warn
+  });
+  Object.defineProperty(keycode, "numpad0", {
+    enumerable: true, get: function(){return 96;}, set: Warn
+  });
+  Object.defineProperty(keycode, "decimal", {
+    enumerable: true, get: function(){return 110;}, set: Warn
+  });
+})();
+
+const keyCode = keycode;
+keycode = undefined;
+delete(keycode);
+
+var exception;
+var warning;
+var log;
+var inputlog;
+var popup;
+
+var dir2d;
+var vector2;
+var vector3;
+
+var circle;
+var line;
+var box;
+var sprite;
+
+(function(){
+  var key = false;
+
+  function Warn(){new Warning("Protection level", "Cannot set property due to its protection level.");}
+
+  //Message objects
+  exception = function(type, content, reference)
   {
-    this.reference = reference;
-    if(content !== undefined)
+    var result;
+    if(isValueDefined(content))
     {
-      if(this.reference !== null)
+      if(isValueDefined(reference) && typeof reference == "object")
       {
-        if(typeof this.reference == "object")
-        {
-          try
-          {
-            this.content = type.toString() + " exception in " + this.reference.constructor.name + " class:<br/>" + content.toString().replace(/\n/g, "<br/>");
-          }
-          catch(error)
-          {
-            this.content = type.toString() + " exception in " + this.reference.valueOf() + ":<br/>" + content.toString().replace(/\n/g, "<br/>");
-          }
-          this.reference._isValid = false;
-        }
-        else
-          this.content = type.toString() + " exception:<br/>" + content.toString().replace(/\n/g, "<br/>");
+        result = `${type.toString()} exception in ${reference.constructor.name} class:<br/>${content.toString().replace(/\n/g, "<br/>")}`;
+
+        key = true;
+        reference.isValid = false;
+        key = false;
       }
       else
-        this.content = type.toString() + " exception:<br/>" + content.toString().replace(/\n/g, "<br/>");
+        result = `${type.toString()} exception:<br/>${content.toString().replace(/\n/g, "<br/>")}`;
     }
     else
-      this.content = "Exception:<br/>" + type.toString().replace(/\n/g, "<br/>");
+      result = `Exception:<br/>${type.toString().replace(/\n/g, "<br/>")}`;
 
-    Exception.prototype.toString = function()
+    Object.defineProperty(this, "content", {
+      enumerable: true, get: function(){return result}, set: Warn
+    });
+
+    Exception.prototype.toString = function(){return this.content;};
+
+    Exception.prototype.valueOf = function(){return "Exception";};
+
+    var print = function()
     {
-      return this.content;
-    }
+      var BlankLog = document.getElementById("BlankLog");
 
-    Exception.prototype.valueOf = function()
-    {
-      return "Exception";
-    }
+      if(BlankLog !== null)
+        BlankLog.remove();
 
-    this.print();
-  }
+      var Logs = document.getElementById("Logs");
 
-  print()
-  {
-    var BlankLog = document.getElementById("BlankLog");
-
-    if(BlankLog !== null)
-      BlankLog.remove();
-
-    var Logs = document.getElementById("Logs");
-
-    this.display = document.createElement("div");
-    Logs.appendChild(this.display);
-    this.display.className = "ErrLog";
-
-    var Icon = document.createElement("img");
-    this.display.appendChild(Icon);
-    Icon.src = "../Assets/Images/RedX.png";
-
-    var P = document.createElement("p");
-    this.display.appendChild(P);
-    P.innerHTML = this.content.toString();
-
-    this.display.scrollIntoView(true);
-
-    var Instance = this;
-    setTimeout(function(){OnError(Instance);}, window.timeout);
-  }
-
-  delete()
-  {
-    this.display.remove();
-    var Logs = document.getElementById("Logs");
-    if(Logs.innerHTML === "")
-      Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
-  }
-}
-
-class Warning
-{
-  constructor(type, content, reference = null)
-  {
-    this.reference = reference;
-    if(content !== undefined)
-    {
-      if(this.reference !== null)
+      var display = document.createElement("div");
+      try
       {
-        if(typeof this.reference == "object")
-        {
-          try
-          {
-            this.content = type.toString() + " warning in " + this.reference.constructor.name + " class:<br/>" + content.toString().replace(/\n/g, "<br/>");
-          }
-          catch(error)
-          {
-            this.content = type.toString() + " warning in " + this.reference.valueOf() + ":<br/>" + content.toString().replace(/\n/g, "<br/>");
-          }
-        }
-        else
-          this.content = type.toString() + " warning:<br/>" + content.toString().replace(/\n/g, "<br/>");
+        Object.defineProperty(this, "display", {
+          enumerable: true, get: function(){return display;}, set: Warn
+        });
       }
-      else
-        this.content = type.toString() + " warning:<br/>" + content.toString().replace(/\n/g, "<br/>");
-    }
-    else
-      this.content = "Warning:<br/>" + type.toString().replace(/\n/g, "<br/>");
+      catch(error)
+      {
+        display.remove();
+        new Exception("Double call", "Cannot call function 'print' after it was already called once.");
+        return;
+      }
+      Logs.appendChild(display);
+      display.className = "ErrLog";
 
-    Warning.prototype.toString = function()
-    {
-      return this.content;
-    }
+      var icon = document.createElement("img");
+      display.appendChild(icon);
+      icon.src = "../Assets/Images/RedX.png";
 
-    Warning.prototype.valueOf = function()
-    {
-      return "Warning";
+      var P = document.createElement("p");
+      display.appendChild(P);
+      P.innerHTML = this.content.toString();
+
+      display.scrollIntoView(true);
+
+      var Instance = this;
+      setTimeout(function(){OnError(Instance);}, window.timeout);
     }
+    Object.defineProperty(this, "print", {
+      enumerable: true, get: function(){return print;}, set: Warn
+      });
 
     this.print();
-  }
 
-  print()
-  {
-    var BlankLog = document.getElementById("BlankLog");
-
-    if(BlankLog !== null)
-      BlankLog.remove();
-
-    var Logs = document.getElementById("Logs");
-
-    this.display = document.createElement("div");
-    Logs.appendChild(this.display);
-    this.display.className = "WarnLog";
-
-    var Icon = document.createElement("img");
-    this.display.appendChild(Icon);
-    Icon.src = "../Assets/Images/YellowWarning.png";
-
-    var P = document.createElement("p");
-    this.display.appendChild(P);
-    P.innerHTML = this.content.toString();
-
-    this.display.scrollIntoView(true);
-
-    var Instance = this;
-    setTimeout(function(){OnError(Instance);}, window.timeout);
-  }
-
-  delete()
-  {
-    this.display.remove();
-    var Logs = document.getElementById("Logs");
-    if(Logs.innerHTML === "")
-      Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
-  }
-}
-
-class Log
-{
-  constructor(content, color, scroll, url)
-  {
-    this._isValid = true;
-    if(content !== undefined)
-      this.content = content.toString().replace(/\n/g, "<br/>");
-    else
-      new Exception("Invalid value", "Passed value 'content' returned undefined!", this);
-    if(color !== undefined)
-      this.color = color;
-    else this.color = "white";
-    if(scroll !== undefined)
-      this.scroll = scroll;
-    else this.scroll = true;
-    this.url = url;
-
-    Log.prototype.toString = function()
+    var _delete = function()
     {
-      return this.content;
+      this.display.remove();
+      var Logs = document.getElementById("Logs");
+      if(Logs.innerHTML === "")
+        Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
     }
+    Object.defineProperty(this, "delete", {
+      enumerable: true, get: function(){return _delete;}, set: Warn
+    });
+  }
+
+  warning = function(type, content, reference)
+  {
+    var result;
+    if(isValueDefined(content))
+    {
+      if(isValueDefined(reference) && typeof reference == "object")
+        result = `${type.toString()} warning in ${reference.constructor.name} class:<br/>${content.toString().replace(/\n/g, "<br/>")}`;
+      else
+        result = `${type.toString()} warning:<br/>${content.toString().replace(/\n/g, "<br/>")}`;
+    }
+    else
+      result = `Warning:<br/>${type.toString().replace(/\n/g, "<br/>")}`;
+
+    Object.defineProperty(this, "content", {
+      enumerable: true, get: function(){return result}, set: Warn
+    });
+
+    Warning.prototype.toString = function(){return this.content;};
+
+    Warning.prototype.valueOf = function(){return "Warning";};
+
+    var print = function()
+    {
+      var BlankLog = document.getElementById("BlankLog");
+
+      if(BlankLog !== null)
+        BlankLog.remove();
+
+      var Logs = document.getElementById("Logs");
+
+      var display = document.createElement("div");
+      try
+      {
+        Object.defineProperty(this, "display", {
+          enumerable: true, get: function(){return display;}, set: Warn
+        });
+      }
+      catch(error)
+      {
+        display.remove();
+        new Exception("Double call", "Cannot call function 'print' after it was already called once.");
+        return;
+      }
+      Logs.appendChild(this.display);
+      display.className = "WarnLog";
+
+      var Icon = document.createElement("img");
+      display.appendChild(Icon);
+      Icon.src = "../Assets/Images/YellowWarning.png";
+
+      var P = document.createElement("p");
+      display.appendChild(P);
+      P.innerHTML = this.content.toString();
+
+      display.scrollIntoView(true);
+
+      var Instance = this;
+      setTimeout(function(){OnError(Instance);}, window.timeout);
+    }
+    Object.defineProperty(this, "print", {
+      enumerable: true, get: function(){return print;}, set: Warn
+    });
+
+    this.print();
+
+    var _delete = function()
+    {
+      this.display.remove();
+      var Logs = document.getElementById("Logs");
+      if(Logs.innerHTML === "")
+        Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
+    }
+    Object.defineProperty(this, "delete", {
+      enumerable: true, get: function(){return _delete;}, set: Warn
+    });
+  }
+
+  log = function(content, color, scroll, url)
+  {
+    var isValid = true;
+    Object.defineProperty(this, "isValid", {
+      enumerable: true, get: function(){return isValid;}, set: function(v){
+        if(key)
+          isValid = v;
+        else
+          Warn();
+      }
+    });
+    if(isValueDefined(content))
+      Object.defineProperty(this, "content", {
+        enumerable: true, get: function(){return content.toString().replace(/\n/g, "<br/>");}, set: function(v){
+          if(key)
+            content = v;
+          else
+            Warn();
+        }
+      });
+    else
+      new Exception("Invalid value", "Passed value 'content' is not a valid value.", this);
+    if(!isValueDefined(color))
+      color = "white";
+    Object.defineProperty(this, "color", {
+        enumerable: true, get: function(){return color.toString();}, set: function(v){
+          if(key)
+            color = v;
+          else
+            Warn();
+        }
+      });
+    if(!isValueDefined(scroll))
+      scroll = true;
+    if(typeof scroll == "boolean")
+      Object.defineProperty(this, "scroll", {
+        enumerable: true, get: function(){return scroll;}, set: function(v){
+          if(key)
+            scroll = v;
+          else
+            Warn();
+        }
+      });
+    else
+      new Exception("Unexpected value", "Passed value 'scroll' is not a bool.", this);
+    if(!isValueDefined(url))
+      url = "";
+    Object.defineProperty(this, "url", {
+      enumerable: true, get: function(){return url.toString();}, set: function(v){
+        if(key)
+          url = v;
+        else
+          Warn();
+      }
+    });
+
+    Log.prototype.toString = function(){return this.content;}
 
     Log.prototype.valueOf = function()
     {
-      if(this._isValid)
+      if(this.isValid)
         return "Log";
       else
         return "<a style='color:red;'>[Log]</a>";
     }
 
-    if(this._isValid)
-      this.print();
-  }
-
-  print()
-  {
-    var BlankLog = document.getElementById("BlankLog");
-
-    if(BlankLog !== null)
-      BlankLog.remove();
-
-    var Logs = document.getElementById("Logs");
-
-    this.display = document.createElement("div")
-    Logs.appendChild(this.display);
-    this.display.className = "Log";
-    this.display.style.borderLeft = "2px solid " + this.color;
-
-
-    if(this.url !== undefined)
+    var print = function()
     {
-      this.icon = document.createElement("img");
-      this.display.appendChild(this.icon);
-      this.icon.src = this.url;
-    }
-
-    this.text = document.createElement("p");
-    this.display.appendChild(this.text);
-    this.text.style.color = this.color;
-    this.text.innerHTML = this.content;
-
-    if(this.scroll)
-      this.display.scrollIntoView();
-
-    var Instance = this;
-    setTimeout(function(){OnMessage(Instance);}, window.timeout);
-  }
-
-  edit(content)
-  {
-    if(this._isValid)
-    {
-      this.content = content;
-      this.text.innerHTML = content.toString().replace(/\n/g, "<br/>");
-    }
-    else
-      new Exception("Invalid value", "Cannot edit this instance of Log because it is invalid.", this);
-  }
-
-  setColor(color)
-  {
-    if(this._isValid)
-    {
-      this.color = color;
-      this.text.style.color = color;
-      this.display.style.borderLeft = "2px solid " + color;
-    }
-    else
-      new Exception("Invalid value", "Cannot change the color of this instance of Log because it is invalid.", this);
-  }
-
-  setImage(url)
-  {
-    if(this._isValid)
-    {
-      if(this.url === undefined)
+      if(!this.isValid)
       {
-        this.url = url;
-        this.display.innerHTML = "";
-
-        this.icon = document.createElement("img");
-        this.display.appendChild(this.icon);
-        this.icon.src = "../Assets/Images/" + this.url;
-
-        this.text = document.createElement("p");
-        this.display.appendChild(this.text);
-        this.text.style.color = this.color;
-        this.text.innerHTML = this.content;
+        new Exception("Invalid value", "Cannot print the object because this instance is invalid.", this);
+        return;
       }
 
-      this.url = url;
-      this.icon.src = "../Assets/Images/" + this.url;
-    }
-    else
-      new Exception("Invalid value", "Cannot change the image of this instance of Log because it is invalid.", this);
-  }
+      var BlankLog = document.getElementById("BlankLog");
 
-  delete()
-  {
-    this.display.remove();
-    this._isValid = false;
-    var Logs = document.getElementById("Logs");
-    if(Logs.innerHTML === "")
-      Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
-  }
+      if(BlankLog !== null)
+        BlankLog.remove();
 
-  isValid()
-  {
-    return this._isValid;
-  }
-}
+      var Logs = document.getElementById("Logs");
 
-class InputLog
-{
-  constructor(type, header, addition)
-  {
-    this._isValid = true;
-    if(type.toString().toLowerCase() == "button" || type.toString().toLowerCase() == "reset")
-      type = "submit";
-    if(type !== undefined)
-      this.type = type.toString().toLowerCase();
-    else
-      new Exception("Invalid value", "Passed value 'type' returned undefined!", this);
-
-    if(header !== undefined)
-      this.header = header.toString().replace(/\n/g, "<br/>");
-    else
+      var display = document.createElement("div");
       try
       {
-        this.header = type.toString() + " input request";
+        Object.defineProperty(this, "display", {
+          enumerable: true, get: function(){return display;}, set: Warn
+        });
       }
       catch(error)
       {
-        this.header = "Input request";
+        display.remove();
+        new Exception("Double call", "Cannot call function 'print' after it was already called once.");
+        return;
+      }
+      Logs.appendChild(this.display);
+      display.className = "Log";
+      display.style.borderLeft = "2px solid " + this.color;
+
+
+      if(this.url !== "")
+      {
+        var icon = document.createElement("img");
+        Object.defineProperty(this, "icon", {
+          enumerable: true, get: function(){return icon;}, set: function(v){
+            if(key)
+              icon = v;
+            else
+              Warn();
+          }
+        });
+        display.appendChild(icon);
+        icon.src = this.url;
       }
 
-    if(addition !== undefined)
-      this.addition = addition;
-    else
-      this.addition = "";
+      var text = document.createElement("p");
+      Object.defineProperty(this, "text", {
+        enumerable: true, get: function(){return text;}, set: Warn
+      });
+      display.appendChild(text);
+      text.style.color = this.color;
+      text.innerHTML = this.content;
 
-    InputLog.prototype.toString = function()
-    {
-      return this.header;
+      if(this.scroll)
+        display.scrollIntoView();
+
+      var Instance = this;
+      setTimeout(function(){OnMessage(Instance);}, window.timeout);
     }
+    Object.defineProperty(this, "print", {
+      enumerable: true, get: function(){return print;}, set: Warn
+    });
 
-    InputLog.prototype.valueOf = function()
+    if(this.isValid)
+      this.print();
+
+    var edit = function(content)
     {
-      if(this._isValid)
-        return "InputLog";
+      if(this.isValid)
+      {
+        key = true;
+        this.content = content;
+        key = false;
+        this.text.innerHTML = content.toString().replace(/\n/g, "<br/>");
+      }
       else
-        return "<a style='color:red;'>[InputLog]</a>";
+        new Exception("Invalid value", "Cannot edit this instance of Log because it is invalid.", this);
+    }
+    Object.defineProperty(this, "edit", {
+      enumerable: true, get: function(){return edit;}, set: Warn
+    });
+
+    var setColor = function(color)
+    {
+      if(this.isValid)
+      {
+        key = true;
+        this.color = color;
+        key = false;
+        this.text.style.color = color;
+        this.display.style.borderLeft = "2px solid " + color;
+      }
+      else
+        new Exception("Invalid value", "Cannot change the color of this instance of Log because it is invalid.", this);
+    }
+    Object.defineProperty(this, "setColor", {
+      enumerable: true, get: function(){return setColor;}, set: Warn
+    });
+
+    var setImage = function(url)
+    {
+      if(this.isValid)
+      {
+        if(this.url === "")
+        {
+          key = true;
+          var display = this.display;
+          var text = this.text;
+          display.innerHTML = "";
+
+          var icon = document.createElement("img");
+          Object.defineProperty(this, "icon", {
+            enumerable: true, get: function(){return icon;}, set: function(v){
+              if(key)
+                icon = v;
+              else
+                Warn();
+            }
+          });
+          display.appendChild(icon);
+
+          text = document.createElement("p");
+          display.appendChild(text);
+          text.style.color = this.color;
+          text.innerHTML = this.content;
+          key = false;
+        }
+
+        key = true;
+        this.url = url;
+        this.icon.src = url;
+        key = false;
+      }
+      else
+        new Exception("Invalid value", "Cannot change the image of this instance of Log because it is invalid.", this);
+    }
+    Object.defineProperty(this, "setImage", {
+      enumerable: true, get: function(){return setImage;}, set: Warn
+    });
+
+    var _delete = function()
+    {
+      this.display.remove();
+      key = true;
+      this.isValid = false;
+      key = false;
+      var Logs = document.getElementById("Logs");
+      if(Logs.innerHTML === "")
+        Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
+    }
+    Object.defineProperty(this, "delete", {
+      enumerable: true, get: function(){return _delete;}, set: Warn
+    });
+  }
+
+  inputlog = function(type, header, addition)
+  {
+    var isValid = true;
+    Object.defineProperty(this, "isValid", {
+      enumerable: true, get: function(){return isValid;}, set: function(v){
+        if(key)
+          isValid = v;
+        else
+          Warn();
+      }
+    });
+
+    if(type.toString().toLowerCase() == "button" || type.toString().toLowerCase() == "reset")
+      type = "submit";
+    if(isValueDefined(type))
+      Object.defineProperty(this, "type", {
+        enumerable: true, get: function(){return type.toString().toLowerCase();}, set: Warn
+      });
+    else
+      new Exception("Invalid value", "Passed value 'type' returned undefined!", this);
+
+    if(isValueDefined(header))
+      Object.defineProperty(this, "header", {
+        enumerable: true, get: function(){return header.toString().replace(/\n/g, "<br/>");}, set: Warn
+      });
+    else
+    {
+      Object.defineProperty(this, "header", {
+        enumerable: true, get: function(){return "Input request";}, set: Warn
+      });
     }
 
-    if(this._isValid)
+    if(isValueDefined(addition))
+      Object.defineProperty(this, "addition", {
+        enumerable: true, get: function(){return addition;}, set: Warn
+      });
+    else
+      Object.defineProperty(this, "addition", {
+        enumerable: true, get: function(){return "";}, set: Warn
+      });
+
+      InputLog.prototype.toString = function(){return this.header;}
+
+      InputLog.prototype.valueOf = function()
+      {
+        if(this.isValid)
+          return "InputLog";
+        else
+          return "<a style='color:red;'>[InputLog]</a>";
+      }
+
+    var populateData = function()
+    {
+
+      var data = {};
+      if(this.type == "file")
+        data = {
+          "file": this.input.files[0],
+          "filePath": this.input.value,
+          "fileName": this.input.value.split("\\").pop(),
+          "fileExt": this.input.value.split("\\").pop().split(".").pop(),
+          "lastModified": this.input.files[0].lastModified
+        };
+      else if(this.type == "submit")
+      {
+        var current = new Date();
+        data = {
+          "date": current.getFullYear() + "-" + (current.getMonth()+1) + "-" + current.getDate(),
+          "time": current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds(),
+          "year": current.getFullYear(),
+          "month": current.getMonth(),
+          "date": current.getDate(),
+          "hours": current.getHours(),
+          "minutes": current.getMinutes(),
+          "seconds": current.getSeconds()
+        };
+      }
+      else if(this.type == "checkbox" || this.type == "radio")
+        data.checked = this.input.checked;
+      else if(this.type == "color")
+        data = {
+          "hex": this.input.value,
+          "rgb": "rgb(" + parseInt("0x" + this.input.value.slice(1,3)) + ", " + parseInt("0x" + this.input.value.slice(3,5)) + ", " + parseInt("0x" + this.input.value.slice(5,7)) + ")",
+          "red": parseInt("0x" + this.input.value.slice(1,3)),
+          "green": parseInt("0x" + this.input.value.slice(3,5)),
+          "blue": parseInt("0x" + this.input.value.slice(5,7))
+        };
+      else if(this.type == "date")
+        data = {
+          "date": this.input.value,
+          "year": this.input.value.split("-")[0],
+          "month": this.input.value.split("-")[1],
+          "day": this.input.value.split("-")[2]
+        };
+      else if(this.type == "email" || this.type == "number" || this.type == "password" || this.type == "range" || this.type == "search" || this.type == "text" || this.type == "url")
+        data.value = this.input.value;
+      else if(this.type == "time")
+        data = {
+          "time": this.input.value,
+          "hours": this.input.value.split(":")[0],
+          "minutes": this.input.value.split(":")[1]
+        };
+      data.dataType = this.type;
+
+      try
+      {
+        Object.defineProperty(this, "data", {
+            enumerable: true, get: function(){return Object.freeze(data);}, set: Warn
+          });
+      }
+      catch(error)
+      {
+        new Exception("Double call", "Cannot call function 'populateData' after it was already called once.");
+        return;
+      }
+    }
+    Object.defineProperty(this, "populateData", {
+      enumerable: true, get: function(){return populateData;}, set: Warn
+    });
+
+    var checkValidity = function()
+    {
+      if(this.type != "file" || this.addition == "")
+        return true;
+
+      const validExts = this.addition.replace(".", "").split(",");
+
+      for(var i in validExts)
+        if(this.input.value.split("\\").pop().split(".").pop() == validExts[i])
+          return true;
+
+      return false;
+    }
+    Object.defineProperty(this, "checkValidity", {
+      enumerable: true, get: function(){return checkValidity;}, set: Warn
+    });
+
+    this.onsubmit = function(data){};
+
+    var setColor = function(color)
+    {
+      this.text.style.color = color;
+      this.display.style.borderLeft = "2px solid " + color;
+      this.input.style.color = color;
+      this.submit.style.color = color;
+      this.submit.style.borderColor = color;
+    }
+    Object.defineProperty(this, "setColor", {
+      enumerable: true, get: function(){return setColor;}, set: Warn
+    });
+
+    var _delete = function()
+    {
+      this.display.remove();
+      key = true;
+      this.isValid = false;
+      key = false;
+      var Logs = document.getElementById("Logs");
+      if(Logs.innerHTML.replace(/\n/g, "").replace(/ /g, "") === "")
+        Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
+    }
+    Object.defineProperty(this, "delete", {
+      enumerable: true, get: function(){return _delete;}, set: Warn
+    });
+
+    var print = function()
+    {
+      if(!this.isValid)
+      {
+        new Exception("Invalid value", "Cannot print the object because this instance is invalid.", this);
+        return;
+      }
+
+      var Instance = this;
+
+      var HasSubmit = true;
+
+      var BlankLog = document.getElementById("BlankLog");
+
+      if(BlankLog !== null)
+        BlankLog.remove();
+
+      var Logs = document.getElementById("Logs");
+
+      var display = document.createElement("form");
+      try
+      {
+        Object.defineProperty(this, "display", {
+          enumerable: true, get: function(){return display;}, set: Warn
+        });
+      }
+      catch(error)
+      {
+        display.remove();
+        new Exception("Double call", "Cannot call function 'print' after it was already called once.");
+        return;
+      }
+      Logs.appendChild(display);
+      display.className = "Log";
+      display.style.borderLeft = "2px solid darkgrey";
+
+      display.onsubmit = function()
+      {
+        try
+        {
+          if(Instance.checkValidity())
+          {
+            Instance.populateData()
+            Instance.delete();
+            Instance.onsubmit(Instance.data);
+          }
+          else
+            new Exception("invalid filetype", `Extension .${Instance.input.value.split("\\").pop().split(".").pop()} does not match any accepted extensions.\nAccepted extensions: ${Instance.addition}`);
+          return false;
+        }
+        catch(error)
+        {
+          alert(error);
+        }
+      };
+
+      var icon = document.createElement("img");
+      display.appendChild(icon);
+      icon.src = "../Assets/Images/Gear.png";
+
+      var text = document.createElement("p");
+      Object.defineProperty(this, "text", {
+        enumerable: true, get: function(){return text;}, set: Warn
+      });
+      display.appendChild(text);
+      text.style.color = "darkgrey";
+      text.innerHTML = this.header;
+
+      var input = document.createElement("input");
+      Object.defineProperty(this, "input", {
+        enumerable: true, get: function(){return input;}, set: Warn
+      });
+      display.appendChild(input);
+      input.style.fontFamily = "Prompt";
+      input.style.color = "darkgrey";
+      input.type = this.type;
+      input.required = true;
+
+      if(this.type == "file")
+        input.accept = this.addition;
+      else if(this.type == "submit")
+      {
+        input.required = false;
+        input.style.display = "block";
+        if(this.addition !== "")
+          input.value = this.addition;
+        else
+          input.value = "button";
+        HasSubmit = false;
+      }
+      else if(this.type == "checkbox" || this.type == "radio")
+        input.required = false;
+      else if(this.type == "color")
+        input.onchange = function(){Instance.setColor(input.value);};
+
+      if(HasSubmit)
+      {
+        var submit = document.createElement("input");
+        Object.defineProperty(this, "submit", {
+          enumerable: true, get: function(){return submit;}, set: function(v){new Warning("Protection level", "Cannot set property due to its protection level.");}
+        });
+        display.appendChild(submit);
+        submit.style.fontFamily = "Prompt";
+        submit.style.color = "darkgrey";
+        submit.style.backgroundColor = "grey";
+        submit.style.border = "2px solid darkgrey";
+        submit.style.borderRadius = "3px";
+        submit.type = "submit";
+      }
+
+      display.scrollIntoView(true);
+
+      setTimeout(function(){OnMessage(Instance);}, window.timeout);
+    }
+    Object.defineProperty(this, "print", {
+      enumerable: true, get: function(){return print;}, set: Warn
+    });
+
+    if(this.isValid)
       this.print();
   }
 
-  print()
+  popup = function(header, callback = function(result){}, options = ["yes", "no"], img, color = "white")
   {
-    var Instance = this;
-
-    var HasSubmit = true;
-
-    var BlankLog = document.getElementById("BlankLog");
-
-    if(BlankLog !== null)
-      BlankLog.remove();
-
-    var Logs = document.getElementById("Logs");
-
-    this.display = document.createElement("form")
-    Logs.appendChild(this.display);
-    this.display.className = "Log";
-    this.display.style.borderLeft = "2px solid darkgrey";
-
-    this.display.onsubmit = function()
-    {
-      Instance.populateData();
-      if(Instance.checkValidity())
-      {
-        Instance.delete();
-        Instance.onsubmit(Instance.data);
+    var isValid = true;
+    Object.defineProperty(this, "isValid", {
+      enumerable: true, get: function(){return isValid;}, set: function(v){
+        if(key)
+          isValid = v;
+        else
+          Warn();
       }
-      return false;
-    };
+    });
 
-    var icon = document.createElement("img");
-    this.display.appendChild(icon);
-    icon.src = "../Assets/Images/Gear.png";
-
-    this.text = document.createElement("p");
-    this.display.appendChild(this.text);
-    this.text.style.color = "darkgrey";
-    this.text.innerHTML = this.header;
-
-    this.input = document.createElement("input");
-    this.display.appendChild(this.input);
-    this.input.style.fontFamily = "Prompt";
-    this.input.style.color = "darkgrey";
-    this.input.type = this.type;
-    this.input.required = true;
-
-    if(this.type == "file")
-      this.input.accept = this.addition;
-    else if(this.type == "submit")
-    {
-      this.input.required = false;
-      this.input.style.display = "block";
-      if(this.addition !== "")
-        this.input.value = this.addition;
-      else
-        this.input.value = "button";
-      HasSubmit = false;
-    }
-    else if(this.type == "checkbox" || this.type == "radio")
-      this.input.required = false;
-    else if(this.type == "color")
-      this.input.onchange = function(){Instance.setColor(Instance.input.value);};
-
-    if(HasSubmit)
-    {
-      this.submit = document.createElement("input");
-      this.display.appendChild(this.submit);
-      this.submit.style.fontFamily = "Prompt";
-      this.submit.style.color = "darkgrey";
-      this.submit.style.backgroundColor = "grey";
-      this.submit.style.border = "2px solid darkgrey";
-      this.submit.style.borderRadius = "3px";
-      this.submit.type = "submit";
-    }
-
-    this.display.scrollIntoView(true);
-
-    setTimeout(function(){OnMessage(Instance);}, window.timeout);
-  }
-
-  populateData()
-  {
-    this.data = {};
-    if(this.type == "file")
-      this.data = {
-        "file": this.input.files[0],
-        "filePath": this.input.value,
-        "fileName": this.input.value.split("\\").pop(),
-        "fileExt": this.input.value.split("\\").pop().split(".").pop(),
-        "lastModified": this.input.files[0].lastModified
-      };
-    else if(this.type == "submit")
-    {
-      var current = new Date();
-      this.data = {
-        "date": current.getFullYear() + "-" + (current.getMonth()+1) + "-" + current.getDate(),
-        "time": current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds()
-      };
-    }
-    else if(this.type == "checkbox" || this.type == "radio")
-      this.data.checked = this.input.checked;
-    else if(this.type == "color")
-      this.data = {
-        "hex": this.input.value,
-        "rgb": "rgb(" + parseInt("0x" + this.input.value.slice(1,3)) + ", " + parseInt("0x" + this.input.value.slice(3,5)) + ", " + parseInt("0x" + this.input.value.slice(5,7)) + ")",
-        "red": parseInt("0x" + this.input.value.slice(1,3)),
-        "green": parseInt("0x" + this.input.value.slice(3,5)),
-        "blue": parseInt("0x" + this.input.value.slice(5,7))
-      };
-    else if(this.type == "date")
-      this.data = {
-        "date": this.input.value,
-        "year": this.input.value.split("-")[0],
-        "month": this.input.value.split("-")[1],
-        "day": this.input.value.split("-")[2]
-      };
-    else if(this.type == "email" || this.type == "number" || this.type == "password" || this.type == "range" || this.type == "search" || this.type == "text" || this.type == "url")
-      this.data.value = this.input.value;
-    else if(this.type == "time")
-      this.data = {
-        "time": this.input.value,
-        "hours": this.input.value.split(":")[0],
-        "minutes": this.input.value.split(":")[1]
-      };
-    this.data.dataType = this.type;
-  }
-
-  checkValidity()
-  {
-    if(this.type != "file" || this.addition == "")
-      return true;
-
-    const validExts = this.addition.replace(".", "").split(",");
-
-    for(var i in validExts)
-      if(this.data.fileExt == validExts[i])
-        return true;
-
-    new Exception("Invalid filetype", "Extension ." + this.data.fileExt + " does not match any accepted extensions.\nAccepted extensions: " + this.addition);
-    return false;
-  }
-
-  onsubmit(data)
-  {
-
-  }
-
-  setColor(color)
-  {
-    this.text.style.color = color;
-    this.display.style.borderLeft = "2px solid " + color;
-    this.input.style.color = color;
-    this.submit.style.color = color;
-    this.submit.style.borderColor = color;
-  }
-
-  delete()
-  {
-    this.display.remove();
-    this._isValid = false;
-    var Logs = document.getElementById("Logs");
-    if(Logs.innerHTML.replace(/\n/g, "").replace(/ /g, "") === "")
-      Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
-  }
-
-  isValid()
-  {
-    return this._isValid;
-  }
-}
-
-class Popup
-{
-  constructor(header, callback = function(result){}, options = ["yes", "no"], img, color = "white")
-  {
-    this._isValid = true;
-    if(header !== undefined)
-      this.header = header.toString().replace(/\n/g, "<br/>");
+    if(isValueDefined(header))
+      Object.defineProperty(this, "header", {
+        enumerable: true, get: function(){return header.toString().replace(/\n/g, "<br/>");}, set: Warn
+      });
     else
       new Exception("Invalid value", "Passed value 'header' returned undefined!", this);
 
     try
     {
       if(options.length > 0)
-        this.options = options;
+        Object.defineProperty(this, "options", {
+            enumerable: true, get: function(){return options;}, set: Warn
+          });
       else
       {
-        new Exception("Invalid value", "Passed value 'options' did not have a proper length.", this);
+        new Exception("Invalid value", "Passed value 'options' has a length of 0.", this);
         return;
       }
     }
@@ -548,1036 +1050,1490 @@ class Popup
       return;
     }
 
-    this.callback = callback;
-    this.img = img;
-    this.color = color;
+    Object.defineProperty(this, "callback", {
+      enumerable: true, get: function(){return callback;}, set: Warn
+    });
+    Object.defineProperty(this, "img", {
+      enumerable: true, get: function(){return img;}, set: Warn
+    });
+    Object.defineProperty(this, "color", {
+      enumerable: true, get: function(){return color;}, set: Warn
+    });
 
-    Popup.prototype.toString = function()
-    {
-      return this.header;
-    }
+    Popup.prototype.toString = function(){return this.header;}
 
     Popup.prototype.valueOf = function()
     {
-      if(this._isValid)
+      if(this.isValid)
         return "Popup";
       else
         return "<a style='color:red;'>[Popup]</a>";
     }
 
-    if(this._isValid)
+    var _delete = function()
+    {
+      this.background.remove();
+      key = true;
+      this.isValid = false;
+      key = false;
+    }
+    Object.defineProperty(this, "delete", {
+      enumerable: true, get: function(){return _delete;}, set: Warn
+    });
+
+    var init = function()
+    {
+      if(!this.isValid)
+      {
+        new Exception("Invalid value", "Cannot initialize the object because this instance is invalid.", this);
+        return;
+      }
+
+      var Instance = this;
+
+      var background = document.createElement("div");
+      Object.defineProperty(this, "background", {
+        enumerable: true, get: function(){return background;}, set: Warn
+      });
+      background.style.position = "absolute";
+      background.style.left = 0;
+      background.style.bottom = 0;
+      background.style.width = window.innerWidth;
+      background.style.height = window.innerHeight;
+      background.style.backgroundColor = "rgba(255, 255, 255, 0.25)";
+
+      var display = document.createElement("div");
+      Object.defineProperty(this, "display", {
+        enumerable: true, get: function(){return display;}, set: Warn
+      });
+      background.appendChild(display);
+      display.style.margin = "200px auto auto";
+      display.style.padding = 10;
+      display.style.width = 300;
+      display.style.textAlign = "center";
+      display.style.fontFamily = "Prompt";
+      display.style.backgroundColor = this.color;
+      display.style.borderRadius = "10px";
+      display.style.opacity = 0;
+      display.style.transition = "opacity 0.25s ease";
+      setTimeout(function(){
+        document.body.appendChild(Instance.background);
+        Instance.display.style.opacity = 1;
+      }, 50);
+
+      if(isValueDefined(this.img))
+      {
+        var icon = document.createElement("img");
+        Object.defineProperty(this, "icon", {
+          enumerable: true, get: function(){return icon;}, set: Warn
+        });
+        display.appendChild(icon);
+        icon.style.width = 32;
+        icon.style.height = 32;
+        icon.style.margin = "auto";
+        icon.style.display = "block";
+        icon.src = this.img;
+      }
+
+      var text = document.createElement("p");
+      Object.defineProperty(this, "text", {
+        enumerable: true, get: function(){return text;}, set: Warn
+      });
+      display.appendChild(text);
+      text.style.margin = "10px";
+      text.innerHTML = this.header;
+
+      for(var i = 0; i < this.options.length; i++)
+      {
+        var input = document.createElement("input");
+        this.display.appendChild(input);
+        input.style.margin = 10;
+        input.type = "button";
+        input.value = this.options[i];
+        input.id = "popup_select";
+      }
+
+      var popupUpdate = setInterval(function(){
+        if(window.lastClicked.id == "popup_select")
+        {
+          try
+          {
+            Instance.callback(window.lastClicked.value);
+          }
+          catch(error)
+          {
+            new Exception("Invalid value", "Passed value 'callback' was not a function!", Instance);
+          }
+          Instance.delete();
+          clearInterval(popupUpdate);
+          return;
+        }
+      }, 0);
+    }
+    Object.defineProperty(this, "init", {
+      enumerable: true, get: function(){return init;}, set: Warn
+    });
+
+    if(this.isValid)
       this.init();
   }
 
-  init()
+  //Data objects
+  dir2d = function(val = "none")
   {
-    var Instance = this;
-
-    this.background = document.createElement("div");
-    this.background.style.position = "absolute";
-    this.background.style.left = 0;
-    this.background.style.bottom = 0;
-    this.background.style.width = window.innerWidth;
-    this.background.style.height = window.innerHeight;
-    this.background.style.backgroundColor = "rgba(255, 255, 255, 0.25)";
-
-    this.display = document.createElement("div");
-    this.background.appendChild(this.display);
-    this.display.style.margin = "200px auto auto";
-    this.display.style.padding = 10;
-    this.display.style.width = 300;
-    this.display.style.textAlign = "center";
-    this.display.style.fontFamily = "Prompt";
-    this.display.style.backgroundColor = this.color;
-    this.display.style.borderRadius = "10px";
-    this.display.style.opacity = 0;
-    this.display.style.transition = "opacity 0.25s ease";
-    setTimeout(function(){Instance.show();}, 50);
-
-    if(this.img !== undefined)
-    {
-      this.icon = document.createElement("img");
-      this.display.appendChild(this.icon);
-      this.icon.style.width = 32;
-      this.icon.style.height = 32;
-      this.icon.style.margin = "auto";
-      this.icon.style.display = "block";
-      this.icon.src = this.img;
-    }
-
-    this.text = document.createElement("p");
-    this.display.appendChild(this.text);
-    this.text.style.margin = "10px";
-    this.text.innerHTML = this.header;
-
-    for(var i = 0; i < this.options.length; i++)
-    {
-      var input = document.createElement("input");
-      this.display.appendChild(input);
-      input.style.margin = 10;
-      input.type = "button";
-      input.value = this.options[i];
-      input.id = "popup_select";
-    }
-
-    var popupUpdate = setInterval(function(){
-      if(window.lastClicked.id == "popup_select")
-      {
-        Instance.callback(window.lastClicked.value);
-        Instance.hide();
-        clearInterval(popupUpdate);
-        return;
+    var isValid = true;
+    Object.defineProperty(this, "isValid", {
+      enumerable: true, get: function(){return isValid;}, set: function(v){
+        if(key)
+          isValid = v;
+        else
+          Warn();
       }
-    }, 0);
-  }
+    });
 
-  show()
-  {
-    document.body.appendChild(this.background);
-    this.display.style.opacity = 1;
-  }
-
-  hide()
-  {
-    this.background.remove();
-    this.display.style.opacity = 0;
-  }
-}
-
-//Data classes
-class Dir2D
-{
-  constructor(val = "none")
-  {
-    Dir2D.prototype.valueOf = function()
+    if(typeof val == "string" &&
+      (val.toLowerCase() == "none" || val.toLowerCase() == "left" || val.toLowerCase() == "up" || val.toLowerCase() == "right" || val.toLowerCase() == "down"))
     {
-      return "Dir2D";
-    }
-
-    this._isValid = true;
-    if(val.toLowerCase() == "none" || val.toLowerCase() == "left" || val.toLowerCase() == "up" || val.toLowerCase() == "right" || val.toLowerCase() == "down")
-    {
-      this.value = val.toLowerCase();
+      Object.defineProperty(this, "value", {
+        enumerable: true, get: function(){return val.toLowerCase();}, set: function(v){
+          if(key)
+            if(typeof v == "string" &&
+              (v.toLowerCase() == "none" || v.toLowerCase() == "left" || v.toLowerCase() == "up" || v.toLowerCase() == "right" || v.toLowerCase() == "down"))
+              val = v;
+            else
+              new Exception("Unexpected value", "Passed value 'v' is not a valid direction.");
+          else
+            Warn();
+        }
+      });
+      var result;
       if(this.value == "up" || this.value == "down")
-        this.axis = "vertical";
+        result = "vertical";
       else if(this.value == "left" || this.value == "right")
-        this.axis = "horizontal";
+        result = "horizontal";
       else
-        this.axis = "none";
+        result = "none";
+      Object.defineProperty(this, "axis", {
+        enumerable: true, get: function(){return result;}, set: function(v){
+          if(key)
+            if(typeof v == "string" &&
+              (v.toLowerCase() == "none" || v.toLowerCase() == "horizontal" || v.toLowerCase() == "vertical"))
+              val = v;
+            else
+            {
+              new Exception("Unexpected value", "Passed value 'v' is not a valid axis.");
+              return;
+            }
+          else
+            Warn();
+        }
+      });
     }
     else
     {
-      this.value = undefined;
-      this.axis = "none";
-      new Exception("Unexpected value", "Passed value was not a valid value.\nValue: " + val, this);
+      Object.defineProperty(this, "value", {
+        enumerable: true, get: function(){return "none";}, set: Warn
+      });
+      new Exception("Unexpected value", `Passed value 'val' was not a valid direction.\nValue: '${val}'`, this);
     }
+
+    Dir2D.prototype.valueOf = function(){return "Dir2D";}
 
     Dir2D.prototype.toString = function()
     {
-      if(this._isValid)
+      if(this.isValid)
         return this.value;
       else
         return "<a style='color:red;'>[Dir2D]</a>";
     }
-  }
 
-  new()
-  {
-    if(this._isValid)
-      return new Dir2D(this.value);
-    else
+    var _new = function()
     {
-      new Exception("Invalid value", "Cannot create a new instance of Dir2D because this instance of Dir2D was invalid.");
-      return null;
-    }
-  }
-
-  equals(Dir)
-  {
-    if(Dir.valueOf() == "Dir2D")
-    {
-      if(this._isValid && Dir._isValid)
-        return this.value == Dir.value;
+      if(this.isValid)
+        return new Dir2D(this.value);
       else
       {
-        new Exception("Invalid value", "Dir2D cannot compare with the passed value either because the passed value was invalid or because this instance of Dir2D was invalid.");
-        return false;
-      }
-    }
-    else if(typeof Dir == "string")
-    {
-      if(this._isValid)
-        return this.value == Dir.toLowerCase();
-      else
-      {
-        new Exception("Invalid value", "Dir2D cannot compare with the passed value because this instance of Dir2D was invalid.", this);
-        return false;
-      }
-    }
-    else
-    {
-      new Exception("Unexpected value", "Dir2D cannot compare with the passed value because the value wasn't a value of type Dir2D nor a value of type string.\nValue type: " + typeof Dir);
-      return false;
-    }
-  }
-
-  invert()
-  {
-    if(this._isValid)
-    {
-      if(this.value == "none")
-        return new Dir2D("none");
-      else if (this.value == "left")
-        return new Dir2D("right");
-      else if(this.value == "up")
-        return new Dir2D("down");
-      else if(this.value == "right")
-        return new Dir2D("left");
-      else if(this.value == "down")
-        return new Dir2D("up");
-    }
-    else
-    {
-      new Exception("Invalid value", "Cannot invert Dir2D because this instance of Dir2D was invalid.", this);
-      return null;
-    }
-  }
-
-  toVector2()
-  {
-    if(this._isValid)
-    {
-      if(this.value == "none")
-        return new Vector2();
-      else if (this.value == "left")
-        return new Vector2(-1, 0);
-      else if(this.value == "up")
-        return new Vector2(0, 1);
-      else if(this.value == "right")
-        return new Vector2(1, 0);
-      else if(this.value == "down")
-        return new Vector2(0, -1);
-    }
-    else
-    {
-      new Exception("Invalid value", "Cannot parse Dir2D to Vector2 because this instance of Dir2D was invalid.", this);
-      return null;
-    }
-  }
-
-  toDeg()
-  {
-    if(this._isValid)
-    {
-      if(this.value == "none")
+        new Exception("Invalid value", "Cannot create a new instance of Dir2D because this instance of Dir2D was invalid.");
         return null;
-      else if (this.value == "left")
-        return -90;
-      else if(this.value == "up")
-        return 0;
-      else if(this.value == "right")
-        return 90;
-      else if(this.value == "down")
-        return 180;
+      }
     }
-    else
+    Object.defineProperty(this, "new", {
+      enumerable: true, get: function(){return _new;}, set: Warn
+    });
+
+    var equals = function(dir)
     {
-      new Exception("Invalid value", "Cannot parse Dir2D to degrees because this instance of Dir2D was invalid.", this);
-      return null;
+      if(dir.valueOf() == "Dir2D")
+      {
+        if(this.isValid && dir.isValid)
+          return this.value == dir.value;
+        else
+        {
+          new Exception("Invalid value", "Dir2D cannot compare with the passed value either because the passed value was invalid or because this instance of Dir2D was invalid.");
+          return false;
+        }
+      }
+      else if(typeof dir == "string")
+      {
+        if(this.isValid)
+          return this.value == dir.toLowerCase();
+        else
+        {
+          new Exception("Invalid value", "Dir2D cannot compare with the passed value because this instance of Dir2D was invalid.", this);
+          return false;
+        }
+      }
+      else
+      {
+        new Exception("Unexpected value", "Dir2D cannot compare with the passed value because the value wasn't a value of type Dir2D nor a value of type string.\nValue type: " + typeof Dir);
+        return false;
+      }
     }
+    Object.defineProperty(this, "equals", {
+      enumerable: true, get: function(){return equals;}, set: Warn
+    });
+
+    var invert = function()
+    {
+      if(this.isValid)
+      {
+        if(this.value == "none")
+          return new Dir2D("none");
+        else if (this.value == "left")
+          return new Dir2D("right");
+        else if(this.value == "up")
+          return new Dir2D("down");
+        else if(this.value == "right")
+          return new Dir2D("left");
+        else if(this.value == "down")
+          return new Dir2D("up");
+      }
+      else
+      {
+        new Exception("Invalid value", "Cannot invert Dir2D because this instance of Dir2D was invalid.", this);
+        return null;
+      }
+    }
+    Object.defineProperty(this, "invert", {
+      enumerable: true, get: function(){return invert;}, set: Warn
+    });
+
+    var toVector2 = function()
+    {
+      if(this.isValid)
+      {
+        if(this.value == "none")
+          return new Vector2();
+        else if (this.value == "left")
+          return new Vector2(-1, 0);
+        else if(this.value == "up")
+          return new Vector2(0, 1);
+        else if(this.value == "right")
+          return new Vector2(1, 0);
+        else if(this.value == "down")
+          return new Vector2(0, -1);
+      }
+      else
+      {
+        new Exception("Invalid value", "Cannot parse Dir2D to Vector2 because this instance of Dir2D was invalid.", this);
+        return null;
+      }
+    }
+    Object.defineProperty(this, "toVector2", {
+      enumerable: true, get: function(){return toVector2;}, set: Warn
+    });
+
+    var toDeg = function()
+    {
+      if(this.isValid)
+      {
+        if(this.value == "none")
+          return null;
+        else if (this.value == "left")
+          return -90;
+        else if(this.value == "up")
+          return 0;
+        else if(this.value == "right")
+          return 90;
+        else if(this.value == "down")
+          return 180;
+      }
+      else
+      {
+        new Exception("Invalid value", "Cannot parse Dir2D to degrees because this instance of Dir2D was invalid.", this);
+        return null;
+      }
+    }
+    Object.defineProperty(this, "toDeg", {
+      enumerable: true, get: function(){return toDeg;}, set: Warn
+    });
   }
+  Object.defineProperty(dir2d, "none", {
+    enumerable: true, get: function(){return new Dir2D("none");}, set: Warn
+  });
+  Object.defineProperty(dir2d, "up", {
+    enumerable: true, get: function(){return new Dir2D("up");}, set: Warn
+  });
+  Object.defineProperty(dir2d, "down", {
+    enumerable: true, get: function(){return new Dir2D("down");}, set: Warn
+  });
+  Object.defineProperty(dir2d, "left", {
+    enumerable: true, get: function(){return new Dir2D("left");}, set: Warn
+  });
+  Object.defineProperty(dir2d, "right", {
+    enumerable: true, get: function(){return new Dir2D("right");}, set: Warn
+  });
 
-  isValid()
+  vector2 = function(x = 0, y = 0)
   {
-    return this._isValid;
-  }
-}
+    var isValid = true;
+    Object.defineProperty(this, "isValid", {
+      enumerable: true, get: function(){return isValid;}, set: function(v){
+        if(key)
+          isValid = v;
+        else
+          Warn();
+      }
+    });
 
-class Vector2
-{
-  constructor(x = 0, y = 0)
-  {
-    Vector2.prototype.valueOf = function()
-    {
-      return "Vector2";
-    }
-
-    this._isValid = true;
-    if(typeof x == "number")
-      this.x = x;
+    if(isValueDefined(x) && typeof x == "number")
+      Object.defineProperty(this, "x", {
+        enumerable: true, get: function(){return x;}, set: function(v){
+          if(isValueDefined(v) && typeof v == "number")
+            x = v;
+          else
+            new Exception("Unexpected value", "Passed value 'v' was not a number.");
+        }
+      });
     else
     {
-      this.x = NaN;
-      new Exception("Unexpected value", "Passed value 'x' was not a number.\nValue type: " + typeof x, this);
+      Object.defineProperty(this, "x", {
+        enumerable: true, get: function(){return NaN;}, set: Warn
+      });
+      new Exception("Unexpected value", "Passed value 'x' was not a number.", this);
     }
-    if(typeof y == "number")
-      this.y = y;
+
+    if(isValueDefined(y) && typeof y == "number")
+      Object.defineProperty(this, "y", {
+        enumerable: true, get: function(){return y;}, set: function(v){
+          if(isValueDefined(v) && typeof v == "number")
+            y = v;
+          else
+            new Exception("Unexpected value", "Passed value 'v' was not a number.");
+        }
+      });
     else
     {
-      this.y = NaN;
-      new Exception("Unexpected value", "Passed value 'y' was not a number.\nValue type: " + typeof y, this);
+      Object.defineProperty(this, "y", {
+        enumerable: true, get: function(){return NaN;}, set: Warn
+      });
+      new Exception("Unexpected value", "Passed value 'y' was not a number.", this);
     }
+
+    Vector2.prototype.valueOf = function(){return "Vector2";}
 
     Vector2.prototype.toString = function()
     {
-      if(this._isValid)
-        return "(" + this.x + ", " + this.y +")";
+      if(this.isValid)
+        return `(${this.x}, ${this.y})`;
       else
         return "<a style='color:red;'>[Vector2]</a>";
     }
-  }
 
-  new()
-  {
-    if(this._isValid)
-      return new Vector2(this.x, this.y);
-    else
+    var _new = function()
     {
-      new Exception("Invalid value", "Cannot create a new instance of Vector2 because this instance of Vector2 was invalid.", this);
-      return null;
-    }
-  }
-
-  equals(other)
-  {
-    if(other.valueOf() == "Vector2")
-    {
-      if(this._isValid && other._isValid)
+      if(this.isValid)
+        return new Vector2(this.x, this.y);
+      else
       {
-        if(other.x == this.x && other.y == this.y)
-          return true;
+        new Exception("Invalid value", "Cannot create a new instance of Vector2 because this instance of Vector2 was invalid.", this);
+        return null;
+      }
+    }
+    Object.defineProperty(this, "new", {
+      enumerable: true, get: function(){return _new;}, set: Warn
+    });
+
+    var equals = function(other)
+    {
+      if(other.valueOf() == "Vector2")
+      {
+        if(this.isValid && other.isValid)
+          return (other.x == this.x && other.y == this.y);
         else
+        {
+          new Exception("Invalid value", "Vector2 cannot compare with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
           return false;
+        }
       }
       else
       {
-        new Exception("Invalid value", "Vector2 cannot compare with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
+        new Exception("Unexpected value", "Vector2 cannot compare with the passed value because the value wasn't a value of type Vector2.");
         return false;
       }
     }
-    else
+    Object.defineProperty(this, "equals", {
+      enumerable: true, get: function(){return equals;}, set: Warn
+    });
+
+    var add = function(value)
     {
-      new Exception("Unexpected value", "Vector2 cannot compare with the passed value because the value wasn't a value of type Vector2.<br/>Value type: " + other.valueOf());
-      return false;
+      if(value.valueOf() == "Vector2")
+      {
+        if(this.isValid && value.isValid)
+          return new Vector2(this.x + value.x, this.y + value.y);
+        else
+        {
+          new Exception("Invalid value", "Vector2 cannot make an addition with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
+          return null;
+        }
+      }
+      else if(isValueDefined(value) && typeof value == "number")
+      {
+        if(this.isValid)
+          return new Vector2(this.x + value, this.y + value);
+        else
+        {
+          new Exception("Invalid value", "Vector2 cannot make an addition with the passed value because this instance of Vector2 was invalid.", this);
+          return null;
+        }
+      }
+      else
+      {
+        new Exception("Unexpected value", "Vector2 cannot make an addition with the passed value because the value wasn't a value of type Vector2 nor a value of type number.");
+        return null;
+      }
     }
+    Object.defineProperty(this, "add", {
+      enumerable: true, get: function(){return add;}, set: Warn
+    });
+
+    var sub = function(value)
+    {
+      if(value.valueOf() == "Vector2")
+      {
+        if(this.isValid && value.isValid)
+          return new Vector2(this.x - value.x, this.y - value.y);
+        else
+        {
+          new Exception("Invalid value", "Vector2 cannot make an substraction with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
+          return null;
+        }
+      }
+      else if(isValueDefined(value) && typeof value == "number")
+      {
+        if(this.isValid)
+          return new Vector2(this.x - value, this.y - value);
+        else
+        {
+          new Exception("Invalid value", "Vector2 cannot make an substraction with the passed value because this instance of Vector2 was invalid.", this);
+          return null;
+        }
+      }
+      else
+      {
+        new Exception("Unexpected value", "Vector2 cannot make an substraction with the passed value because the value wasn't a value of type Vector2 nor a value of type number.");
+        return null;
+      }
+    }
+    Object.defineProperty(this, "sub", {
+      enumerable: true, get: function(){return sub;}, set: Warn
+    });
+
+    var multi = function(value)
+    {
+      if(value.valueOf() == "Vector2")
+      {
+        if(this.isValid && value.isValid)
+          return new Vector2(this.x * value.x, this.y * value.y);
+        else
+        {
+          new Exception("Invalid value", "Vector2 cannot make an multiplication with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
+          return null;
+        }
+      }
+      else if(isValueDefined(value) && typeof value == "number")
+      {
+        if(this.isValid)
+          return new Vector2(this.x * value, this.y * value);
+        else
+        {
+          new Exception("Invalid value", "Vector2 cannot make an multiplication with the passed value because this instance of Vector2 was invalid.", this);
+          return null;
+        }
+      }
+      else
+      {
+        new Exception("Unexpected value", "Vector2 cannot make an multiplication with the passed value because the value wasn't a value of type Vector2 nor a value of type number.");
+        return null;
+      }
+    }
+    Object.defineProperty(this, "multi", {
+      enumerable: true, get: function(){return multi;}, set: Warn
+    });
+
+    var div = function(value)
+    {
+      if(value.valueOf() == "Vector2")
+      {
+        if(this.isValid && value.isValid)
+          return new Vector2(this.x / value.x, this.y / value.y);
+        else
+        {
+          new Exception("Invalid value", "Vector2 cannot divide with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
+          return null;
+        }
+      }
+      else if(isValueDefined(value) && typeof value == "number")
+      {
+        if(this.isValid)
+          return new Vector2(this.x / value, this.y / value);
+        else
+        {
+          new Exception("Invalid value", "Vector2 cannot divide with the passed value because this instance of Vector2 was invalid.", this);
+          return null;
+        }
+      }
+      else
+      {
+        new Exception("Invalid value", "Vector2 cannot divide with the passed value because the value wasn't a value of type Vector2 nor a value of type number.");
+        return null;
+      }
+    }
+    Object.defineProperty(this, "div", {
+      enumerable: true, get: function(){return div;}, set: Warn
+    });
+
+    var dist = function(other)
+    {
+      if(other.valueOf() == "Vector2")
+      {
+        if(this.isValid && other.isValid)
+        {
+          var thirdPoint = new Vector2(this.x, other.y);
+          var a = Math.abs(thirdPoint.x - other.x);
+          var b = Math.abs(thirdPoint.y - this.y);
+          var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+          return c;
+        }
+        else
+        {
+          new Exception("Invalid value", "Vector2 cannot calculate distance with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
+          return null;
+        }
+      }
+      else
+      {
+        new Exception("Unexpected value", "Vector2 cannot calculate distance with the value because is wasn't a value of type Vector2.");
+        return null;
+      }
+    }
+    Object.defineProperty(this, "dist", {
+      enumerable: true, get: function(){return dist;}, set: Warn
+    });
+
+    var lerp = function(other, dist)
+    {
+      if(other.valueOf() == "Vector2")
+      {
+        if(typeof dist == "number")
+        {
+          if(this.isValid && other.isValid)
+          {
+            var x = other.x - this.x;
+            var y = other.y - this.y;
+            return this.add(new Vector2(x, y).multi(dist));
+          }
+          else
+          {
+            new Exception("Invalid value", "Vector2 cannot calculate distance with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
+            return null;
+          }
+        }
+        else
+          new Exception("Unexpected value", "Vector2 cannot lerp because the passed value 'dist' was not a number.");
+      }
+      else
+        new Exception("Unexpected value", "Vector2 cannot lerp with the passed value because the value wasn't a value of type Vector2.");
+    }
+    Object.defineProperty(this, "lerp", {
+      enumerable: true, get: function(){return lerp;}, set: Warn
+    });
   }
+  Object.defineProperty(vector2, "one", {
+    enumerable: true, get: function(){return new Vector2(1, 1);}, set: Warn
+  });
+  Object.defineProperty(vector2, "up", {
+    enumerable: true, get: function(){return new Vector2(0, 1);}, set: Warn
+  });
+  Object.defineProperty(vector2, "right", {
+    enumerable: true, get: function(){return new Vector2(1, 0);}, set: Warn
+  });
+  Object.defineProperty(vector2, "zero", {
+    enumerable: true, get: function(){return new Vector2();}, set: Warn
+  });
 
-  add(value)
+  vector3 = function(x = 0, y = 0, z = 0)
   {
-    if(value.valueOf() == "Vector2")
-    {
-      if(this._isValid && value._isValid)
-      {
-        return new Vector2(this.x + value.x, this.y + value.y);
+    var isValid = true;
+    Object.defineProperty(this, "isValid", {
+      enumerable: true, get: function(){return isValid;}, set: function(v){
+        if(key)
+          isValid = v;
+        else
+          Warn();
       }
-      else
-      {
-        new Exception("Invalid value", "Vector2 cannot make an addition with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
-        return null;
-      }
-    }
-    else if(typeof value == "number")
-    {
-      if(this._isValid)
-      {
-        return new Vector2(this.x + value, this.y + value);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector2 cannot make an addition with the passed value because this instance of Vector2 was invalid.", this);
-        return null;
-      }
-    }
+    });
+
+    if(isValueDefined(x) && typeof x == "number")
+      Object.defineProperty(this, "x", {
+        enumerable: true, get: function(){return x;}, set: function(v){
+          if(isValueDefined(v) && typeof v == "number")
+            x = v;
+          else
+            new Exception("Unexpected value", "Passed value 'v' was not a number.");
+        }
+      });
     else
     {
-      new Exception("Unexpected value", "Vector2 cannot make an addition with the passed value because the value wasn't a value of type Vector2 nor a value of type number.<br/>Value type: " + typeof value);
-      return null;
-    }
-  }
-
-  sub(value)
-  {
-    if(value.valueOf() == "Vector2")
-    {
-      if(this._isValid && value._isValid)
-      {
-        return new Vector2(this.x - value.x, this.y - value.y);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector2 cannot make an substraction with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
-        return null;
-      }
-    }
-    else if(typeof value == "number")
-    {
-      if(this._isValid)
-      {
-        return new Vector2(this.x - value, this.y - value);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector2 cannot make an substraction with the passed value because this instance of Vector2 was invalid.", this);
-        return null;
-      }
-    }
-    else
-    {
-      new Exception("Unexpected value", "Vector2 cannot make an substraction with the passed value because the value wasn't a value of type Vector2 nor a value of type number.<br/>Value type: " + typeof value);
-      return null;
-    }
-  }
-
-  multi(value)
-  {
-    if(value.valueOf() == "Vector2")
-    {
-      if(this._isValid && value._isValid)
-      {
-        return new Vector2(this.x * value.x, this.y * value.y);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector2 cannot make an multiplication with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
-        return null;
-      }
-    }
-    else if(typeof value == "number")
-    {
-      if(this._isValid)
-      {
-        return new Vector2(this.x * value, this.y * value);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector2 cannot make an multiplication with the passed value because this instance of Vector2 was invalid.", this);
-        return null;
-      }
-    }
-    else
-    {
-      new Exception("Unexpected value", "Vector2 cannot make an multiplication with the passed value because the value wasn't a value of type Vector2 nor a value of type number.<br/>Value type: " + typeof value);
-      return null;
-    }
-  }
-
-  div(value)
-  {
-    if(value.valueOf() == "Vector2")
-    {
-      if(this._isValid && value._isValid)
-      {
-        return new Vector2(this.x / value.x, this.y / value.y);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector2 cannot divide with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
-        return null;
-      }
-    }
-    else if(typeof value == "number")
-    {
-      if(this._isValid)
-      {
-        return new Vector2(this.x / value, this.y / value);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector2 cannot divide with the passed value because this instance of Vector2 was invalid.", this);
-        return null;
-      }
-    }
-    else
-    {
-      new Exception("Invalid value", "Vector2 cannot divide with the passed value because the value wasn't a value of type Vector2 nor a value of type number.<br/>Value type: " + typeof value);
-      return null;
-    }
-  }
-
-  dist(other)
-  {
-    if(other.valueOf() == "Vector2")
-    {
-      if(this._isValid && other._isValid)
-      {
-        var thirdPoint = new Vector2(this.x, other.y);
-        var a = Math.abs(thirdPoint.x - other.x);
-        var b = Math.abs(thirdPoint.y - this.y);
-        var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
-        return c;
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector2 cannot calculate distance with the passed value either because the value was invalid or because this instance of Vector2 was invalid.");
-        return null;
-      }
-    }
-    else
-    {
-      new Exception("Unexpected value", "Vector2 cannot calculate distance with the value because is wasn't a value of type Vector2.<br/>Value type: " + other.valueOf());
-      return null;
-    }
-  }
-
-  lerp(other, dist)
-  {
-    if(other.valueOf() == "Vector2")
-    {
-      if(typeof dist == "number")
-      {
-        var x = other.x - this.x;
-        var y = other.y - this.y;
-        return this.Add(new Vector2(x, y).Multi(dist));
-      }
-      else
-        new Exception("Unexpected value", "Vector2 cannot lerp because the passed value 'dist' was not a number.<br/>Value type: " + typeof dist);
-    }
-    else
-      new Exception("Unexpected value", "Vector2 cannot lerp with the passed value because the value wasn't a value of type Vector2.<br/>Value type: " + other.valueOf());
-  }
-}
-
-class Vector3
-{
-  constructor(x = 0, y = 0, z = 0)
-  {
-    Vector3.prototype.valueOf = function()
-    {
-      return "Vector3";
+      Object.defineProperty(this, "x", {
+        enumerable: true, get: function(){return NaN;}, set: Warn
+      });
+      new Exception("Unexpected value", "Passed value 'x' was not a number.", this);
     }
 
-    this._isValid = true;
-    if(typeof x == "number")
-      this.x = x;
+    if(isValueDefined(y) && typeof y == "number")
+      Object.defineProperty(this, "y", {
+        enumerable: true, get: function(){return y;}, set: function(v){
+          if(isValueDefined(v) && typeof v == "number")
+            y = v;
+          else
+            new Exception("Unexpected value", "Passed value 'v' was not a number.");
+        }
+      });
     else
     {
-      this.x = NaN;
-      new Exception("Unexpected value", "Passed value 'x' was not a number.\nValue type: " + typeof x, this);
+      Object.defineProperty(this, "y", {
+        enumerable: true, get: function(){return NaN;}, set: Warn
+      });
+      new Exception("Unexpected value", "Passed value 'y' was not a number.", this);
     }
-    if(typeof y == "number")
-      this.y = y;
+
+    if(isValueDefined(z) && typeof z == "number")
+      Object.defineProperty(this, "z", {
+        enumerable: true, get: function(){return z;}, set: function(v){
+          if(isValueDefined(v) && typeof v == "number")
+            z = v;
+          else
+            new Exception("Unexpected value", "Passed value 'v' was not a number.");
+        }
+      });
     else
     {
-      this.y = NaN;
-      new Exception("Unexpected value", "Passed value 'y' was not a number.\nValue type: " + typeof y, this);
+      Object.defineProperty(this, "z", {
+        enumerable: true, get: function(){return NaN;}, set: Warn
+      });
+      new Exception("Unexpected value", "Passed value 'z' was not a number.", this);
     }
-    if(typeof z == "number")
-      this.z = z;
-    else
-    {
-      this.z = NaN;
-      new Exception("Unexpected value", "Passed value 'z' was not a number.\nValue type: " + typeof z, this);
-    }
+
+    Vector3.prototype.valueOf = function(){return "Vector3";}
 
     Vector3.prototype.toString = function()
     {
-      if(this._isValid)
-        return "(" + this.x + ", " + this.y + ", " + this.z +")";
+      if(this.isValid)
+        return `(${this.x}, ${this.y}, ${this.z})`;
       else
         return "<a style='color:red;'>[Vector3]</a>";
     }
-  }
 
-  new()
-  {
-    if(this._isValid)
-      return new Vector3(this.x, this.y, this.z);
-    else
+    var _new = function()
     {
-      new Exception("Invalid value", "Cannot create a new instance of Vector3 because this instance of Vector3 was invalid.", this);
-      return null;
-    }
-  }
-
-  equals(other)
-  {
-    if(other.valueOf() == "Vector3")
-    {
-      if(this._isValid && other._isValid)
+      if(this.isValid)
+        return new Vector3(this.x, this.y, this.z);
+      else
       {
-        if(other.x == this.x && other.y == this.y && other.z == this.z)
-          return true;
+        new Exception("Invalid value", "Cannot create a new instance of Vector3 because this instance of Vector3 was invalid.", this);
+        return null;
+      }
+    }
+    Object.defineProperty(this, "new", {
+      enumerable: true, get: function(){return _new;}, set: Warn
+    });
+
+    var equals = function(other)
+    {
+      if(other.valueOf() == "Vector3")
+      {
+        if(this.isValid && other.isValid)
+          return (other.x == this.x && other.y == this.y && other.z == this.z);
         else
+        {
+          new Exception("Invalid value", "Vector3 cannot compare with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
           return false;
+        }
       }
       else
       {
-        new Exception("Invalid value", "Vector3 cannot compare with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
+        new Exception("Unexpected value", "Vector3 cannot compare with the passed value because the value wasn't a value of type Vector3.");
         return false;
       }
     }
-    else
+    Object.defineProperty(this, "equals", {
+      enumerable: true, get: function(){return equals;}, set: Warn
+    });
+
+    var add = function(value)
     {
-      new Exception("Unexpected value", "Vector3 cannot compare with the passed value because is wasn't a value of type Vector3.\nValue type: " + other.valueOf());
-      return false;
+      if(value.valueOf() == "Vector3")
+      {
+        if(this.isValid && value.isValid)
+          return new Vector3(this.x + value.x, this.y + value.y, this.z + value.z);
+        else
+        {
+          new Exception("Invalid value", "Vector3 cannot make an addition with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
+          return null;
+        }
+      }
+      else if(isValueDefined(value) && typeof value == "number")
+      {
+        if(this.isValid)
+          return new Vector3(this.x + value, this.y + value, this.z + value);
+        else
+        {
+          new Exception("Invalid value", "Vector3 cannot make an addition with the passed value because this instance of Vector3 was invalid.", this);
+          return null;
+        }
+      }
+      else
+      {
+        new Exception("Unexpected value", "Vector3 cannot make an addition with the passed value because the value wasn't a value of type Vector3 nor a value of type number.");
+        return null;
+      }
+    }
+    Object.defineProperty(this, "add", {
+      enumerable: true, get: function(){return add;}, set: Warn
+    });
+
+    var sub = function(value)
+    {
+      if(value.valueOf() == "Vector3")
+      {
+        if(this.isValid && value.isValid)
+          return new Vector2(this.x - value.x, this.y - value.y, this.z - value.z);
+        else
+        {
+          new Exception("Invalid value", "Vector3 cannot make an substraction with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
+          return null;
+        }
+      }
+      else if(isValueDefined(value) && typeof value == "number")
+      {
+        if(this.isValid)
+          return new Vector2(this.x - value, this.y - value, this.z - value);
+        else
+        {
+          new Exception("Invalid value", "Vector3 cannot make an substraction with the passed value because this instance of Vector3 was invalid.", this);
+          return null;
+        }
+      }
+      else
+      {
+        new Exception("Unexpected value", "Vector3 cannot make an substraction with the passed value because the value wasn't a value of type Vector3 nor a value of type number.");
+        return null;
+      }
+    }
+    Object.defineProperty(this, "sub", {
+      enumerable: true, get: function(){return sub;}, set: Warn
+    });
+
+    var multi = function(value)
+    {
+      if(value.valueOf() == "Vector3")
+      {
+        if(this.isValid && value.isValid)
+          return new Vector2(this.x * value.x, this.y * value.y, this.z * value.z);
+        else
+        {
+          new Exception("Invalid value", "Vector3 cannot make an multiplication with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
+          return null;
+        }
+      }
+      else if(isValueDefined(value) && typeof value == "number")
+      {
+        if(this.isValid)
+          return new Vector2(this.x * value, this.y * value, this.z * value);
+        else
+        {
+          new Exception("Invalid value", "Vector3 cannot make an multiplication with the passed value because this instance of Vector3 was invalid.", this);
+          return null;
+        }
+      }
+      else
+      {
+        new Exception("Unexpected value", "Vector3 cannot make an multiplication with the passed value because the value wasn't a value of type Vector3 nor a value of type number.");
+        return null;
+      }
+    }
+    Object.defineProperty(this, "multi", {
+      enumerable: true, get: function(){return multi;}, set: Warn
+    });
+
+    var div = function(value)
+    {
+      if(value.valueOf() == "Vector3")
+      {
+        if(this.isValid && value.isValid)
+          return new Vector2(this.x / value.x, this.y / value.y, this.z / value.z);
+        else
+        {
+          new Exception("Invalid value", "Vector3 cannot divide with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
+          return null;
+        }
+      }
+      else if(isValueDefined(value) && typeof value == "number")
+      {
+        if(this.isValid)
+          return new Vector2(this.x / value, this.y / value, this.z / value);
+        else
+        {
+          new Exception("Invalid value", "Vector3 cannot divide with the passed value because this instance of Vector3 was invalid.", this);
+          return null;
+        }
+      }
+      else
+      {
+        new Exception("Invalid value", "Vector3 cannot divide with the passed value because the value wasn't a value of type Vector3 nor a value of type number.");
+        return null;
+      }
+    }
+    Object.defineProperty(this, "div", {
+      enumerable: true, get: function(){return div;}, set: Warn
+    });
+
+    var dist = function(other)
+    {
+      if(other.valueOf() == "Vector3")
+      {
+        if(this.isValid && other.isValid)
+        {
+          var thirdPoint = new Vector3(this.x, other.y, other.z);
+          var a = Math.abs(thirdPoint.x - other.x);
+          var b = Math.abs(thirdPoint.y - this.y);
+          var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+          var d = Math.abs(thirdPoint.z - this.z);
+          var e = Math.sqrt(Math.pow(c, 2) + Math.pow(d, 2));
+          return e;
+        }
+        else
+        {
+          new Exception("Invalid value", "Vector3 cannot calculate distance with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
+          return null;
+        }
+      }
+      else
+      {
+        new Exception("Unexpected value", "Vector3 cannot calculate distance with the passed value because the value wasn't a value of type Vector3.");
+        return null;
+      }
+    }
+    Object.defineProperty(this, "dist", {
+      enumerable: true, get: function(){return dist;}, set: Warn
+    });
+
+    var lerp = function(other, dist)
+    {
+      if(other.valueOf() == "Vector3")
+      {
+        if(typeof dist == "number")
+        {
+          var x = other.x - this.x;
+          var y = other.y - this.y;
+          var z = other.z - this.z;
+          return this.add(new Vector3(x, y, z).multi(dist));
+        }
+        else
+          new Exception("Unexpected value", "Vector3 cannot lerp because the passed value 'dist' was not a number.");
+      }
+      else
+        new Exception("Unexpected value", "Vector3 cannot lerp with the passed value because the value wasn't a value of type Vector3.");
     }
   }
+  Object.defineProperty(vector3, "one", {
+    enumerable: true, get: function(){return new Vector3(1, 1, 1);}, set: Warn
+  });
+  Object.defineProperty(vector3, "forward", {
+    enumerable: true, get: function(){return new Vector3(0, 0, 1);}, set: Warn
+  });
+  Object.defineProperty(vector3, "up", {
+    enumerable: true, get: function(){return new Vector3(0, 1, 0);}, set: Warn
+  });
+  Object.defineProperty(vector3, "right", {
+    enumerable: true, get: function(){return new Vector3(1, 0, 0);}, set: Warn
+  });
+  Object.defineProperty(vector3, "zero", {
+    enumerable: true, get: function(){return new Vector3();}, set: Warn
+  });
 
-  add(value)
+  //Shape objects
+  circle = function(position, width, color = "white")
   {
-    if(value.valueOf() == "Vector3")
+    var isValid = true;
+    Object.defineProperty(this, "isValid", {
+      enumerable: true, get: function(){return isValid;}, set: function(v){
+        if(key)
+          isValid = v;
+        else
+          Warn();
+    }});
+
+    if(isValueDefined(position) && position.valueOf() == "Vector2")
     {
-      if(this._isValid && value._isValid)
-      {
-        return new Vector3(this.x + value.x, this.y + value.y, this.z + value.z);
-      }
+      if(position.isValid)
+        Object.defineProperty(this, "position", {
+          enumerable: true, get: function(){return position;}, set: function(pos){
+            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            {
+              if(pos.isValid)
+                position = pos;
+              else
+                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.");
+            }
+            else
+              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.");
+          }
+        });
       else
-      {
-        new Exception("Invalid value", "Vector3 cannot make an addition with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
-        return null;
-      }
-    }
-    else if(typeof value == "number")
-    {
-      if(this._isValid)
-      {
-        return new Vector3(this.x + value, this.y + value, this.z + value);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector3 cannot make an addition with the passed value because this instance of Vector3 was invalid.", this);
-        return null;
-      }
+        new Exception("Invalid value", "Passed value 'position' was not a valid Vector2.");
     }
     else
-    {
-      new Exception("Unexpected value", "Vector3 cannot make an addition with the passed value because the value wasn't a value of type Vector3 nor a value of type number.\nValue type: " + typeof value);
-      return null;
-    }
-  }
+      new Exception("Unexpected value", "Passed value 'position' was not a Vector2.");
 
-  sub(value)
-  {
-    if(value.valueOf() == "Vector3")
-    {
-      if(this._isValid && value._isValid)
-      {
-        return new Vector3(this.x - value.x, this.y - value.y, this.z - value.z);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector3 cannot make an substraction with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
-        return null;
-      }
-    }
-    else if(typeof value == "number")
-    {
-      if(this._isValid)
-      {
-        return new Vector3(this.x - value, this.y - value, this.z - value);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector3 cannot make an substraction with the passed value because this instance of Vector3 was invalid.", this);
-        return null;
-      }
-    }
+    if(isValueDefined(width) && typeof width == "number")
+      Object.defineProperty(this, "width", {
+        enumerable: true, get: function(){return width;}, set: function(v){
+          if(isValueDefined(v) && typeof v == "number")
+            width = v;
+          else
+            new Exception("Unexpected value", "Passed value 'v' was not a number.");
+        }
+      });
     else
-    {
-      new Exception("Unexpected value", "Vector3 cannot make an substraction with the passed value because the value wasn't a value of type Vector3 nor a value of type number.\nValue type: " + typeof value);
-      return null;
-    }
-  }
-
-  multi(value)
-  {
-    if(value.valueOf() == "Vector3")
-    {
-      if(this._isValid && value._isValid)
-      {
-        return new Vector3(this.x * value.x, this.y * value.y, this.z * value.z);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector3 cannot make an multiplication with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
-        return null;
-      }
-    }
-    else if(typeof value == "number")
-    {
-      if(this._isValid)
-      {
-        return new Vector3(this.x * value, this.y * value, this.z * value);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector3 cannot make an multiplication with the passed value because this instance of Vector3 was invalid.", this);
-        return null;
-      }
-    }
-    else
-    {
-      new Exception("Unexpected value", "Vector3 cannot make an multiplication with the passed value because is wasn't a value of type Vector3 nor a value of type number.\nValue type: " + typeof value);
-      return null;
-    }
-  }
-
-  div(value)
-  {
-    if(value.valueOf() == "Vector3")
-    {
-      if(this._isValid && value._isValid)
-      {
-        return new Vector3(this.x / value.x, this.y / value.y, this.z / value.z);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector3 cannot divide with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
-        return null;
-      }
-    }
-    else if(typeof value == "number")
-    {
-      if(this._isValid)
-      {
-        return new Vector3(this.x / value, this.y / value, this.z / value);
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector3 cannot divide with the passed value because this instance of Vector3 was invalid.", this);
-        return null;
-      }
-    }
-    else
-    {
-      new Exception("Unexpected value", "Vector3 cannot divide with the passed value because is wasn't a value of type Vector3 nor a value of type number.\nValue type: " + typeof value);
-      return null;
-    }
-  }
-
-  dist(other)
-  {
-    if(other.valueOf() == "Vector3")
-    {
-      if(this._isValid && other._isValid)
-      {
-        var thirdPoint = new Vector3(this.x, other.y, other.z);
-        var a = Math.abs(thirdPoint.x - other.x);
-        var b = Math.abs(thirdPoint.y - this.y);
-        var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
-        var d = Math.abs(thirdPoint.z - this.z);
-        var e = Math.sqrt(Math.pow(c, 2) + Math.pow(d, 2));
-        return e;
-      }
-      else
-      {
-        new Exception("Invalid value", "Vector3 cannot calculate distance with the passed value either because the value was invalid or because this instance of Vector3 was invalid.");
-        return null;
-      }
-    }
-    else
-    {
-      new Exception("Unexpected value", "Vector3 cannot calculate distance with the passed value because the value wasn't a value of type Vector3.\nValue type: " + other.valueOf());
-      return null;
-    }
-  }
-
-  lerp(other, dist)
-  {
-    if(other.valueOf() == "Vector3")
-    {
-      if(typeof dist == "number")
-      {
-        var x = other.x - this.x;
-        var y = other.y - this.y;
-        var z = other.z - this.z;
-        return this.Add(new Vector3(x, y, z).Multi(dist));
-      }
-      else
-        new Exception("Unexpected value", "Vector3 cannot lerp because the passed value 'dist' was not a number.\nValue type: " + typeof dist);
-    }
-    else
-      new Exception("Unexpected value", "Vector3 cannot lerp with the passed value because the value wasn't a value of type Vector3.\nValue type: " + other.valueOf());
-  }
-}
-
-//Shape classes
-class Circle
-{
-  constructor(position, width, color = "white")
-  {
-    Circle.prototype.valueOf = function()
-    {
-      return "Circle";
-    }
-
-    this._isValid = true;
+      new Exception("Unexpected value", "Passed value 'width' was not a number.");
     this.color = color;
-    if(position.valueOf() == "Vector2")
-    {
-      this.position = position;
-    }
-    else
-    {
-      this.position = new Vector2();
-      new Exception("Unexpected value", "Passed value 'position' was not a value of type Vector2.\nValue type: " + position.valueOf(), this);
-    }
-    if(typeof width == "number")
-    {
-      this.width = width;
-    }
-    else
-    {
-      this.width = 0;
-      new Exception("Unexpected value", "Passed value 'width' was not a number.\nValue type: " + typeof position, this);
-    }
+
+    Circle.prototype.valueOf = function(){return "Circle";}
 
     Circle.prototype.toString = function()
     {
-      if(this._isValid)
-        return this.width + "pixels diameter Circle\nColor: " + this.color + "\nPosition: " + this.position.toString();
+      if(this.isValid)
+        return `${this.width} pixel wide Circle\nColor: ${this.color}\nPosition: ${this.position.toString()}`;
       else
         return "<a style='color:red;'>[Circle]</a>";
     }
 
-    this.init();
-  }
-
-  init()
-  {
-    this.display = document.createElement("span");
-    content.appendChild(this.display);
-    this.display.style.display = "block";
-    this.display.style.position = "absolute";
-    this.display.style.borderRadius = "50%";
-    this.update();
-  }
-
-  update()
-  {
-    this.display.style.width = this.width;
-    this.display.style.height = this.width;
-    this.display.style.backgroundColor = this.color;
-    this.display.style.left = this.position.x - this.width/2;
-    this.display.style.bottom = this.position.y - this.width/2;
-  }
-
-  delete()
-  {
-    this.display.remove();
-  }
-}
-
-class Line
-{
-  constructor(start, end, width = 1, color = "white")
-  {
-    Line.prototype.valueOf = function()
+    var update = function()
     {
-      return "Line";
+      var display = this.display;
+      display.style.width = this.width;
+      display.style.height = this.width;
+      display.style.backgroundColor = this.color;
+      display.style.left = this.position.x - this.width/2;
+      display.style.bottom = this.position.y - this.width/2;
     }
+    Object.defineProperty(this, "update", {
+      enumerable: true, get: function(){return update;}, set: Warn
+    });
 
-    this._isValid = true;
-    this.width = width;
-    this.color = color;
-    if(start.valueOf() == "Vector2")
+    var init = function()
     {
-      this.start = start;
+      if(!this.isValid)
+      {
+        new Exception("Invalid value", "Cannot initialise the object because this instance is invalid.", this);
+        return;
+      }
+
+      var display = document.createElement("span");
+      try
+      {
+        Object.defineProperty(this, "display", {
+          enumerable: true, get: function(){return display;}, set: Warn
+        });
+      }
+      catch(error)
+      {
+        display.remove();
+        new Exception("Double call", "Cannot call function 'init' after it was already called once.");
+        return;
+      }
+      content.appendChild(display);
+      display.style.display = "block";
+      display.style.position = "absolute";
+      display.style.borderRadius = "50%";
+      this.update();
+    }
+    Object.defineProperty(this, "init", {
+      enumerable: true, get: function(){return init;}, set: Warn
+    });
+
+    if(this.isValid)
+      this.init();
+
+    var _delete = function(){this.display.remove();}
+    Object.defineProperty(this, "delete", {
+      enumerable: true, get: function(){return _delete;}, set: Warn
+    });
+  }
+
+  line = function(start, end, width = 1, color = "white")
+  {
+    var isValid = true;
+    Object.defineProperty(this, "isValid", {
+      enumerable: true, get: function(){return isValid;}, set: function(v){
+        if(key)
+          isValid = v;
+        else
+          Warn();
+    }});
+    if(isValueDefined(width) && typeof width == "number")
+      Object.defineProperty(this, "width", {
+        enumerable: true, get: function(){return width;}, set: function(v){
+          if(isValueDefined(v) && typeof v == "number")
+            width = v;
+          else
+            new Exception("Unexpected value", "Passed value 'v' was not a number.");
+       }
+      });
+    else
+      new Exception("Unexpected value", "Passed value 'width' was not a number.");
+    if(typeof color == "string")
+      Object.defineProperty(this, "color", {
+        enumerable: true, get: function(){return color;}, set: function(v){
+          if(typeof v == string)
+            color = v;
+          else
+            new Exception("Unexpected value", "Passed value 'v' was not a string.");
+       }
+      });
+    else
+      new Exception("Unexpected value", "Passed value 'color' was not a string.");
+    if(isValueDefined(start) && start.valueOf() == "Vector2")
+    {
+      if(start.isValid)
+        Object.defineProperty(this, "start", {
+          enumerable: true, get: function(){return start;}, set: function(pos){
+            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            {
+              if(pos.isValid)
+                start = pos;
+              else
+                new Exception("Invalid value", "Passed value 'pos' is not a valid Vector2.", this);
+            }
+            else
+              new Exception("Unexpected value", "Passed value 'pos' is not a Vector2.", this);
+          }
+        });
+      else
+        new Exception("Invalid value", "Passed value 'start' is not a valid Vector2.", this);
     }
     else
+      new Exception("Unexpected value", "Passed value 'start' is not a Vector2.", this);
+    if(isValueDefined(end) && end.valueOf() == "Vector2")
     {
-      this.start = new Vector2();
-      new Exception("Unexpected value", "Passed value 'start' was not a value of type Vector2.\nValue type: " + start.valueOf(), this);
-    }
-    if(end.valueOf() == "Vector2")
-    {
-      this.end = end;
+      if(end.isValid)
+        Object.defineProperty(this, "end", {
+          enumerable: true, get: function(){return end;}, set: function(pos){
+            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            {
+              if(pos.isValid)
+                end = pos;
+              else
+                new Exception("Invalid value", "Passed value 'pos' is not a valid Vector2.");
+            }
+            else
+              new Exception("Unexpected value", "Passed value 'pos' is not a Vector2.");
+          }
+        });
+      else
+        new Exception("Invalid value", "Passed value 'end' is not a valid Vector2.");
     }
     else
-    {
-      this.end = new Vector2();
-      new Exception("Unexpected value", "Passed value 'end' was not a value of type Vector2.\nValue type: " + end.valueOf(), this);
-    }
+      new Exception("Unexpected value", "Passed value 'end' is not a Vector2.");
+
+    Line.prototype.valueOf = function(){return "Line";};
 
     Line.prototype.toString = function()
     {
-      if(this._isValid)
-        return this.width + "pixels wide Line\nColor: " + this.color + "\nStart: " + this.start.toString() + " | End: " + this.end.toString();
+      if(this.isValid)
+        return `${this.width} pixels wide Line\nColor: ${this.color}\nStart: ${this.start.toString()}| End: ${this.end.toString()}`;
       else
         return "<a style='color:red;'>[Line]</a>";
     }
 
-    this.init();
-  }
-
-  init()
-  {
-    this.point = document.createElement("a");
-    content.appendChild(this.point);
-    this.display = document.createElement("div");
-    this.point.appendChild(this.display);
-    this.point.style.position = "absolute";
-    this.display.style.position = "absolute";
-
-    this.update();
-  }
-
-  update()
-  {
-    this.point.style.left = this.start.x;
-    this.point.style.bottom = this.start.y;
-    this.display.style.height = this.start.dist(this.end) + this.width * 2;
-    this.display.style.width = this.width;
-    this.display.style.left = 0 - this.width/2;
-    this.display.style.bottom = 0 - this.width/2;
-    this.display.style.backgroundColor = this.color;
-    var rad = Math.acos((this.end.y-this.start.y)/this.start.dist(this.end));
-    if(this.end.x < this.start.x)
-      rad *= -1;
-    this.point.style.transform = "rotate(" + rad + "rad)";
-  }
-
-  delete()
-  {
-    this.display.remove();
-  }
-}
-
-class Box
-{
-  constructor(position, size, color = "white")
-  {
-    Box.prototype.valueOf = function()
+    var init = function()
     {
-      return "Box";
+      if(!this.isValid)
+      {
+        new Exception("Invalid value", "Cannot initialise the object because this instance is invalid.", this);
+        return;
+      }
+
+      var point = document.createElement("a");
+      try
+      {
+        Object.defineProperty(this, "point", {
+          enumerable: true, get: function(){return point;}, set: Warn
+        });
+      }
+      catch(error)
+      {
+        point.remove();
+        new Exception("Double call", "Cannot call function 'init' after it was already called once.");
+        return;
+      }
+      content.appendChild(point);
+      var display = document.createElement("div");
+      Object.defineProperty(this, "display", {
+        enumerable: true, get: function(){return display;}, set: Warn
+      });
+      point.appendChild(display);
+      point.style.position = "absolute";
+      display.style.position = "absolute";
+
+      this.update();
     }
+    Object.defineProperty(this, "init", {
+      enumerable: true, get: function(){return init;}, set: Warn
+    });
 
-    this._isValid = true;
-    this.color = color;
-    if(position !== undefined && position.valueOf() == "Vector2")
+    var update = function()
     {
-      this.position = position;
+      if(!this.isValid)
+      {
+        new Exception("Invalid value", "Cannot update the object because this instance is invalid.", this);
+        return;
+      }
+
+      var point = this.point;
+      var display = this.display;
+      var start = this.start;
+      var end = this.end;
+      var width = this.width;
+      point.style.left = start.x;
+      point.style.bottom = start.y;
+      display.style.height = start.dist(end) + width * 2;
+      display.style.width = this.width;
+      display.style.left = 0 - this.width/2;
+      display.style.bottom = 0 - this.width/2;
+      display.style.backgroundColor = this.color;
+      var rad = Math.acos((end.y-start.y)/start.dist(end));
+      if(end.x < start.x)
+        rad *= -1;
+      point.style.transform = "rotate(" + rad + "rad)";
+    }
+    Object.defineProperty(this, "update", {
+      enumerable: true, get: function(){return update;}, set: Warn
+    });
+
+    if(this.isValid)
+      this.init();
+
+    var _delete = function(){this.display.remove();};
+    Object.defineProperty(this, "delete", {
+      enumerable: true, get: function(){return _delete;}, set: Warn
+    });
+  }
+
+  box = function(position, size, color = "white")
+  {
+    var isValid = true;
+    Object.defineProperty(this, "isValid", {
+      enumerable: true, get: function(){return isValid;}, set: function(v){
+        if(key)
+          isValid = v;
+        else
+          Warn();
+    }});
+
+    if(typeof color == "string")
+      Object.defineProperty(this, "color", {
+        enumerable: true, get: function(){return color;}, set: function(v){
+          if(typeof v == string)
+            color = v;
+          else
+            new Exception("Unexpected value", "Passed value 'v' was not a string.");
+       }
+      });
+    else
+      new Exception("Unexpected value", "Passed value 'color' was not a string.");
+    if(isValueDefined(position) && position.valueOf() == "Vector2")
+    {
+      if(position.isValid)
+        Object.defineProperty(this, "position", {
+          enumerable: true, get: function(){return position;}, set: function(pos){
+            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            {
+              if(pos.isValid)
+                position = pos;
+              else
+                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.");
+            }
+            else
+              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.");
+          }
+        });
+      else
+        new Exception("Invalid value", "Passed value 'position' was not a valid Vector2.");
     }
     else
+      new Exception("Unexpected value", "Passed value 'position' was not a Vector2.");
+    if(isValueDefined(size) && size.valueOf() == "Vector2")
     {
-      this.position = new Vector2();
-      if(position !== undefined)
-        new Exception("Unexpected value", "Passed value 'position' was not a value of type Vector2.\nValue type: " + position.valueOf(), this);
+      if(size.isValid)
+        Object.defineProperty(this, "size", {
+          enumerable: true, get: function(){return size;}, set: function(pos){
+            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            {
+              if(pos.isValid)
+                size = pos;
+              else
+                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.");
+            }
+            else
+              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.");
+          }
+        });
       else
-        new Exception("Invalid value", "Passed value 'position' returned undefined!\nExpected value of type Vector2.", this);
-    }
-    if(size !== undefined && size.valueOf() == "Vector2")
-    {
-      this.size = size;
+        new Exception("Invalid value", "Passed value 'size' was not a valid Vector2.");
     }
     else
-    {
-      this.size = new Vector2();
-      if(size !== undefined)
-        new Exception("Unexpected value", "Passed value 'size' was not a value of type Vector2.\nValue type: " + size.valueOf(), this);
-      else
-        new Exception("Invalid value", "Passed value 'size' returned undefined!\nExpected value of type Vector2.", this);
-    }
+      new Exception("Unexpected value", "Passed value 'size' was not a Vector2.");
+
+    Box.prototype.valueOf = function(){return "Box";}
 
     Box.prototype.toString = function()
     {
-      if(this._isValid)
-        return "Box<br/>Color: " + this.color + "\nPosition: " + this.position.toString() + "\nSize: " + this.size.toString();
+      if(this.isValid)
+        return `Box\nColor: ${this.color}\nPosition: ${this.position.toString()}\nSize: ${this.size.toString()}`;
       else
         return "<a style='color:red;'>[Box]</a>";
     }
 
-    this.init();
-  }
-
-  init()
-  {
-    this.display = document.createElement("div");
-    content.appendChild(this.display);
-    this.display.style.position = "absolute";
-    this.update();
-  }
-
-  update()
-  {
-    this.display.style.backgroundColor = this.color;
-    this.display.style.width = this.size.x;
-    this.display.style.height = this.size.y;
-    this.display.style.left = this.position.x - this.size.x/2;
-    this.display.style.bottom = this.position.y - this.size.y/2;
-  }
-
-  delete()
-  {
-    this.display.remove();
-  }
-}
-
-class Sprite
-{
-  constructor(position, size, url)
-  {
-    Sprite.prototype.valueOf = function()
+    var update = function()
     {
-      return "Sprite";
+      var display = this.display;
+      display.style.backgroundColor = this.color;
+      display.style.width = this.size.x;
+      display.style.height = this.size.y;
+      display.style.left = this.position.x - this.size.x/2;
+      display.style.bottom = this.position.y - this.size.y/2;
     }
+    Object.defineProperty(this, "update", {
+      enumerable: true, get: function(){return update;}, set: Warn
+    });
 
-    this._isValid = true;
+    var init = function()
+    {
+      if(!this.isValid)
+      {
+        new Exception("Invalid value", "Cannot initialise the object because this instance is invalid.", this);
+        return;
+      }
+
+      var display = document.createElement("div");
+      try
+      {
+        Object.defineProperty(this, "display", {
+          enumerable: true, get: function(){return display;}, set: Warn
+        });
+      }
+      catch(error)
+      {
+        display.remove();
+        new Exception("Double call", "Cannot call function 'init' after it was already called once.");
+        return;
+      }
+      content.appendChild(display);
+      display.style.position = "absolute";
+      this.update();
+    }
+    Object.defineProperty(this, "init", {
+      enumerable: true, get: function(){return init;}, set: Warn
+    });
+
+    if(this.isValid)
+      this.init();
+
+    var _delete = function(){this.display.remove();}
+    Object.defineProperty(this, "delete", {
+      enumerable: true, get: function(){return _delete;}, set: Warn
+    });
+  }
+
+  sprite = function(position, size, url)
+  {
+    var isValid = true;
+    Object.defineProperty(this, "isValid", {
+      enumerable: true, get: function(){return isValid;}, set: function(v){
+        if(key)
+          isValid = v;
+        else
+          Warn();
+    }});
+
     if(typeof url == "string")
+      Object.defineProperty(this, "url", {
+        enumerable: true, get: function(){return url;}, set: function(v){
+          if(typeof v == string)
+            url = v;
+          else
+            new Exception("Unexpected value", "Passed value 'v' was not a string.");
+       }
+      });
+    else
+      new Exception("Unexpected value", "Passed value 'url' was not a string.");
+    if(isValueDefined(position) && position.valueOf() == "Vector2")
     {
-      this.url = url;
+      if(position.isValid)
+        Object.defineProperty(this, "position", {
+          enumerable: true, get: function(){return position;}, set: function(pos){
+            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            {
+              if(pos.isValid)
+                position = pos;
+              else
+                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.");
+            }
+            else
+              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.");
+          }
+        });
+      else
+        new Exception("Invalid value", "Passed value 'position' was not a valid Vector2.");
     }
     else
+      new Exception("Unexpected value", "Passed value 'position' was not a Vector2.");
+    if(isValueDefined(size) && size.valueOf() == "Vector2")
     {
-      this.url = "";
-      new Exception("Unexpected value", "Passed value 'url' was not a value of type string.\nValue type: " + typeof url, this);
-    }
-    if(position.valueOf() == "Vector2")
-    {
-      this.position = position;
+      if(size.isValid)
+        Object.defineProperty(this, "size", {
+          enumerable: true, get: function(){return size;}, set: function(pos){
+            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            {
+              if(pos.isValid)
+                size = pos;
+              else
+                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.");
+            }
+            else
+              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.");
+          }
+        });
+      else
+        new Exception("Invalid value", "Passed value 'size' was not a valid Vector2.");
     }
     else
-    {
-      this.position = new Vector2();
-      new Exception("Unexpected value", "Passed value 'position' was not a value of type Vector2.\nValue type: " + position.valueOf(), this);
-    }
-    if(size.valueOf() == "Vector2")
-    {
-      this.size = size;
-    }
-    else
-    {
-      this.size = new Vector2();
-      new Exception("Unexpected value", "Passed value 'size' was not a value of type Vector2.\nValue type: " + size.valueOf(), this);
-    }
+      new Exception("Unexpected value", "Passed value 'size' was not a Vector2.");
+
+    Sprite.prototype.valueOf = function(){return "Sprite";}
 
     Sprite.prototype.toString = function()
     {
-      if(this._isValid)
-        return "Sprite<br/>Url: " + this.url + "\nPosition: " + this.position.toString() + "\nSize: " + this.size.toString();
+      if(this.isValid)
+        return `Sprite\nUrl: ${this.url}\nPosition: ${this.position.toString()}\nSize: ${this.size.toString()}`;
       else
         return "<a style='color:red;'>[Sprite]</a>";
     }
 
-    this.init();
-  }
+    var update = function()
+    {
+      var display = this.display;
+      display.src = this.url;
+      display.style.width = this.size.x;
+      display.style.height = this.size.y;
+      display.style.left = this.position.x - this.size.x/2;
+      display.style.bottom = this.position.y - this.size.y/2;
+    }
+    Object.defineProperty(this, "update", {
+      enumerable: true, get: function(){return update;}, set: Warn
+    });
 
-  init()
-  {
-    this.display = document.createElement("img");
-    content.appendChild(this.display);
-    readOnly(this.display);
-    this.display.style.position = "absolute";
-    this.update();
-  }
+    var init = function()
+    {
+      if(!this.isValid)
+      {
+        new Exception("Invalid value", "Cannot initialise the object because this instance is invalid.", this);
+        return;
+      }
 
-  update()
-  {
-    this.display.src = this.url;
-    this.display.style.width = this.size.x;
-    this.display.style.height = this.size.y;
-    this.display.style.left = this.position.x - this.size.x/2;
-    this.display.style.bottom = this.position.y - this.size.y/2;
-  }
+      var display = document.createElement("img");
+      try
+      {
+        Object.defineProperty(this, "display", {
+          enumerable: true, get: function(){return display;}, set: Warn
+        });
+      }
+      catch(error)
+      {
+        display.remove();
+        new Exception("Double call", "Cannot call function 'init' after it was already called once.");
+        return;
+      }
+      content.appendChild(display);
+      readOnly(display);
+      display.style.position = "absolute";
+      this.update();
+    }
+    Object.defineProperty(this, "init", {
+      enumerable: true, get: function(){return init;}, set: Warn
+    });
 
-  delete()
-  {
-    this.display.remove();
-  }
-}
+    if(this.isValid)
+      this.init();
 
+    var _delete = function(){this.display.remove();}
+  }
+})();
+
+const Exception = exception;
+exception = undefined;
+delete(exception);
+const Warning = warning;
+warning = undefined;
+delete(warning);
+const Log = log;
+log = undefined;
+delete(log);
+const InputLog = inputlog;
+inputlog = undefined;
+delete(inputlog);
+const Popup = popup;
+popup = undefined;
+delete(popup);
+
+const Dir2D = dir2d;
+dir2d = undefined;
+delete(dir2d);
+const Vector2 = vector2;
+vector2 = undefined;
+delete(vector2);
+const Vector3 = vector3;
+vector3 = undefined;
+delete(vector3);
+
+const Circle = circle;
+circle = undefined;
+delete(circle);
+const Line = line;
+line = undefined;
+delete(line);
+const Box = box;
+box = undefined;
+delete(box);
+const Sprite = sprite;
+sprite = undefined;
+delete(sprite);
 //Start a javascript file of your choice (has to be in the 'Games' directory)
-async function execute(file, gameName)
+const execute = async function(file, gameName)
 {
   if(document.getElementById("Games").innerHTML.replace(/\n/g, "").replace(/ /g, "") == "")
   {
@@ -1586,7 +2542,7 @@ async function execute(file, gameName)
 
     //Create script element
     var game = document.createElement("script");
-    game.innerHTML = fileContent;
+    game.innerHTML = "try\n{\n  " + fileContent + "\n}\ncatch(error)\n{\n  new Exception(error);\n}";
 
     //Execute the file
     new Log("Successfully executed '" + gameName + "'!", "lime", true, "../Assets/Images/GreenCheckmark.png");
@@ -1620,7 +2576,7 @@ async function execute(file, gameName)
 }
 
 //Console functions
-function toggleConsole()
+const toggleConsole = function()
 {
   if(Console.style.top == "10px")
     Console.style.top = "-300px";
@@ -1633,7 +2589,7 @@ function toggleConsole()
     Toggle.style.transform = "rotate(180deg)";
 }
 
-function clearConsole()
+const clearConsole = function()
 {
   Logs = document.getElementById("Logs");
   Logs.innerHTML = "<p id='BlankLog'>There are no logs yet.</p>";
@@ -1672,30 +2628,30 @@ document.addEventListener('click', function(event) {
 });
 
 //Console TextArea functions
-function lockTextArea()
+const lockTextArea = function()
 {
   TextArea.readOnly = true;
 }
 
-function unlockTextArea()
+const unlockTextArea = function()
 {
   TextArea.readOnly = false;
 }
 
-function popTextArea()
+const popTextArea = function()
 {
   var Result = TextArea.value;
   TextArea.value = "";
   return Result;
 }
 
-function correctTextArea()
+const correctTextArea = function()
 {
   TextArea.value = TextArea.value.replace(/\n/g, "").replace(/</g, "").replace(/>/g, "");
 }
 
 //Console commands
-function handleCommand(message)
+const handleCommand = function(message)
 {
   if(message.startsWith("/"))
   {
@@ -1710,7 +2666,7 @@ function handleCommand(message)
               msg += commands[command].syntax + "\n" + commands[command].desc;
             else
               msg += "\n\n" + commands[command].syntax + "\n" + commands[command].desc;
-          new Log(msg, "darkgrey", true, "Gear.png");
+          new Log(msg, "darkgrey", true, "../Assets/Images/Gear.png");
         },
         "syntax":"Help",
         "desc":"Bring up a help message.",
@@ -1785,19 +2741,19 @@ function handleCommand(message)
 //Handle update
 var Update = function(){};
 var _Update;
-var _u1 = function(){
+const _u1 = function(){
   clearInterval(_Update);
   Update();
   _Update = setInterval(_u2, window.interval);
 };
-var _u2 = function(){
+const _u2 = function(){
   clearInterval(_Update);
   Update();
   _Update = setInterval(_u1, window.interval);
 };
 
 //Usefull stuff
-function readOnly(element)
+const unselectable = function(element)
 {
   if(isElement(element))
   {
@@ -1812,7 +2768,8 @@ function readOnly(element)
     new Exception("Unexpected value", "Cannot set passed value 'element' as readonly because the passed value was not an instance of HTMLElement nor any similar value class.\nValue type: " + typeof element);
 }
 
-function isElement(obj) {
+const isElement = function(obj)
+{
   try {
     return obj instanceof HTMLElement;
   }
@@ -1823,76 +2780,99 @@ function isElement(obj) {
   }
 }
 
-function random(start, end)
+const isValueDefined = function(val)
 {
-  if(typeof start === "number" && typeof end === "number")
-    return Math.random() * (end-start) + start;
-  else
-  {
-    new Exception("Unexpected value", "One or more of the passed values in random() were not values of type number.");
-    return 0;
-  }
+  if(val === undefined || val === null || (typeof val == "number" && isNaN(val)))return false;return true;
 }
 
-function randomStr(length)
-{
-  if(typeof length === "number")
+var random = {};
+
+(function(){
+  function Warn(){new Warning("Protection level", "Cannot set property due to its protection level.");}
+
+  var range = function(start, end)
   {
-    var result = "";
-    var list = [];
-    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for(var i = 0; i < length; i++)
-      list.push(chars[parseInt(random(0, chars.length))]);
-
-    for(var i = 0; i < list.length; i++)
-      result += list[i];
-
-    return result;
+    if(typeof start === "number" && typeof end === "number")
+      return Math.random() * (end-start) + start;
+    else
+    {
+      new Exception("Unexpected value", "One or more of the passed values in Random.range() were not values of type number.");
+      return 0;
+    }
   }
-  else
+  Object.defineProperty(random, "range", {
+    enumerable: true, get: function(){return range;}, set: Warn
+  });
+
+  var string = function(length)
   {
-    if(length === undefined)
+    if(typeof length === "number")
+    {
+      var result = "";
+      var list = [];
+      var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      for(var i = 0; i < length; i++)
+        list.push(chars[parseInt(random(0, chars.length))]);
+
+      for(var i = 0; i < list.length; i++)
+        result += list[i];
+
+      return result;
+    }
+    else
+    {
+      if(length === undefined)
+        return "";
+
+      new Exception("Unexpected value", "Passed value 'length' in Random.string() was not a value of type number.");
       return "";
-
-    new Exception("Unexpected value", "Passed value 'length' in randomStr() was not a value of type number.\nValue type: " + typeof length);
-    return "";
+    }
   }
-}
+  Object.defineProperty(random, "string", {
+    enumerable: true, get: function(){return string;}, set: Warn
+  });
 
-function randomColor()
-{
-  var r = random(0, 255);
-  var g = random(0, 255);
-  var b = random(0, 255);
-  return "rgb(" + r + ", " + g + ", " + b + ")";
-}
-
-function choose(array)
-{
-  try
+  var color = function()
   {
-    var i = parseInt(random(0, array.length));
-    return array[i];
+    var r = random(0, 255);
+    var g = random(0, 255);
+    var b = random(0, 255);
+    return "rgb(" + r + ", " + g + ", " + b + ")";
   }
-  catch(error)
-  {
-    new Exception("Unexpected value", "Cannot choose random element from passed value 'array' because the value wasn't an instance of Array.");
-  }
-}
+  Object.defineProperty(random, "color", {
+    enumerable: true, get: function(){return color;}, set: Warn
+  });
 
-function normalize(value, min, max)
+  var choose = function(array)
+  {
+    try
+    {
+      var i = parseInt(random(0, array.length));
+      return array[i];
+    }
+    catch(error)
+    {
+      new Exception("Unexpected value", "Cannot choose random element from passed value 'array' because the value wasn't an instance of Array.");
+    }
+  }
+  Object.defineProperty(random, "choose", {
+    enumerable: true, get: function(){return choose;}, set: Warn
+  });
+})();
+
+const Random = random;
+random = undefined;
+delete(random);
+
+const normalize = function(value, min, max)
 {
   if(typeof value == "number" && typeof min == "number" && typeof max == "number")
-  {
     return (value - min)/(max - min);
-  }
   else
-  {
     new Exception("Unexpected value", "Cannot normalize value becauses one or more of the passed values weren't values of type number.");
-  }
 }
 
-function clamp(value, min, max)
+const clamp = function(value, min, max)
 {
   if(typeof value == "number" && typeof min == "number" && typeof max == "number")
   {
@@ -1904,12 +2884,20 @@ function clamp(value, min, max)
       return value;
   }
   else
-  {
     new Exception("Unexpected value", "Cannot clamp value becauses one or more of the passed values weren't values of type number.");
-  }
 }
 
-function collision(element1, element2)
+const map = function(value, min1, max1, min2, max2)
+{
+  if(typeof value == "number" && typeof min1 == "number" && typeof max1 == "number" && typeof min2 == "number" && typeof max2 == "number")
+  {
+    return (value - min1)/(max1 - min1)*(max2 - min2)+min2;
+  }
+  else
+    new Exception("Unexpected value", "Cannot map value becauses one or more of the passed values weren't values of type number.");
+}
+
+const collision = function(element1, element2)
 {
   if(isElement(element1) && isElement(element2))
   {
