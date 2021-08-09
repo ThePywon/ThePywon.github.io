@@ -843,7 +843,7 @@ var sprite;
       }
     }
     Object.defineProperty(this, "populateData", {
-      enumerable: true, get: function(){return populateData;}, set: Warn
+      enumerable: true, get: function(){if(key)return populateData;else Warn;}, set: Warn
     });
 
     var checkValidity = function()
@@ -933,7 +933,9 @@ var sprite;
         {
           if(Instance.checkValidity())
           {
-            Instance.populateData()
+            key = true;
+            Instance.populateData();
+            key = false;
             Instance.delete();
             Instance.onsubmit(Instance.data);
           }
@@ -2460,17 +2462,24 @@ const execute = async function(file, gameName)
       var game = document.createElement("script");
       game.innerHTML = fileContent;
 
+      //Stop the current script
+      stop();
+
       //Execute the file
       new Log("Successfully executed '" + gameName + "'!", "lime", true, "../Assets/Images/GreenCheckmark.png");
-      content.innerHTML = "";
-      document.getElementById("Games").innerHTML = "";
       document.getElementById("Games").appendChild(game);
       Start();
       Update();
-      clearInterval(_Update);
       _Update = setInterval(_u1, window.interval);
     }, ["yes", "no"], "../Assets/Images/YellowWarning.png");
   }
+}
+
+const stop = function()
+{
+  clearDraw();
+  clearInterval(_Update);
+  document.getElementById("Games").innerHTML = "";
 }
 
 //Console functions
@@ -2587,6 +2596,16 @@ const handleCommand = function(message)
         },
         "syntax":"Clear",
         "desc":"Clear the console.",
+        "argAmount":0
+      },
+      "stop":
+      {
+        "run":function(args)
+        {
+          stop();
+        },
+        "syntax":"Stop",
+        "desc":"Stop the currently running script (if there is any)",
         "argAmount":0
       }
     };
@@ -2713,7 +2732,7 @@ var random = {};
       var list = [];
       var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       for(var i = 0; i < length; i++)
-        list.push(chars[parseInt(random(0, chars.length))]);
+        list.push(chars[parseInt(Random.range(0, chars.length))]);
 
       for(var i = 0; i < list.length; i++)
         result += list[i];
@@ -2735,9 +2754,9 @@ var random = {};
 
   var color = function()
   {
-    var r = random(0, 255);
-    var g = random(0, 255);
-    var b = random(0, 255);
+    var r = Random.range(0, 255);
+    var g = Random.range(0, 255);
+    var b = Random.range(0, 255);
     return "rgb(" + r + ", " + g + ", " + b + ")";
   }
   Object.defineProperty(random, "color", {
@@ -2748,7 +2767,7 @@ var random = {};
   {
     try
     {
-      var i = parseInt(random(0, array.length));
+      var i = parseInt(Random.range(0, array.length));
       return array[i];
     }
     catch(error)
@@ -2796,27 +2815,6 @@ const map = function(value, min1, max1, min2, max2)
   }
   else
     new Exception("Unexpected value", "Cannot map value becauses one or more of the passed values weren't values of type number.");
-}
-
-const collision = function(element1, element2)
-{
-  if(isElement(element1) && isElement(element2))
-  {
-    var Rect1 = element1.getBoundingClientRect();
-    var Rect2 = element2.getBoundingClientRect();
-
-    var overlap = !(Rect1.right < Rect2.left || Rect1.left > Rect2.right || Rect1.bottom < Rect2.top || Rect1.top > Rect2.bottom)
-
-    if(overlap)
-      return true;
-    else
-      return false;
-  }
-  else
-  {
-    new Exception("Unexpected value", "Cannot calculate collision with the passed values because one or more of the passed values weren't values of type HTMLElement nor any similar class type.");
-    return false;
-  }
 }
 
 const clearDraw = function()
