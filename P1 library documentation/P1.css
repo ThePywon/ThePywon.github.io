@@ -49,6 +49,7 @@ h3
   transition:color 0.125s ease, background-color 0.125s ease;
   padding:5px;
   margin:5px auto;
+  margin-left:25px;
   cursor:pointer;
 }
 
