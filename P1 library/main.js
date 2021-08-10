@@ -2391,6 +2391,9 @@ var sprite;
       this.init();
 
     var _delete = function(){this.display.remove();}
+    Object.defineProperty(this, "delete", {
+      enumerable: true, get: function(){return _delete;}, set: Warn
+    });
   }
 })();
 
@@ -2673,21 +2676,6 @@ const _u2 = function(){
 };
 
 //Usefull stuff
-const unselectable = function(element)
-{
-  if(isElement(element))
-  {
-    element.style.webkitTouchCallout = "none";
-    element.style.webkitUserSelect = "none";
-    element.style.khtmlUserSelect = "none";
-    element.style.mozUserSelect = "none";
-    element.style.msUserSelect = "none";
-    element.style.userSelect = "none";
-  }
-  else
-    new Exception("Unexpected value", "Cannot set passed value 'element' as readonly because the passed value was not an instance of HTMLElement nor any similar value class.\nValue type: " + typeof element);
-}
-
 const isElement = function(obj)
 {
   try {
@@ -2754,9 +2742,9 @@ var random = {};
 
   var color = function()
   {
-    var r = Random.range(0, 255);
-    var g = Random.range(0, 255);
-    var b = Random.range(0, 255);
+    var r = parseInt(Random.range(0, 255));
+    var g = parseInt(Random.range(0, 255));
+    var b = parseInt(Random.range(0, 255));
     return "rgb(" + r + ", " + g + ", " + b + ")";
   }
   Object.defineProperty(random, "color", {
