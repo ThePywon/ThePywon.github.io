@@ -4,6 +4,7 @@ var MenuHeaders = [
     "buttons":[
       {
         "name":"Log",
+        "type":"object",
         "data":
         {
           "desc":"This object is used to log into the console.",
@@ -115,6 +116,7 @@ var MenuHeaders = [
       },
       {
         "name":"Exception",
+        "type":"object",
         "data":
         {
           "desc":"This object is used to Log errors in the console.",
@@ -193,6 +195,7 @@ var MenuHeaders = [
       },
       {
         "name":"Warning",
+        "type":"object",
         "data":
         {
           "desc":"This object is used to Warn users in the console.",
@@ -271,6 +274,7 @@ var MenuHeaders = [
       },
       {
         "name":"InputLog",
+        "type":"object",
         "data":
         {
           "desc":"This object is used to get input from the user. (text, checkbox, color, file, etc...)",
@@ -383,6 +387,7 @@ var MenuHeaders = [
       },
       {
         "name":"Popup",
+        "type":"object",
         "data":
         {
           "desc":"This object is used to create a popup and get a response from the user.",
@@ -505,10 +510,11 @@ var MenuHeaders = [
     ]
   },
   {
-    "name":"Data Objects",
+    "name":"Math Objects",
     "buttons":[
       {
         "name":"Dir2D",
+        "type":"object",
         "data":
         {
           "desc":"This object's use is to store/transform/use a 2d direction (left, up, right, down and none).",
@@ -604,6 +610,7 @@ var MenuHeaders = [
       },
       {
         "name":"Vector2",
+        "type":"object",
         "data":
         {
           "desc":"This object's use is to store/transform/use a 2D position.",
@@ -703,6 +710,7 @@ var MenuHeaders = [
       },
       {
         "name":"Vector3",
+        "type":"object",
         "data":
         {
           "desc":"This object's use is to store/transform/use a 3D position.",
@@ -821,6 +829,7 @@ var MenuHeaders = [
     "buttons":[
       {
         "name":"Circle",
+        "type":"object",
         "data":
         {
           "desc":"This object's use is to draw a circle at a desired position.",
@@ -844,12 +853,12 @@ var MenuHeaders = [
           "examples":[
             {
               "name":"Simple example",
-              "code":`<a style="color:red;">var</a> center = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:magenta;">window</a>.innerWidth<a style="color:red;">/</a><a style="color:#5555ff;">2</a>, <a style="color:magenta;">window</a>.innerHeight<a style="color:red;">/</a><a style="color:#5555ff;">2</a>);<br/><a style="color:red;">new</a> <a style="color:orange;">Circle</a>(center, <a style="color:#5555ff;">25</a>);`,
+              "code":`<a style="color:red;">var</a> center = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">50</a>, <a style="color:#5555ff;">50</a>);<br/><a style="color:red;">new</a> <a style="color:orange;">Circle</a>(center, <a style="color:#5555ff;">25</a>);`,
               "result":"../Assets/Images/Circle_object-Example1.png"
             },
             {
               "name":"Adding color",
-              "code":`<a style="color:red;">var</a> center = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:magenta;">window</a>.innerWidth<a style="color:red;">/</a><a style="color:#5555ff;">2</a>, <a style="color:magenta;">window</a>.innerHeight<a style="color:red;">/</a><a style="color:#5555ff;">2</a>);<br/><a style="color:red;">new</a> <a style="color:orange;">Circle</a>(center, <a style="color:#5555ff;">25</a>, <a style="color:#55ff55;">"magenta"</a>);`,
+              "code":`<a style="color:red;">var</a> center = <a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">50</a>, <a style="color:#5555ff;">50</a>);<br/><a style="color:red;">new</a> <a style="color:orange;">Circle</a>(center, <a style="color:#5555ff;">25</a>, <a style="color:#55ff55;">"magenta"</a>);`,
               "result":"../Assets/Images/Circle_object-Example2.png"
             }
           ],
@@ -886,6 +895,7 @@ var MenuHeaders = [
       },
       {
         "name":"Line",
+        "type":"object",
         "data":
         {
           "desc":"This object's use is to draw a line going from one point to another.",
@@ -964,6 +974,7 @@ var MenuHeaders = [
       },
       {
         "name":"Box",
+        "type":"object",
         "data":
         {
           "desc":"This object's use is to draw a box at a specific point.",
@@ -1029,6 +1040,7 @@ var MenuHeaders = [
       },
       {
         "name":"Sprite",
+        "type":"object",
         "data":
         {
           "desc":"This object's use is to draw an image to the canvas.",
@@ -1058,10 +1070,38 @@ var MenuHeaders = [
             }
           ],
           "properties":[
-
+            {
+              "name":"position",
+              "desc":"Holds the position of the Sprite."
+            },
+            {
+              "name":"size",
+              "desc":"Holds the size of the Sprite."
+            },
+            {
+              "name":"url",
+              "desc":"Holds the Sprite's image url."
+            },
+            {
+              "name":"isValid",
+              "desc":"Holds the object's valid state.",
+              "readOnly":true
+            }
           ],
           "functions":[
-
+            {
+              "name":'<a style="color:lightblue;">init</a>()',
+              "desc":"Called upon initialization.<br/>Initializes the image HTMLElement for the Sprite.",
+              "onlyOnce":true
+            },
+            {
+              "name":'<a style="color:lightblue;">draw</a>()',
+              "desc":"Draws the sprite on the canvas."
+            },
+            {
+              "name":'<a style="color:lightblue;">delete</a>()',
+              "desc":"Can be used to delete the Sprite entirely.<br/>Doing that is irreversible and the object will be marked 'invalid' from this point on."
+            }
           ]
         }
       }
@@ -1072,121 +1112,123 @@ var MenuHeaders = [
     "buttons":[
       {
         "name":"Start",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
-          "parameters":[
-
-          ],
+          "desc":"Gets called right after the script has loaded.",
+          "constructor":'<a style="color:lightblue;">Start</a>()',
+          "parameters":[],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:lightblue;">function</a> Start()<br/>{<br/>&nbsp;&nbsp;<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"It works!"</a>);<br/>}`,
+              "result":"../Assets/Images/Start_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"Update",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
-          "parameters":[
-
-          ],
+          "desc":'Gets called right after <span class="codeBlock"><a style="color:lightblue;">Start</a>()</span> at specific intervals.<br/>(stored in <span class="codeBlock"><a style="color:magenta;">window</a>.interval</span> in milliseconds)',
+          "constructor":'<a style="color:lightblue;">Update</a>()',
+          "parameters":[],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:lightblue;">function</a> Update()<br/>{<br/>&nbsp;&nbsp;<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"SPAM"</a>);<br/>}`,
+              "result":"../Assets/Images/Update_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"Keydown",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":"Gets called once a key gets pressed.",
+          "constructor":'<a style="color:lightblue;">Keydown</a>(event)',
           "parameters":[
-
+            {
+              "name":"event",
+              "desc":"the key event."
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:lightblue;">function</a> Keydown(<a style="color:grey;">event</a>)<br/>{<br/>&nbsp;&nbsp;<a style="color:red;">if</a>(<a style="color:grey;">event</a>.keyCode == <a style="color:orange;">keyCode</a>.upArrow)<br/>&nbsp;&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"You pressed up!"</a>);<br/>&nbsp;&nbsp;}<br/>}`,
+              "result":"../Assets/Images/Keydown_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"Keyup",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":"Gets called once a key is released.",
+          "constructor":'<a style="color:lightblue;">Keyup</a>(event)',
           "parameters":[
-
+            {
+              "name":"event",
+              "desc":"the key event."
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:lightblue;">function</a> Keyup(<a style="color:grey;">event</a>)<br/>{<br/>&nbsp;&nbsp;<a style="color:red;">if</a>(<a style="color:grey;">event</a>.keyCode == <a style="color:orange;">keyCode</a>.downArrow)<br/>&nbsp;&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"You released down!"</a>);<br/>&nbsp;&nbsp;}<br/>}`,
+              "result":"../Assets/Images/Keyup_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"OnMessage",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":'Gets called a bit after once a Log or an InputLog gets initialized.<br/>(Delay is stored in <span class="codeBlock"><a style="color:magenta;">window</a>.timeout</span> in milliseconds)',
+          "constructor":'<a style="color:lightblue;">OnMessage</a>(message)',
           "parameters":[
-
+            {
+              "name":"message",
+              "desc":"the Log/InputLog that got initialized."
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"Hello!"</a>);<br/><br/><a style="color:lightblue;">function</a> OnMessage(<a style="color:grey;">message</a>)<br/>{<br/>&nbsp;&nbsp;<a style="color:red;">new</a> <a style="color:orange;">Warning</a>(<a style="color:#55ff55;">"'"</a> <a style="color:red;">+</a> <a style="color:grey;">message</a>.<a style="color:lightblue;">toString</a>() <a style="color:red;">+</a> <a style="color:#55ff55;">"' has been logged!"</a>);<br/>}`,
+              "result":"../Assets/Images/OnMessage_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"OnError",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":'Gets called a bit after once a Warning or an Exception gets initialized.<br/>(Delay is stored in <span class="codeBlock"><a style="color:magenta;">window</a>.timeout</span> in milliseconds)',
+          "constructor":'<a style="color:lightblue;">OnError</a>(error)',
           "parameters":[
-
+            {
+              "name":"error",
+              "desc":"the Warning/Exception that got initialized."
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">new</a> <a style="color:orange;">Exception</a>(<a style="color:#55ff55;">"test."</a>);<br/><br/><a style="color:lightblue;">function</a> OnError(<a style="color:grey;">error</a>)<br/>{<br/>&nbsp;&nbsp;<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:#55ff55;">"'"</a> <a style="color:red;">+</a> <a style="color:grey;">error</a>.<a style="color:lightblue;">toString</a>() <a style="color:red;">+</a> <a style="color:#55ff55;">"' has been logged!"</a>);<br/>}`,
+              "result":"../Assets/Images/OnError_function-Example1.png"
+            }
           ]
         }
       }
@@ -1197,81 +1239,88 @@ var MenuHeaders = [
     "buttons":[
       {
         "name":"range",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":"Returns a random value in a certain range.",
+          "constructor":'<a style="color:orange;">Random</a>.<a style="color:lightblue;">range</a>(start, end)',
           "parameters":[
-
+            {
+              "name":"start",
+              "desc":"the minimum value (inclusive)"
+            },
+            {
+              "name":"end",
+              "desc":"the maximum value (exclusive)"
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:orange;">Random</a>.<a style="color:lightblue;">range</a>(<a style="color:#5555ff;">1</a>, <a style="color:#5555ff;">10</a>));`,
+              "result":"../Assets/Images/Random.range_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"color",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
-          "parameters":[
-
-          ],
+          "desc":"Returns a random css rgb color.",
+          "constructor":'<a style="color:orange;">Random</a>.<a style="color:lightblue;">color</a>()',
+          "parameters":[],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">new</a> <a style="color:orange;">Circle</a>(<a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">50</a>, <a style="color:#5555ff;">50</a>), <a style="color:#5555ff;">25</a>, <a style="color:orange;">Random</a>.<a style="color:lightblue;">color</a>());`,
+              "result":"../Assets/Images/Random.color_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"string",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":"Returns a random string of a specified length.<br/>(Contains uppercase/lowercase letter and numbers)",
+          "constructor":'<a style="color:orange;">Random</a>.<a style="color:lightblue;">string</a>(length)',
           "parameters":[
-
+            {
+              "name":"length",
+              "desc":"the desired string length."
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:orange;">Random</a>.<a style="color:lightblue">string</a>(<a style="color:#5555ff;">10</a>));`,
+              "result":"../Assets/Images/Random.string_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"choose",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":"Returns a random element of a passed array.",
+          "constructor":'<a style="color:orange;">Random</a>.<a style="color:lightblue;">choose</a>(array)',
           "parameters":[
-
+            {
+              "name":"array",
+              "desc":"array from wich the element will be picked from."
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">var</a> choices = [<a style="color:#55ff55;">"apple"</a>, <a style="color:#55ff55;">"banana"</a>, <a style="color:#55ff55;">"orange"</a>];<br/><br/><a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:orange;">Random</a>.<a style="color:lightblue">choose</a>(choices));`,
+              "result":"../Assets/Images/Random.choose_function-Example1.png"
+            }
           ]
         }
       }
@@ -1282,61 +1331,99 @@ var MenuHeaders = [
     "buttons":[
       {
         "name":"normalize",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":"Returns a normalized value from the passed value.",
+          "constructor":'<a style="color:lightblue;">normalize</a>(value, min, max)',
           "parameters":[
-
+            {
+              "name":"value",
+              "desc":"the initial value (before normalization)"
+            },
+            {
+              "name":"min",
+              "desc":"the point where 'value' should become 0."
+            },
+            {
+              "name":"max",
+              "desc":"the point where 'value' should become 1."
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:lightblue">normalize</a>(<a style="color:#5555ff;">5</a>, <a style="color:#5555ff;">0</a>, <a style="color:#5555ff;">10</a>));`,
+              "result":"../Assets/Images/normalize_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"clamp",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":"Returns a clamped value from the passed value.",
+          "constructor":'<a style="color:lightblue;">clamp</a>(value, min, max)',
           "parameters":[
-
+            {
+              "name":"value",
+              "desc":"the initial value (before clamping)"
+            },
+            {
+              "name":"min",
+              "desc":"the minimum value that can be returned."
+            },
+            {
+              "name":"max",
+              "desc":"the maximum value that can be returned."
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:lightblue">clamp</a>(<a style="color:#5555ff;">99</a>, <a style="color:#5555ff;">0</a>, <a style="color:#5555ff;">10</a>));`,
+              "result":"../Assets/Images/clamp_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"map",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":"Returns a mapped value from the passed value.",
+          "constructor":'<a style="color:lightblue;">map</a>(value, min1, max1, min2, max2)',
           "parameters":[
-
+            {
+              "name":"value",
+              "desc":"the inital value (before mapping)"
+            },
+            {
+              "name":"min1",
+              "desc":"the point where 'value' should become 'min2'."
+            },
+            {
+              "name":"max1",
+              "desc":"the point where 'value' should become 'max2'."
+            },
+            {
+              "name":"min2",
+              "desc":"the value returned if 'value' is equal to 'min1'"
+            },
+            {
+              "name":"max2",
+              "desc":"the value returned if 'value' is equal to 'max1'"
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:lightblue">map</a>(<a style="color:#5555ff;">5</a>, <a style="color:#5555ff;">0</a>, <a style="color:#5555ff;">10</a>, <a style="color:#5555ff;">0</a>, <a style="color:#5555ff;">100</a>));`,
+              "result":"../Assets/Images/map_function-Example1.png"
+            }
           ]
         }
       }
@@ -1346,62 +1433,41 @@ var MenuHeaders = [
     "name":"Other Functions",
     "buttons":[
       {
-        "name":"unselectable",
-        "data":
-        {
-          "desc":"",
-          "constructor":'',
-          "parameters":[
-
-          ],
-          "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
-          ]
-        }
-      },
-      {
         "name":"isElement",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
+          "desc":"Returns true if the passed object is an HTMLElement.",
+          "constructor":'isElement(obj)',
           "parameters":[
-
+            {
+              "name":"obj",
+              "desc":"the object that will be verified."
+            }
           ],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">var</a> obj = {};<br/><br/><a style="color:red;">new</a> <a style="color:orange;">Log</a>(<a style="color:lightblue;">isElement</a>(obj));`,
+              "result":"../Assets/Images/isElement_function-Example1.png"
+            }
           ]
         }
       },
       {
         "name":"clearDraw",
+        "type":"function",
         "data":
         {
-          "desc":"",
-          "constructor":'',
-          "parameters":[
-
-          ],
+          "desc":"Clears the canvas.",
+          "constructor":'<a style="color:lightblue;">clearDraw</a>()',
+          "parameters":[],
           "examples":[
-
-          ],
-          "properties":[
-
-          ],
-          "functions":[
-
+            {
+              "name":"Simple example",
+              "code":`<a style="color:red;">new</a> <a style="color:orange;">Circle</a>(<a style="color:red;">new</a> <a style="color:orange;">Vector2</a>(<a style="color:#5555ff;">50</a>, <a style="color:#5555ff;">50</a>), <a style="color:#5555ff;">25</a>);<br/><br/><a style="color:lightblue;">clearDraw</a>();`,
+              "result":"../Assets/Images/clearDraw_function-Example1.png"
+            }
           ]
         }
       }
@@ -1425,86 +1491,100 @@ function setup()
       document.getElementById("main").appendChild(slide);
       slides.push(slide);
 
-      slide.innerHTML += `<h1>${MenuHeaders[i].buttons[_i].name}</h1>`;
-      slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.desc}</p><br/><br/>`;
-      slide.innerHTML += `<p class="codeBlock">${MenuHeaders[i].buttons[_i].data.constructor}</p><br/>`;
-
-      for(var p = 0; p < MenuHeaders[i].buttons[_i].data.parameters.length; p++)
+      if(MenuHeaders[i].buttons[_i].type == "object" || MenuHeaders[i].buttons[_i].type == "function")
       {
-        if(MenuHeaders[i].buttons[_i].data.parameters[p].mandatory)
-          slide.innerHTML += `<p>The parameter '${MenuHeaders[i].buttons[_i].data.parameters[p].name}' determines ${MenuHeaders[i].buttons[_i].data.parameters[p].desc}<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>`;
-        else
-          slide.innerHTML += `<p>The parameter '${MenuHeaders[i].buttons[_i].data.parameters[p].name}' determines ${MenuHeaders[i].buttons[_i].data.parameters[p].desc}</p><br/>`;
-      }
+        slide.innerHTML += `<h1>${MenuHeaders[i].buttons[_i].name} ${MenuHeaders[i].buttons[_i].type}</h1>`;
+        slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.desc}</p><br/><br/>`;
+        if(MenuHeaders[i].buttons[_i].type == "object")
+          slide.innerHTML += `<p class="codeBlock">${MenuHeaders[i].buttons[_i].data.constructor}</p><br/>`;
+        else if(MenuHeaders[i].buttons[_i].type == "function")
+          slide.innerHTML += `<span class="codeBlock">${MenuHeaders[i].buttons[_i].data.constructor}</span><br/>`;
 
-      slide.innerHTML += "<br/><br/><br/>";
-
-      for(var e = 0; e < MenuHeaders[i].buttons[_i].data.examples.length; e++)
-      {
-        slide.innerHTML += `<h3>${MenuHeaders[i].buttons[_i].data.examples[e].name}:</h3>`;
-        slide.innerHTML += `<p class="codeBlock">${MenuHeaders[i].buttons[_i].data.examples[e].code}</p><br/>`;
-        if(MenuHeaders[i].buttons[_i].data.examples[e].result)
-          slide.innerHTML += `<h3>Result:</h3><img src="${MenuHeaders[i].buttons[_i].data.examples[e].result}"/><br/><br/><br/>`;
-        else if(MenuHeaders[i].buttons[_i].data.examples[e].results)
+        for(var p = 0; p < MenuHeaders[i].buttons[_i].data.parameters.length; p++)
         {
-          slide.innerHTML += "<h3>Result:</h3>";
-          for(var r = 0; r < MenuHeaders[i].buttons[_i].data.examples[e].results.length; r++)
-            slide.innerHTML += `<img src="${MenuHeaders[i].buttons[_i].data.examples[e].results[r]}"/><br/><br/><br/>`;
+          if(MenuHeaders[i].buttons[_i].type == "object")
+          {
+            if(MenuHeaders[i].buttons[_i].data.parameters[p].mandatory)
+              slide.innerHTML += `<p>The parameter '${MenuHeaders[i].buttons[_i].data.parameters[p].name}' determines ${MenuHeaders[i].buttons[_i].data.parameters[p].desc}<br/><a style="color:red;">It is mandatory to pass in this variable.<a></p><br/>`;
+            else
+              slide.innerHTML += `<p>The parameter '${MenuHeaders[i].buttons[_i].data.parameters[p].name}' determines ${MenuHeaders[i].buttons[_i].data.parameters[p].desc}</p><br/>`;
+          }
+          else
+            slide.innerHTML += `<br/><br/><p>The parameter '${MenuHeaders[i].buttons[_i].data.parameters[p].name}' holds ${MenuHeaders[i].buttons[_i].data.parameters[p].desc}</p>`;
+        }
+
+        slide.innerHTML += "<br/><br/><br/>";
+
+        for(var e = 0; e < MenuHeaders[i].buttons[_i].data.examples.length; e++)
+        {
+          slide.innerHTML += `<h3>${MenuHeaders[i].buttons[_i].data.examples[e].name}:</h3>`;
+          slide.innerHTML += `<p class="codeBlock">${MenuHeaders[i].buttons[_i].data.examples[e].code}</p><br/>`;
+          if(MenuHeaders[i].buttons[_i].data.examples[e].result)
+            slide.innerHTML += `<h3>Result:</h3><img src="${MenuHeaders[i].buttons[_i].data.examples[e].result}"/><br/><br/><br/>`;
+          else if(MenuHeaders[i].buttons[_i].data.examples[e].results)
+          {
+            slide.innerHTML += "<h3>Result:</h3>";
+            for(var r = 0; r < MenuHeaders[i].buttons[_i].data.examples[e].results.length; r++)
+              slide.innerHTML += `<img src="${MenuHeaders[i].buttons[_i].data.examples[e].results[r]}"/><br/><br/><br/>`;
+          }
         }
       }
 
-      slide.innerHTML += '<br/><br/><br/><h2>Some properties you can play with.</h2><br/>';
-
-      var board = '<div class="board"><div class="titles">';
-
-      for(var p = 0; p < MenuHeaders[i].buttons[_i].data.properties.length; p++)
+      if(MenuHeaders[i].buttons[_i].type == "object")
       {
-        if(MenuHeaders[i].buttons[_i].data.properties[p].notAlways)
-          board += `<div>${MenuHeaders[i].buttons[_i].data.properties[p].name} <img src="../Assets/Images/YellowWarning.png"/></div>`;
-        else if(!MenuHeaders[i].buttons[_i].data.properties[p].readOnly)
-          board += `<div>${MenuHeaders[i].buttons[_i].data.properties[p].name} <img src="../Assets/Images/Gear.png"/></div>`;
-        else
-          board += `<div>${MenuHeaders[i].buttons[_i].data.properties[p].name}</div>`;
-      }
+        slide.innerHTML += '<br/><br/><br/><h2>Some properties you can play with.</h2><br/>';
 
-      board += '</div><div class="descriptions">';
+        var board = '<div class="board"><div class="titles">';
 
-      for(var p = 0; p < MenuHeaders[i].buttons[_i].data.properties.length; p++)
-      {
-        if(!MenuHeaders[i].buttons[_i].data.properties[p].readOnly)
-          board += `<p>${MenuHeaders[i].buttons[_i].data.properties[p].desc}<br/>This value can be set.</p>`;
-        else if(MenuHeaders[i].buttons[_i].data.properties[p].noConstruct)
-          board += `<p>${MenuHeaders[i].buttons[_i].data.properties[p].desc}<br/>can be used without instance. (no 'new' required)</p>`;
-        else
-          board += `<p>${MenuHeaders[i].buttons[_i].data.properties[p].desc}</p>`;
-      }
-
-      board += "</div></div><br/><br/><br/><br/>";
-      slide.innerHTML += board;
-
-      slide.innerHTML += "<h2>Some functions you can play with.</h2><br/><br/>";
-
-      for(var f = 0; f < MenuHeaders[i].buttons[_i].data.functions.length; f++)
-      {
-        if(MenuHeaders[i].buttons[_i].data.functions[f].protected)
+        for(var p = 0; p < MenuHeaders[i].buttons[_i].data.properties.length; p++)
         {
-          slide.innerHTML += `<h3><span class="codeBlock">${MenuHeaders[i].buttons[_i].data.functions[f].name}</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/RedX.png"/></h3>`;
-          slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.functions[f].desc}<br/>This function is <a style="color:red;">PROTECTED</a>.</p><br/><br/>`;
+          if(MenuHeaders[i].buttons[_i].data.properties[p].notAlways)
+            board += `<div>${MenuHeaders[i].buttons[_i].data.properties[p].name} <img src="../Assets/Images/YellowWarning.png"/></div>`;
+          else if(!MenuHeaders[i].buttons[_i].data.properties[p].readOnly)
+            board += `<div>${MenuHeaders[i].buttons[_i].data.properties[p].name} <img src="../Assets/Images/Gear.png"/></div>`;
+          else
+            board += `<div>${MenuHeaders[i].buttons[_i].data.properties[p].name}</div>`;
         }
-        else if(MenuHeaders[i].buttons[_i].data.functions[f].onlyOnce)
+
+        board += '</div><div class="descriptions">';
+
+        for(var p = 0; p < MenuHeaders[i].buttons[_i].data.properties.length; p++)
         {
-          slide.innerHTML += `<h3><span class="codeBlock">${MenuHeaders[i].buttons[_i].data.functions[f].name}</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/YellowWarning.png"/></h3>`;
-          slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.functions[f].desc}<br/>This function can only be called <a style="color:red;">ONCE</a>.</p><br/><br/>`;
+          if(!MenuHeaders[i].buttons[_i].data.properties[p].readOnly)
+            board += `<p>${MenuHeaders[i].buttons[_i].data.properties[p].desc}<br/>This value can be set.</p>`;
+          else if(MenuHeaders[i].buttons[_i].data.properties[p].noConstruct)
+            board += `<p>${MenuHeaders[i].buttons[_i].data.properties[p].desc}<br/>can be used without instance. (no 'new' required)</p>`;
+          else
+            board += `<p>${MenuHeaders[i].buttons[_i].data.properties[p].desc}</p>`;
         }
-        else if(MenuHeaders[i].buttons[_i].data.functions[f].settable)
+
+        board += "</div></div><br/><br/><br/><br/>";
+        slide.innerHTML += board;
+
+        slide.innerHTML += "<h2>Some functions you can play with.</h2><br/><br/>";
+
+        for(var f = 0; f < MenuHeaders[i].buttons[_i].data.functions.length; f++)
         {
-          slide.innerHTML += `<h3><span class="codeBlock">${MenuHeaders[i].buttons[_i].data.functions[f].name}</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/Gear.png"/></h3>`;
-          slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.functions[f].desc}<br/>This function can be set!</p><br/><br/>`;
-        }
-        else
-        {
-          slide.innerHTML += `<h3><span class="codeBlock">${MenuHeaders[i].buttons[_i].data.functions[f].name}</span></h3>`;
-          slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.functions[f].desc}</p><br/><br/>`;
+          if(MenuHeaders[i].buttons[_i].data.functions[f].protected)
+          {
+            slide.innerHTML += `<h3><span class="codeBlock">${MenuHeaders[i].buttons[_i].data.functions[f].name}</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/RedX.png"/></h3>`;
+            slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.functions[f].desc}<br/>This function is <a style="color:red;">PROTECTED</a>.</p><br/><br/>`;
+          }
+          else if(MenuHeaders[i].buttons[_i].data.functions[f].onlyOnce)
+          {
+            slide.innerHTML += `<h3><span class="codeBlock">${MenuHeaders[i].buttons[_i].data.functions[f].name}</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/YellowWarning.png"/></h3>`;
+            slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.functions[f].desc}<br/>This function can only be called <a style="color:red;">ONCE</a>.</p><br/><br/>`;
+          }
+          else if(MenuHeaders[i].buttons[_i].data.functions[f].settable)
+          {
+            slide.innerHTML += `<h3><span class="codeBlock">${MenuHeaders[i].buttons[_i].data.functions[f].name}</span><img style="width:20px;height:20px;margin-left:10px;" src="../Assets/Images/Gear.png"/></h3>`;
+            slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.functions[f].desc}<br/>This function can be set!</p><br/><br/>`;
+          }
+          else
+          {
+            slide.innerHTML += `<h3><span class="codeBlock">${MenuHeaders[i].buttons[_i].data.functions[f].name}</span></h3>`;
+            slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.functions[f].desc}</p><br/><br/>`;
+          }
         }
       }
 
@@ -1541,4 +1621,4 @@ function show(index)
   }
 }
 
-show(9);
+show(0);
