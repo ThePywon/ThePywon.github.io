@@ -201,28 +201,16 @@ var keycode = {};
   Object.defineProperty(keycode, "delete", {
     enumerable: true, get: function(){return 46;}, set: Warn
   });
-  Object.defineProperty(keycode, "Tab", {
-    enumerable: true, get: function(){return 9;}, set: Warn
-  });
   Object.defineProperty(keycode, "capslock", {
     enumerable: true, get: function(){return 20;}, set: Warn
   });
-  Object.defineProperty(keycode, "leftShift", {
+  Object.defineProperty(keycode, "shift", {
     enumerable: true, get: function(){return 16;}, set: Warn
   });
-  Object.defineProperty(keycode, "leftCtrl", {
+  Object.defineProperty(keycode, "ctrl", {
     enumerable: true, get: function(){return 17;}, set: Warn
   });
-  Object.defineProperty(keycode, "leftAlt", {
-    enumerable: true, get: function(){return 18;}, set: Warn
-  });
-  Object.defineProperty(keycode, "rightShift", {
-    enumerable: true, get: function(){return 16;}, set: Warn
-  });
-  Object.defineProperty(keycode, "rightCtrl", {
-    enumerable: true, get: function(){return 192;}, set: Warn
-  });
-  Object.defineProperty(keycode, "rightAlt", {
+  Object.defineProperty(keycode, "alt", {
     enumerable: true, get: function(){return 18;}, set: Warn
   });
   Object.defineProperty(keycode, "tab", {
