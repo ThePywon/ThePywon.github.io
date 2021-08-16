@@ -1472,6 +1472,405 @@ var MenuHeaders = [
         }
       }
     ]
+  },
+  {
+    "name":"Data objects",
+    "buttons":[
+      {
+        "name":"keyCode",
+        "type":"data object",
+        "data":
+        {
+          "desc":"This object holds keycode numbers so you dont have to look for them.",
+          "properties":[
+            {
+              "name":"leftArrow",
+              "desc":"Holds the keycode 37"
+            },
+            {
+              "name":"upArrow",
+              "desc":"Holds the keycode 38"
+            },
+            {
+              "name":"rightArrow",
+              "desc":"Holds the keycode 39"
+            },
+            {
+              "name":"downArrow",
+              "desc":"Holds the keycode 40"
+            },
+            {
+              "name":"space",
+              "desc":"Holds the keycode 32"
+            },
+            {
+              "name":"escape",
+              "desc":"Holds the keycode 27"
+            },
+            {
+              "name":"f1",
+              "desc":"Holds the keycode 112"
+            },
+            {
+              "name":"f2",
+              "desc":"Holds the keycode 113"
+            },
+            {
+              "name":"f3",
+              "desc":"Holds the keycode 114"
+            },
+            {
+              "name":"f4",
+              "desc":"Holds the keycode 115"
+            },
+            {
+              "name":"f5",
+              "desc":"Holds the keycode 116"
+            },
+            {
+              "name":"f6",
+              "desc":"Holds the keycode 117"
+            },
+            {
+              "name":"f7",
+              "desc":"Holds the keycode 118"
+            },
+            {
+              "name":"f8",
+              "desc":"Holds the keycode 119"
+            },
+            {
+              "name":"f9",
+              "desc":"Holds the keycode 120"
+            },
+            {
+              "name":"f10",
+              "desc":"Holds the keycode 121"
+            },
+            {
+              "name":"f11",
+              "desc":"Holds the keycode 122"
+            },
+            {
+              "name":"f12",
+              "desc":"Holds the keycode 123"
+            },
+            {
+              "name":"backquote",
+              "desc":"Holds the keycode 191"
+            },
+            {
+              "name":"digit1",
+              "desc":"Holds the keycode 49"
+            },
+            {
+              "name":"digit2",
+              "desc":"Holds the keycode 50"
+            },
+            {
+              "name":"digit3",
+              "desc":"Holds the keycode 51"
+            },
+            {
+              "name":"digit4",
+              "desc":"Holds the keycode 52"
+            },
+            {
+              "name":"digit5",
+              "desc":"Holds the keycode 53"
+            },
+            {
+              "name":"digit6",
+              "desc":"Holds the keycode 54"
+            },
+            {
+              "name":"digit7",
+              "desc":"Holds the keycode 55"
+            },
+            {
+              "name":"digit8",
+              "desc":"Holds the keycode 56"
+            },
+            {
+              "name":"digit9",
+              "desc":"Holds the keycode 57"
+            },
+            {
+              "name":"digit0",
+              "desc":"Holds the keycode 48"
+            },
+            {
+              "name":"minus",
+              "desc":"Holds the keycode 173"
+            },
+            {
+              "name":"equal",
+              "desc":"Holds the keycode 61"
+            },
+            {
+              "name":"A",
+              "desc":"Holds the keycode 65"
+            },
+            {
+              "name":"B",
+              "desc":"Holds the keycode 66"
+            },
+            {
+              "name":"C",
+              "desc":"Holds the keycode 67"
+            },
+            {
+              "name":"D",
+              "desc":"Holds the keycode 68"
+            },
+            {
+              "name":"E",
+              "desc":"Holds the keycode 69 (nice)"
+            },
+            {
+              "name":"F",
+              "desc":"Holds the keycode 70"
+            },
+            {
+              "name":"G",
+              "desc":"Holds the keycode 71"
+            },
+            {
+              "name":"H",
+              "desc":"Holds the keycode 72"
+            },
+            {
+              "name":"I",
+              "desc":"Holds the keycode 73"
+            },
+            {
+              "name":"J",
+              "desc":"Holds the keycode 74"
+            },
+            {
+              "name":"K",
+              "desc":"Holds the keycode 75"
+            },
+            {
+              "name":"L",
+              "desc":"Holds the keycode 76"
+            },
+            {
+              "name":"M",
+              "desc":"Holds the keycode 77"
+            },
+            {
+              "name":"N",
+              "desc":"Holds the keycode 78"
+            },
+            {
+              "name":"O",
+              "desc":"Holds the keycode 79"
+            },
+            {
+              "name":"P",
+              "desc":"Holds the keycode 80"
+            },
+            {
+              "name":"Q",
+              "desc":"Holds the keycode 81"
+            },
+            {
+              "name":"R",
+              "desc":"Holds the keycode 82"
+            },
+            {
+              "name":"S",
+              "desc":"Holds the keycode 83"
+            },
+            {
+              "name":"T",
+              "desc":"Holds the keycode 84"
+            },
+            {
+              "name":"U",
+              "desc":"Holds the keycode 85"
+            },
+            {
+              "name":"V",
+              "desc":"Holds the keycode 86"
+            },
+            {
+              "name":"W",
+              "desc":"Holds the keycode 87"
+            },
+            {
+              "name":"X",
+              "desc":"Holds the keycode 88"
+            },
+            {
+              "name":"Y",
+              "desc":"Holds the keycode 89"
+            },
+            {
+              "name":"Z",
+              "desc":"Holds the keycode 90"
+            },
+            {
+              "name":"home",
+              "desc":"Holds the keycode 36"
+            },
+            {
+              "name":"end",
+              "desc":"Holds the keycode 35"
+            },
+            {
+              "name":"delete",
+              "desc":"Holds the keycode 46"
+            },
+            {
+              "name":"capslock",
+              "desc":"Holds the keycode 20"
+            },
+            {
+              "name":"leftShift",
+              "desc":"Holds the keycode 16"
+            },
+            {
+              "name":"leftShift",
+              "desc":"Holds the keycode 16"
+            },
+            {
+              "name":"tab",
+              "desc":"Holds the keycode 9"
+            },
+            {
+              "name":"shift",
+              "desc":"Holds the keycode 16"
+            },
+            {
+              "name":"ctrl",
+              "desc":"Holds the keycode 17"
+            },
+            {
+              "name":"alt",
+              "desc":"Holds the keycode 18"
+            },
+            {
+              "name":"leftOS",
+              "desc":"Holds the keycode 91"
+            },
+            {
+              "name":"backspace",
+              "desc":"Holds the keycode 8"
+            },
+            {
+              "name":"enter",
+              "desc":"Holds the keycode 13"
+            },
+            {
+              "name":"leftBracket",
+              "desc":"Holds the keycode 160"
+            },
+            {
+              "name":"rightBracket",
+              "desc":"Holds the keycode 221"
+            },
+            {
+              "name":"backslash",
+              "desc":"Holds the keycode 220"
+            },
+            {
+              "name":"semicolon",
+              "desc":"Holds the keycode 59"
+            },
+            {
+              "name":"quote",
+              "desc":"Holds the keycode 192"
+            },
+            {
+              "name":"comma",
+              "desc":"Holds the keycode 188"
+            },
+            {
+              "name":"period",
+              "desc":"Holds the keycode 190"
+            },
+            {
+              "name":"slash",
+              "desc":"Holds the keycode 191"
+            },
+            {
+              "name":"pageUp",
+              "desc":"Holds the keycode 33"
+            },
+            {
+              "name":"pageDown",
+              "desc":"Holds the keycode 34"
+            },
+            {
+              "name":"numlock",
+              "desc":"Holds the keycode 144"
+            },
+            {
+              "name":"divide",
+              "desc":"Holds the keycode 111"
+            },
+            {
+              "name":"multiply",
+              "desc":"Holds the keycode 106"
+            },
+            {
+              "name":"subtract",
+              "desc":"Holds the keycode 109"
+            },
+            {
+              "name":"add",
+              "desc":"Holds the keycode 107"
+            },
+            {
+              "name":"numpad1",
+              "desc":"Holds the keycode 97"
+            },
+            {
+              "name":"numpad2",
+              "desc":"Holds the keycode 98"
+            },
+            {
+              "name":"numpad3",
+              "desc":"Holds the keycode 99"
+            },
+            {
+              "name":"numpad4",
+              "desc":"Holds the keycode 100"
+            },
+            {
+              "name":"numpad5",
+              "desc":"Holds the keycode 101"
+            },
+            {
+              "name":"numpad6",
+              "desc":"Holds the keycode 102"
+            },
+            {
+              "name":"numpad7",
+              "desc":"Holds the keycode 103"
+            },
+            {
+              "name":"numpad8",
+              "desc":"Holds the keycode 104"
+            },
+            {
+              "name":"numpad9",
+              "desc":"Holds the keycode 105"
+            },
+            {
+              "name":"numpad0",
+              "desc":"Holds the keycode 96"
+            },
+            {
+              "name":"decimal",
+              "desc":"Holds the keycode 110"
+            }
+          ]
+        }
+      }
+    ]
   }
 ];
 
@@ -1491,10 +1890,26 @@ function setup()
       document.getElementById("main").appendChild(slide);
       slides.push(slide);
 
-      if(MenuHeaders[i].buttons[_i].type == "object" || MenuHeaders[i].buttons[_i].type == "function")
+      if(MenuHeaders[i].buttons[_i].type == "object" || MenuHeaders[i].buttons[_i].type == "function" || MenuHeaders[i].buttons[_i].type == "data object")
       {
         slide.innerHTML += `<h1>${MenuHeaders[i].buttons[_i].name} ${MenuHeaders[i].buttons[_i].type}</h1>`;
         slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.desc}</p><br/><br/>`;
+
+        if(MenuHeaders[i].buttons[_i].type == "data object")
+        {
+          var board = '<div class="board"><div class="titles">';
+          for(var p = 0; p < MenuHeaders[i].buttons[_i].data.properties.length; p++)
+            board += `<div>${MenuHeaders[i].buttons[_i].data.properties[p].name}</div>`;
+          board += '</div><div class="descriptions">';
+          for(var p = 0; p < MenuHeaders[i].buttons[_i].data.properties.length; p++)
+            board += `<p>${MenuHeaders[i].buttons[_i].data.properties[p].desc}</p>`;
+          board += "</div></div><br/><br/><br/><br/>";
+          slide.innerHTML += board;
+        }
+      }
+
+      if(MenuHeaders[i].buttons[_i].type == "object" || MenuHeaders[i].buttons[_i].type == "function")
+      {
         if(MenuHeaders[i].buttons[_i].type == "object")
           slide.innerHTML += `<p class="codeBlock">${MenuHeaders[i].buttons[_i].data.constructor}</p><br/>`;
         else if(MenuHeaders[i].buttons[_i].type == "function")
