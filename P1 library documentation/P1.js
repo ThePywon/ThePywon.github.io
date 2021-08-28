@@ -1,5 +1,37 @@
 var MenuHeaders = [
   {
+    "name":"Console Commands",
+    "buttons":[
+      {
+        "name":"Basic Commands",
+        "type":"data object",
+        "hideTitleType":true,
+        "data":
+        {
+          "desc":"All the commands you need to setup your project.<br/>(Command prefix is '/')",
+          "properties":[
+            {
+              "name":"Help",
+              "desc":"Lists all the console commands."
+            },
+            {
+              "name":"Execute",
+              "desc":"Execute the file of your choice. (Has to be a .p1 file)"
+            },
+            {
+              "name":"Clear",
+              "desc":"Clears the console."
+            },
+            {
+              "name":"Stop",
+              "desc":"Stops the currently running script (if any)"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
     "name":"Console Objects",
     "buttons":[
       {
@@ -1892,7 +1924,10 @@ function setup()
 
       if(MenuHeaders[i].buttons[_i].type == "object" || MenuHeaders[i].buttons[_i].type == "function" || MenuHeaders[i].buttons[_i].type == "data object")
       {
-        slide.innerHTML += `<h1>${MenuHeaders[i].buttons[_i].name} ${MenuHeaders[i].buttons[_i].type}</h1>`;
+        if(!MenuHeaders[i].buttons[_i].hideTitleType)
+          slide.innerHTML += `<h1>${MenuHeaders[i].buttons[_i].name} ${MenuHeaders[i].buttons[_i].type}</h1>`;
+        else
+          slide.innerHTML += `<h1>${MenuHeaders[i].buttons[_i].name}</h1>`;
         slide.innerHTML += `<p>${MenuHeaders[i].buttons[_i].data.desc}</p><br/><br/>`;
 
         if(MenuHeaders[i].buttons[_i].type == "data object")
