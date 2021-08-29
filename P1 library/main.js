@@ -326,6 +326,7 @@ var sprite;
 
 (function(){
   var key = false;
+  var originals = {};
 
   function Warn(){new Warning("Protection level", "Cannot set property due to its protection level.");}
 
@@ -353,9 +354,13 @@ var sprite;
       enumerable: true, get: function(){return result}, set: Warn
     });
 
-    Exception.prototype.toString = function(){return this.content;};
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function(){return this.content;};}, set: Warn
+    });
 
-    Exception.prototype.valueOf = function(){return "Exception";};
+    Object.defineProperty(this, "typeOf", {
+      enumerable: true, get: function(){return function(){return "Exception";};}, set: Warn
+    });
 
     var print = function()
     {
@@ -412,6 +417,7 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
+  originals["Exception"] = exception;
 
   warning = function(type, content, reference)
   {
@@ -430,9 +436,13 @@ var sprite;
       enumerable: true, get: function(){return result}, set: Warn
     });
 
-    Warning.prototype.toString = function(){return this.content;};
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function(){return this.content;};}, set: Warn
+    });
 
-    Warning.prototype.valueOf = function(){return "Warning";};
+    Object.defineProperty(this, "typeOf", {
+      enumerable: true, get: function(){return function(){return "Warning";};}, set: Warn
+    });
 
     var print = function()
     {
@@ -489,6 +499,7 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
+  originals["Warning"] = warning;
 
   log = function(content, color, scroll, url)
   {
@@ -546,15 +557,18 @@ var sprite;
       }
     });
 
-    Log.prototype.toString = function(){return this.content;}
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function(){return this.content;};}, set: Warn
+    });
 
-    Log.prototype.valueOf = function()
-    {
-      if(this.isValid)
-        return "Log";
-      else
-        return "<a style='color:red;'>[Log]</a>";
-    }
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function(){
+        if(this.isValid)
+          return "Log";
+        else
+          return "<a style='color:red;'>[Log]</a>";
+      };}, set: Warn
+    });
 
     var print = function()
     {
@@ -713,6 +727,7 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
+  originals["Log"] = log;
 
   inputlog = function(type, header, addition)
   {
@@ -1002,6 +1017,7 @@ var sprite;
     if(this.isValid)
       this.print();
   }
+  originals["Warning"] = warning;
 
   popup = function(header, callback = function(result){}, options = ["yes", "no"], img, color = "white")
   {
@@ -1167,6 +1183,7 @@ var sprite;
     if(this.isValid)
       this.init();
   }
+  originals["Warning"] = warning;
 
   //Data objects
   dir2d = function(val = "none")
@@ -1358,6 +1375,7 @@ var sprite;
       enumerable: true, get: function(){return toDeg;}, set: Warn
     });
   }
+  originals["Warning"] = warning;
   Object.defineProperty(dir2d, "none", {
     enumerable: true, get: function(){return new Dir2D("none");}, set: Warn
   });
@@ -1650,6 +1668,7 @@ var sprite;
       enumerable: true, get: function(){return lerp;}, set: Warn
     });
   }
+  originals["Warning"] = warning;
   Object.defineProperty(vector2, "one", {
     enumerable: true, get: function(){return new Vector2(1, 1);}, set: Warn
   });
@@ -1948,6 +1967,7 @@ var sprite;
         new Exception("Unexpected value", "Vector3 cannot lerp with the passed value because the value wasn't a value of type Vector3.");
     }
   }
+  originals["Warning"] = warning;
   Object.defineProperty(vector3, "one", {
     enumerable: true, get: function(){return new Vector3(1, 1, 1);}, set: Warn
   });
@@ -2046,6 +2066,7 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
+  originals["Warning"] = warning;
 
   line = function(start, end, width = 1, color = "white")
   {
@@ -2158,6 +2179,7 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
+  originals["Warning"] = warning;
 
   box = function(position, size, color = "white")
   {
@@ -2257,6 +2279,7 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
+  originals["Warning"] = warning;
 
   sprite = function(position, size, url)
   {
@@ -2383,6 +2406,7 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
+  originals["Warning"] = warning;
 })();
 
 const Exception = exception;
