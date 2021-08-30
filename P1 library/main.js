@@ -12,8 +12,8 @@ var Keyup = function(event){};
 var OnMessage = function(message){};
 var OnError = function(message){};
 var Start = function(){};
-window.interval = 50;
-window.timeout = 50;
+window.updateInterval = 0;
+window.eventTimeout = 0;
 window.lastClicked = null;
 
 var keycode = {};
@@ -319,6 +319,8 @@ var dir2d;
 var vector2;
 var vector3;
 
+var canvas;
+
 var circle;
 var line;
 var box;
@@ -326,7 +328,6 @@ var sprite;
 
 (function(){
   var key = false;
-  var originals = {};
 
   function Warn(){new Warning("Protection level", "Cannot set property due to its protection level.");}
 
@@ -398,7 +399,7 @@ var sprite;
       display.scrollIntoView(true);
 
       var Instance = this;
-      setTimeout(function(){OnError(Instance);}, window.timeout);
+      setTimeout(function(){OnError(Instance);}, window.eventTimeout);
     }
     Object.defineProperty(this, "print", {
       enumerable: true, get: function(){return print;}, set: Warn
@@ -417,7 +418,6 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
-  originals["Exception"] = exception;
 
   warning = function(type, content, reference)
   {
@@ -480,7 +480,7 @@ var sprite;
       display.scrollIntoView(true);
 
       var Instance = this;
-      setTimeout(function(){OnError(Instance);}, window.timeout);
+      setTimeout(function(){OnError(Instance);}, window.eventTimeout);
     }
     Object.defineProperty(this, "print", {
       enumerable: true, get: function(){return print;}, set: Warn
@@ -499,7 +499,6 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
-  originals["Warning"] = warning;
 
   log = function(content, color, scroll, url)
   {
@@ -561,7 +560,7 @@ var sprite;
       enumerable: true, get: function(){return function(){return this.content;};}, set: Warn
     });
 
-    Object.defineProperty(this, "toString", {
+    Object.defineProperty(this, "typeOf", {
       enumerable: true, get: function(){return function(){
         if(this.isValid)
           return "Log";
@@ -630,7 +629,7 @@ var sprite;
         display.scrollIntoView();
 
       var Instance = this;
-      setTimeout(function(){OnMessage(Instance);}, window.timeout);
+      setTimeout(function(){OnMessage(Instance);}, window.eventTimeout);
     }
     Object.defineProperty(this, "print", {
       enumerable: true, get: function(){return print;}, set: Warn
@@ -727,7 +726,6 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
-  originals["Log"] = log;
 
   inputlog = function(type, header, addition)
   {
@@ -770,15 +768,19 @@ var sprite;
         enumerable: true, get: function(){return "";}, set: Warn
       });
 
-      InputLog.prototype.toString = function(){return this.header;}
+      Object.defineProperty(this, "toString", {
+        enumerable: true, get: function(){return function(){return this.header;};}, set: Warn
+      });
 
-      InputLog.prototype.valueOf = function()
-      {
-        if(this.isValid)
-          return "InputLog";
-        else
-          return "<a style='color:red;'>[InputLog]</a>";
-      }
+      Object.defineProperty(this, "typeOf", {
+        enumerable: true, get: function(){return function()
+        {
+          if(this.isValid)
+            return "InputLog";
+          else
+            return "<a style='color:red;'>[InputLog]</a>";
+        };}, set: Warn
+      });
 
     var populateData = function()
     {
@@ -1008,7 +1010,7 @@ var sprite;
 
       display.scrollIntoView(true);
 
-      setTimeout(function(){OnMessage(Instance);}, window.timeout);
+      setTimeout(function(){OnMessage(Instance);}, window.eventTimeout);
     }
     Object.defineProperty(this, "print", {
       enumerable: true, get: function(){return print;}, set: Warn
@@ -1017,7 +1019,6 @@ var sprite;
     if(this.isValid)
       this.print();
   }
-  originals["Warning"] = warning;
 
   popup = function(header, callback = function(result){}, options = ["yes", "no"], img, color = "white")
   {
@@ -1066,15 +1067,19 @@ var sprite;
       enumerable: true, get: function(){return color;}, set: Warn
     });
 
-    Popup.prototype.toString = function(){return this.header;}
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function(){return this.header;};}, set: Warn
+    });
 
-    Popup.prototype.valueOf = function()
-    {
-      if(this.isValid)
-        return "Popup";
-      else
-        return "<a style='color:red;'>[Popup]</a>";
-    }
+    Object.defineProperty(this, "typeOf", {
+      enumerable: true, get: function(){return function()
+      {
+        if(this.isValid)
+          return "Popup";
+        else
+          return "<a style='color:red;'>[Popup]</a>";
+      };}, set: Warn
+    });
 
     var _delete = function()
     {
@@ -1183,7 +1188,6 @@ var sprite;
     if(this.isValid)
       this.init();
   }
-  originals["Warning"] = warning;
 
   //Data objects
   dir2d = function(val = "none")
@@ -1244,15 +1248,19 @@ var sprite;
       new Exception("Unexpected value", `Passed value 'val' was not a valid direction.\nValue: '${val}'`, this);
     }
 
-    Dir2D.prototype.valueOf = function(){return "Dir2D";}
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function(){return this.value;};}, set: Warn
+    });
 
-    Dir2D.prototype.toString = function()
-    {
-      if(this.isValid)
-        return this.value;
-      else
-        return "<a style='color:red;'>[Dir2D]</a>";
-    }
+    Object.defineProperty(this, "typeOf", {
+      enumerable: true, get: function(){return function()
+      {
+        if(this.isValid)
+          return "Dir2D";
+        else
+          return "<a style='color:red;'>[Dir2D]</a>";
+      };}, set: Warn
+    });
 
     var _new = function()
     {
@@ -1375,7 +1383,6 @@ var sprite;
       enumerable: true, get: function(){return toDeg;}, set: Warn
     });
   }
-  originals["Warning"] = warning;
   Object.defineProperty(dir2d, "none", {
     enumerable: true, get: function(){return new Dir2D("none");}, set: Warn
   });
@@ -1438,15 +1445,25 @@ var sprite;
       new Exception("Unexpected value", "Passed value 'y' was not a number.", this);
     }
 
-    Vector2.prototype.valueOf = function(){return "Vector2";}
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function()
+        {
+          if(this.isValid)
+            return `(${this.x}, ${this.y})`;
+          else
+            return "(NaN, NaN)";
+        };}, set: Warn
+    });
 
-    Vector2.prototype.toString = function()
-    {
-      if(this.isValid)
-        return `(${this.x}, ${this.y})`;
-      else
-        return "<a style='color:red;'>[Vector2]</a>";
-    }
+    Object.defineProperty(this, "typeOf", {
+      enumerable: true, get: function(){return function()
+      {
+        if(this.isValid)
+          return "Vector2";
+        else
+          return "<a style='color:red;'>[Vector2]</a>";
+      };}, set: Warn
+    });
 
     var _new = function()
     {
@@ -1464,7 +1481,7 @@ var sprite;
 
     var equals = function(other)
     {
-      if(other.valueOf() == "Vector2")
+      if(isValueDefined(other.typeOf) && other.typeOf() == "Vector2")
       {
         if(this.isValid && other.isValid)
           return (other.x == this.x && other.y == this.y);
@@ -1486,7 +1503,7 @@ var sprite;
 
     var add = function(value)
     {
-      if(value.valueOf() == "Vector2")
+      if(isValueDefined(value.typeOf) && value.typeOf() == "Vector2")
       {
         if(this.isValid && value.isValid)
           return new Vector2(this.x + value.x, this.y + value.y);
@@ -1518,7 +1535,7 @@ var sprite;
 
     var sub = function(value)
     {
-      if(value.valueOf() == "Vector2")
+      if(isValueDefined(value.typeOf) && value.typeOf() == "Vector2")
       {
         if(this.isValid && value.isValid)
           return new Vector2(this.x - value.x, this.y - value.y);
@@ -1550,7 +1567,7 @@ var sprite;
 
     var multi = function(value)
     {
-      if(value.valueOf() == "Vector2")
+      if(isValueDefined(value.typeOf) && value.typeOf() == "Vector2")
       {
         if(this.isValid && value.isValid)
           return new Vector2(this.x * value.x, this.y * value.y);
@@ -1582,7 +1599,7 @@ var sprite;
 
     var div = function(value)
     {
-      if(value.valueOf() == "Vector2")
+      if(isValueDefined(value.typeOf) && value.typeOf() == "Vector2")
       {
         if(this.isValid && value.isValid)
           return new Vector2(this.x / value.x, this.y / value.y);
@@ -1614,7 +1631,7 @@ var sprite;
 
     var dist = function(other)
     {
-      if(other.valueOf() == "Vector2")
+      if(isValueDefined(other.typeOf) && other.typeOf() == "Vector2")
       {
         if(this.isValid && other.isValid)
         {
@@ -1642,7 +1659,7 @@ var sprite;
 
     var lerp = function(other, dist)
     {
-      if(other.valueOf() == "Vector2")
+      if(isValueDefined(other.typeOf) && other.typeOf() == "Vector2")
       {
         if(typeof dist == "number")
         {
@@ -1668,7 +1685,6 @@ var sprite;
       enumerable: true, get: function(){return lerp;}, set: Warn
     });
   }
-  originals["Warning"] = warning;
   Object.defineProperty(vector2, "one", {
     enumerable: true, get: function(){return new Vector2(1, 1);}, set: Warn
   });
@@ -1745,15 +1761,25 @@ var sprite;
       new Exception("Unexpected value", "Passed value 'z' was not a number.", this);
     }
 
-    Vector3.prototype.valueOf = function(){return "Vector3";}
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function()
+        {
+          if(this.isValid)
+            return `(${this.x}, ${this.y}, ${this.z})`;
+          else
+            return "(NaN, NaN, NaN)";
+        };}, set: Warn
+    });
 
-    Vector3.prototype.toString = function()
-    {
-      if(this.isValid)
-        return `(${this.x}, ${this.y}, ${this.z})`;
-      else
-        return "<a style='color:red;'>[Vector3]</a>";
-    }
+    Object.defineProperty(this, "typeOf", {
+      enumerable: true, get: function(){return function()
+        {
+          if(this.isValid)
+            return "Vector3";
+          else
+            return "<a style='color:red;'>[Vector3]</a>";
+        };}, set: Warn
+    });
 
     var _new = function()
     {
@@ -1967,7 +1993,6 @@ var sprite;
         new Exception("Unexpected value", "Vector3 cannot lerp with the passed value because the value wasn't a value of type Vector3.");
     }
   }
-  originals["Warning"] = warning;
   Object.defineProperty(vector3, "one", {
     enumerable: true, get: function(){return new Vector3(1, 1, 1);}, set: Warn
   });
@@ -1984,6 +2009,12 @@ var sprite;
     enumerable: true, get: function(){return new Vector3();}, set: Warn
   });
 
+  //Canvas object
+  canvas = function(size)
+  {
+
+  }
+
   //Shape objects
   circle = function(position, width, color = "white")
   {
@@ -1996,27 +2027,27 @@ var sprite;
           Warn();
     }});
 
-    if(isValueDefined(position) && position.valueOf() == "Vector2")
+    if(isValueDefined(position) && isValueDefined(position.typeOf) && position.typeOf() == "Vector2")
     {
       if(position.isValid)
         Object.defineProperty(this, "position", {
           enumerable: true, get: function(){return position;}, set: function(pos){
-            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            if(isValueDefined(pos) && isValueDefined(pos.typeOf) && pos.typeOf() == "Vector2")
             {
               if(pos.isValid)
                 position = pos;
               else
-                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.");
+                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.", this);
             }
             else
-              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.");
+              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.", this);
           }
         });
       else
-        new Exception("Invalid value", "Passed value 'position' was not a valid Vector2.");
+        new Exception("Invalid value", "Passed value 'position' was not a valid Vector2.", this);
     }
     else
-      new Exception("Unexpected value", "Passed value 'position' was not a Vector2.");
+      new Exception("Unexpected value", "Passed value 'position' was not a Vector2.", this);
 
     if(isValueDefined(width) && typeof width == "number")
       Object.defineProperty(this, "width", {
@@ -2024,22 +2055,32 @@ var sprite;
           if(isValueDefined(v) && typeof v == "number")
             width = v;
           else
-            new Exception("Unexpected value", "Passed value 'v' was not a number.");
+            new Exception("Unexpected value", "Passed value 'v' was not a number.", this);
         }
       });
     else
-      new Exception("Unexpected value", "Passed value 'width' was not a number.");
+      new Exception("Unexpected value", "Passed value 'width' was not a number.", this);
     this.color = color;
 
-    Circle.prototype.valueOf = function(){return "Circle";}
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function()
+        {
+          if(this.isValid)
+            return `${this.width} pixel wide Circle\nColor: ${this.color}\nPosition: ${this.position.toString()}`;
+          else
+            return "<a style='color:red;'>[Circle]</a>";
+        };}, set: Warn
+    });
 
-    Circle.prototype.toString = function()
-    {
-      if(this.isValid)
-        return `${this.width} pixel wide Circle\nColor: ${this.color}\nPosition: ${this.position.toString()}`;
-      else
-        return "<a style='color:red;'>[Circle]</a>";
-    }
+    Object.defineProperty(this, "typeOf", {
+      enumerable: true, get: function(){return function()
+      {
+        if(this.isValid)
+          return "Circle";
+        else
+          return "<a style='color:red;'>[Circle]</a>";
+      };}, set: Warn
+    });
 
     var draw = function()
     {
@@ -2066,7 +2107,6 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
-  originals["Warning"] = warning;
 
   line = function(start, end, width = 1, color = "white")
   {
@@ -2084,28 +2124,28 @@ var sprite;
           if(isValueDefined(v) && typeof v == "number")
             width = v;
           else
-            new Exception("Unexpected value", "Passed value 'v' was not a number.");
+            new Exception("Unexpected value", "Passed value 'v' was not a number.", this);
        }
       });
     else
-      new Exception("Unexpected value", "Passed value 'width' was not a number.");
+      new Exception("Unexpected value", "Passed value 'width' was not a number.", this);
     if(typeof color == "string")
       Object.defineProperty(this, "color", {
         enumerable: true, get: function(){return color;}, set: function(v){
           if(typeof v == string)
             color = v;
           else
-            new Exception("Unexpected value", "Passed value 'v' was not a string.");
+            new Exception("Unexpected value", "Passed value 'v' was not a string.", this);
        }
       });
     else
-      new Exception("Unexpected value", "Passed value 'color' was not a string.");
-    if(isValueDefined(start) && start.valueOf() == "Vector2")
+      new Exception("Unexpected value", "Passed value 'color' was not a string.", this);
+    if(isValueDefined(start) && isValueDefined(start.typeOf) && start.typeOf() == "Vector2")
     {
       if(start.isValid)
         Object.defineProperty(this, "start", {
           enumerable: true, get: function(){return start;}, set: function(pos){
-            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            if(isValueDefined(pos) && isValueDefined(pos.typeOf) && pos.typeOf() == "Vector2")
             {
               if(pos.isValid)
                 start = pos;
@@ -2121,37 +2161,47 @@ var sprite;
     }
     else
       new Exception("Unexpected value", "Passed value 'start' is not a Vector2.", this);
-    if(isValueDefined(end) && end.valueOf() == "Vector2")
+    if(isValueDefined(end) && isValueDefined(end.typeOf) && end.typeOf() == "Vector2")
     {
       if(end.isValid)
         Object.defineProperty(this, "end", {
           enumerable: true, get: function(){return end;}, set: function(pos){
-            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            if(isValueDefined(pos) && isValueDefined(pos.typeOf) && pos.typeOf() == "Vector2")
             {
               if(pos.isValid)
                 end = pos;
               else
-                new Exception("Invalid value", "Passed value 'pos' is not a valid Vector2.");
+                new Exception("Invalid value", "Passed value 'pos' is not a valid Vector2.", this);
             }
             else
-              new Exception("Unexpected value", "Passed value 'pos' is not a Vector2.");
+              new Exception("Unexpected value", "Passed value 'pos' is not a Vector2.", this);
           }
         });
       else
-        new Exception("Invalid value", "Passed value 'end' is not a valid Vector2.");
+        new Exception("Invalid value", "Passed value 'end' is not a valid Vector2.", this);
     }
     else
-      new Exception("Unexpected value", "Passed value 'end' is not a Vector2.");
+      new Exception("Unexpected value", "Passed value 'end' is not a Vector2.", this);
 
-    Line.prototype.valueOf = function(){return "Line";};
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function()
+      {
+        if(this.isValid)
+          return `${this.width} pixels wide Line\nColor: ${this.color}\nStart: ${this.start.toString()}| End: ${this.end.toString()}`;
+        else
+          return "<a style='color:red;'>[Line]</a>";
+      };}, set: Warn
+    });
 
-    Line.prototype.toString = function()
-    {
-      if(this.isValid)
-        return `${this.width} pixels wide Line\nColor: ${this.color}\nStart: ${this.start.toString()}| End: ${this.end.toString()}`;
-      else
-        return "<a style='color:red;'>[Line]</a>";
-    }
+    Object.defineProperty(this, "typeOf", {
+      enumerable: true, get: function(){return function()
+      {
+        if(this.isValid)
+          return "Line";
+        else
+          return "<a style='color:red;'>[Line]</a>";
+      };}, set: Warn
+    });
 
     var draw = function()
     {
@@ -2179,7 +2229,6 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
-  originals["Warning"] = warning;
 
   box = function(position, size, color = "white")
   {
@@ -2198,63 +2247,73 @@ var sprite;
           if(typeof v == string)
             color = v;
           else
-            new Exception("Unexpected value", "Passed value 'v' was not a string.");
+            new Exception("Unexpected value", "Passed value 'v' was not a string.", this);
        }
       });
     else
-      new Exception("Unexpected value", "Passed value 'color' was not a string.");
-    if(isValueDefined(position) && position.valueOf() == "Vector2")
+      new Exception("Unexpected value", "Passed value 'color' was not a string.", this);
+    if(isValueDefined(position) && isValueDefined(position.typeOf) && position.typeOf() == "Vector2")
     {
       if(position.isValid)
         Object.defineProperty(this, "position", {
           enumerable: true, get: function(){return position;}, set: function(pos){
-            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            if(isValueDefined(pos) && isValueDefined(pos.typeOf) && pos.typeOf() == "Vector2")
             {
               if(pos.isValid)
                 position = pos;
               else
-                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.");
+                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.", this);
             }
             else
-              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.");
+              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.", this);
           }
         });
       else
-        new Exception("Invalid value", "Passed value 'position' was not a valid Vector2.");
+        new Exception("Invalid value", "Passed value 'position' was not a valid Vector2.", this);
     }
     else
-      new Exception("Unexpected value", "Passed value 'position' was not a Vector2.");
-    if(isValueDefined(size) && size.valueOf() == "Vector2")
+      new Exception("Unexpected value", "Passed value 'position' was not a Vector2.", this);
+    if(isValueDefined(size) && isValueDefined(size.typeOf) && size.typeOf() == "Vector2")
     {
       if(size.isValid)
         Object.defineProperty(this, "size", {
-          enumerable: true, get: function(){return size;}, set: function(pos){
-            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+          enumerable: true, get: function(){return size;}, set: function(s){
+            if(isValueDefined(s) && isValueDefined(s.typeOf) && s.typeOf() == "Vector2")
             {
-              if(pos.isValid)
-                size = pos;
+              if(s.isValid)
+                size = s;
               else
-                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.");
+                new Exception("Invalid value", "Passed value 's' was not a valid Vector2.", this);
             }
             else
-              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.");
+              new Exception("Unexpected value", "Passed value 's' was not a Vector2.", this);
           }
         });
       else
-        new Exception("Invalid value", "Passed value 'size' was not a valid Vector2.");
+        new Exception("Invalid value", "Passed value 'size' was not a valid Vector2.", this);
     }
     else
-      new Exception("Unexpected value", "Passed value 'size' was not a Vector2.");
+      new Exception("Unexpected value", "Passed value 'size' was not a Vector2.", this);
 
-    Box.prototype.valueOf = function(){return "Box";}
+      Object.defineProperty(this, "toString", {
+        enumerable: true, get: function(){return function()
+        {
+          if(this.isValid)
+            return `Box\nColor: ${this.color}\nPosition: ${this.position.toString()}\nSize: ${this.size.toString()}`;
+          else
+            return "<a style='color:red;'>[Box]</a>";
+        };}, set: Warn
+      });
 
-    Box.prototype.toString = function()
-    {
-      if(this.isValid)
-        return `Box\nColor: ${this.color}\nPosition: ${this.position.toString()}\nSize: ${this.size.toString()}`;
-      else
-        return "<a style='color:red;'>[Box]</a>";
-    }
+      Object.defineProperty(this, "typeOf", {
+        enumerable: true, get: function(){return function()
+        {
+          if(this.isValid)
+            return "Box";
+          else
+            return "<a style='color:red;'>[Box]</a>";
+        };}, set: Warn
+      });
 
     var draw = function()
     {
@@ -2279,7 +2338,6 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
-  originals["Warning"] = warning;
 
   sprite = function(position, size, url)
   {
@@ -2298,63 +2356,73 @@ var sprite;
           if(typeof v == string)
             url = v;
           else
-            new Exception("Unexpected value", "Passed value 'v' was not a string.");
+            new Exception("Unexpected value", "Passed value 'v' was not a string.", this);
        }
       });
     else
-      new Exception("Unexpected value", "Passed value 'url' was not a string.");
-    if(isValueDefined(position) && position.valueOf() == "Vector2")
+      new Exception("Unexpected value", "Passed value 'url' was not a string.", this);
+    if(isValueDefined(position) && isValueDefined(position.typeOf) && position.typeOf() == "Vector2")
     {
       if(position.isValid)
         Object.defineProperty(this, "position", {
           enumerable: true, get: function(){return position;}, set: function(pos){
-            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+            if(isValueDefined(pos) && isValueDefined(pos.typeOf) && pos.typeOf() == "Vector2")
             {
               if(pos.isValid)
                 position = pos;
               else
-                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.");
+                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.", this);
             }
             else
-              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.");
+              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.", this);
           }
         });
       else
-        new Exception("Invalid value", "Passed value 'position' was not a valid Vector2.");
+        new Exception("Invalid value", "Passed value 'position' was not a valid Vector2.", this);
     }
     else
-      new Exception("Unexpected value", "Passed value 'position' was not a Vector2.");
-    if(isValueDefined(size) && size.valueOf() == "Vector2")
+      new Exception("Unexpected value", "Passed value 'position' was not a Vector2.", this);
+    if(isValueDefined(size) && isValueDefined(size.typeOf) && size.typeOf() == "Vector2")
     {
       if(size.isValid)
         Object.defineProperty(this, "size", {
-          enumerable: true, get: function(){return size;}, set: function(pos){
-            if(isValueDefined(pos) && pos.valueOf() == "Vector2")
+          enumerable: true, get: function(){return size;}, set: function(s){
+            if(isValueDefined(s) && isValueDefined(s.typeOf) && s.typeOf() == "Vector2")
             {
-              if(pos.isValid)
-                size = pos;
+              if(s.isValid)
+                size = s;
               else
-                new Exception("Invalid value", "Passed value 'pos' was not a valid Vector2.");
+                new Exception("Invalid value", "Passed value 's' was not a valid Vector2.", this);
             }
             else
-              new Exception("Unexpected value", "Passed value 'pos' was not a Vector2.");
+              new Exception("Unexpected value", "Passed value 's' was not a Vector2.", this);
           }
         });
       else
-        new Exception("Invalid value", "Passed value 'size' was not a valid Vector2.");
+        new Exception("Invalid value", "Passed value 'size' was not a valid Vector2.", this);
     }
     else
-      new Exception("Unexpected value", "Passed value 'size' was not a Vector2.");
+      new Exception("Unexpected value", "Passed value 'size' was not a Vector2.", this);
 
-    Sprite.prototype.valueOf = function(){return "Sprite";}
+      Object.defineProperty(this, "toString", {
+        enumerable: true, get: function(){return function()
+        {
+          if(this.isValid)
+            return `Sprite\nUrl: ${this.url}\nPosition: ${this.position.toString()}\nSize: ${this.size.toString()}`;
+          else
+            return "<a style='color:red;'>[Sprite]</a>";
+        };}, set: Warn
+      });
 
-    Sprite.prototype.toString = function()
-    {
-      if(this.isValid)
-        return `Sprite\nUrl: ${this.url}\nPosition: ${this.position.toString()}\nSize: ${this.size.toString()}`;
-      else
-        return "<a style='color:red;'>[Sprite]</a>";
-    }
+      Object.defineProperty(this, "typeOf", {
+        enumerable: true, get: function(){return function()
+        {
+          if(this.isValid)
+            return "Sprite";
+          else
+            return "<a style='color:red;'>[Sprite]</a>";
+        };}, set: Warn
+      });
 
     var draw = function()
     {
@@ -2406,7 +2474,6 @@ var sprite;
       enumerable: true, get: function(){return _delete;}, set: Warn
     });
   }
-  originals["Warning"] = warning;
 })();
 
 const Exception = exception;
@@ -2435,6 +2502,10 @@ const Vector3 = vector3;
 vector3 = undefined;
 delete(vector3);
 
+const Canvas = canvas;
+canvas = undefined;
+delete(canvas);
+
 const Circle = circle;
 circle = undefined;
 delete(circle);
@@ -2447,48 +2518,6 @@ delete(box);
 const Sprite = sprite;
 sprite = undefined;
 delete(sprite);
-//Start a javascript file of your choice (has to be in the 'Games' directory)
-const execute = async function(file, gameName)
-{
-  if(document.getElementById("Games").innerHTML.replace(/\n/g, "").replace(/ /g, "") == "")
-  {
-    //Get file data
-    const fileContent = await file.text();
-
-    //Create script element
-    var game = document.createElement("script");
-    game.innerHTML = "try\n{\n  " + fileContent + "\n}\ncatch(error)\n{\n  new Exception(error);\n}";
-
-    //Execute the file
-    new Log("Successfully executed '" + gameName + "'!", "lime", true, "../Assets/Images/GreenCheckmark.png");
-    document.getElementById("Games").appendChild(game);
-    Start();
-    Update();
-    clearInterval(_Update);
-    _Update = setInterval(_u1, window.interval);
-  }
-  else
-  {
-    new Popup("Are you sure you want to execute another file?\n(doing this will interupt any other file's execution)", async function(result){if(result == "no"){new Log("Execution aborted.", "yellow", true, "../Assets/Images/YellowWarning.png");return;}
-      //Get file data
-      const fileContent = await file.text();
-
-      //Create script element
-      var game = document.createElement("script");
-      game.innerHTML = fileContent;
-
-      //Stop the current script
-      stop();
-
-      //Execute the file
-      new Log("Successfully executed '" + gameName + "'!", "lime", true, "../Assets/Images/GreenCheckmark.png");
-      document.getElementById("Games").appendChild(game);
-      Start();
-      Update();
-      _Update = setInterval(_u1, window.interval);
-    }, ["yes", "no"], "../Assets/Images/YellowWarning.png");
-  }
-}
 
 const stop = function()
 {
@@ -2547,6 +2576,10 @@ document.addEventListener('click', function(event) {
 
   //Return it
   window.lastClicked = target;
+});
+
+document.addEventListener('error', function(error){
+  new Exception(error);
 });
 
 //Console TextArea functions
@@ -2673,19 +2706,82 @@ const handleCommand = function(message)
 //Handle update
 var Update = function(){};
 var Draw = function(){};
-var _Update;
-const _u1 = function(){
-  clearInterval(_Update);
-  Update();
-  Draw();
-  _Update = setInterval(_u2, window.interval);
-};
-const _u2 = function(){
-  clearInterval(_Update);
-  Update();
-  Draw();
-  _Update = setInterval(_u1, window.interval);
-};
+var _execute;
+(function(){
+  var _Update;
+  const _u1 = function(){
+    try
+    {
+      clearInterval(_Update);
+      Update();
+      Draw();
+      _Update = setInterval(_u2, window.updateInterval);
+    }
+    catch(error)
+    {
+      new Exception(error);
+    }
+  };
+  const _u2 = function(){
+    try
+    {
+      clearInterval(_Update);
+      Update();
+      Draw();
+      _Update = setInterval(_u1, window.updateInterval);
+    }
+    catch(error)
+    {
+      new Exception(error);
+    }
+  };
+  //Start a javascript file of your choice (has to be in the 'Games' directory)
+  _execute = async function(file, gameName)
+  {
+    if(document.getElementById("Games").innerHTML.replace(/\n/g, "").replace(/ /g, "") == "")
+    {
+      //Get file data
+      const fileContent = await file.text();
+
+      //Create script element
+      var game = document.createElement("script");
+      game.innerHTML = "try\n{\n  " + fileContent + "\n}\ncatch(error)\n{\n  new Exception(error);\n}";
+
+      //Execute the file
+      new Log("Successfully executed '" + gameName + "'!", "lime", true, "../Assets/Images/GreenCheckmark.png");
+      document.getElementById("Games").appendChild(game);
+      Start();
+      Update();
+      clearInterval(_Update);
+      _Update = setInterval(_u1, window.interval);
+    }
+    else
+    {
+      new Popup("Are you sure you want to execute another file?\n(doing this will interupt any other file's execution)", async function(result){if(result == "no"){new Log("Execution aborted.", "yellow", true, "../Assets/Images/YellowWarning.png");return;}
+        //Get file data
+        const fileContent = await file.text();
+
+        //Create script element
+        var game = document.createElement("script");
+        game.innerHTML = fileContent;
+
+        //Stop the current script
+        stop();
+
+        //Execute the file
+        new Log("Successfully executed '" + gameName + "'!", "lime", true, "../Assets/Images/GreenCheckmark.png");
+        document.getElementById("Games").appendChild(game);
+        Start();
+        Update();
+        _Update = setInterval(_u1, window.interval);
+      }, ["yes", "no"], "../Assets/Images/YellowWarning.png");
+    }
+  }
+})()
+
+const execute = _execute;
+_execute = undefined;
+delete(_execute);
 
 //Usefull stuff
 const isElement = function(obj)
