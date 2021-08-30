@@ -2324,7 +2324,7 @@ var sprite;
       }
 
       ctx.fillStyle = this.color;
-      ctx.fillRect(this.position.x-size.x/2, this.position.y-size.y/2, this.position.x+this.size.x/2, this.position.y+size.y/2);
+      ctx.fillRect(this.position.x, this.position.y, this.size.x, this.size.y);
     }
     Object.defineProperty(this, "draw", {
       enumerable: true, get: function(){return draw;}, set: Warn
@@ -2432,7 +2432,7 @@ var sprite;
         return;
       }
 
-      ctx.drawImage(this.img, this.position.x-this.size.x/2, this.position.y-this.size.y/2, this.position.x+this.size.x/2, this.position.y+this.size.y/2);
+      ctx.drawImage(this.img, this.position.x-this.size.x/2, this.position.y-this.size.y/2, this.size.x, this.size.y);
     }
     Object.defineProperty(this, "draw", {
       enumerable: true, get: function(){return draw;}, set: Warn
