@@ -332,7 +332,7 @@ var sprite;
 
   var canvases = [];
   Object.defineProperty(window, "canvases", {
-    enumerable: true, get: function(){for(var i = 0; i < canvases.length; i++)setTimeout(canvases[i].update, 0);if(key)return canvases;else return Array.from(canvases);}, set: Warn
+    enumerable: true, get: function(){if(key)return canvases;else return Array.from(canvases);}, set: Warn
   });
 
   //Message objects
@@ -2605,7 +2605,7 @@ Object.defineProperty(window, "globalSize", {
     if(isValueDefined(s.typeOf) && s.typeOf() == "Vector2")
     {
       if(s.x >= 0 || s.y >= 0)
-        gs = v;
+        gs = s;
       else
         new Exception("Invalid value", "globalSize cannot have negative numbers.");
     }
@@ -2827,6 +2827,8 @@ var _execute;
     try
     {
       clearInterval(_Update);
+      for(var i = 0; i < window.canvases.length; i++)
+        window.canvases[i].update();
       Update();
       for(var i = 0; i < window.canvases.length; i++)
         window.canvases[i].updateDraw(window.canvases[i]);
@@ -2841,6 +2843,8 @@ var _execute;
     try
     {
       clearInterval(_Update);
+      for(var i = 0; i < window.canvases.length; i++)
+        window.canvases[i].update();
       Update();
       for(var i = 0; i < window.canvases.length; i++)
         window.canvases[i].updateDraw(window.canvases[i]);
