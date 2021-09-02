@@ -2599,7 +2599,7 @@ delete(dir2d);
 const Vector2 = vector2;
 vector2 = undefined;
 delete(vector2);
-var gs = new Vector2(1500, 800);
+var gs = new Vector2(window.innerWidth*0.9, window.innerHeight*0.9);
 Object.defineProperty(window, "globalSize", {
   enumerable: true, get: function(){return gs;}, set: function(s){
     if(isValueDefined(s.typeOf) && s.typeOf() == "Vector2")
