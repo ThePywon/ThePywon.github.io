@@ -4,7 +4,6 @@
 const Console = document.getElementById("Console");
 const TextArea = document.getElementById("ConsoleTA");
 const Toggle = document.getElementById("ConsoleToggle");
-const ctx = document.getElementById("Content").getContext("2d");
 
 //Defaults
 var Keydown = function(event){};
@@ -330,6 +329,11 @@ var sprite;
   var key = false;
 
   function Warn(){new Warning("Protection level", "Cannot set property due to its protection level.");}
+
+  var canvases = [];
+  Object.defineProperty(window, "canvases", {
+    enumerable: true, get: function(){for(var i = 0; i < canvases.length; i++)setTimeout(canvases[i].update, 0);if(key)return canvases;else return Array.from(canvases);}, set: Warn
+  });
 
   //Message objects
   exception = function(type, content, reference)
@@ -2010,9 +2014,87 @@ var sprite;
   });
 
   //Canvas object
-  canvas = function(size)
+  canvas = function()
   {
+    Object.defineProperty(this, "toString", {
+      enumerable: true, get: function(){return function(){return `${window.globalSize.x} by ${window.globalSize.y} Canvas\nLayer: ${this.layer}`;};}, set: Warn
+    });
 
+    Object.defineProperty(this, "typeOf", {
+      enumerable: true, get: function(){return function(){return "Canvas";};}, set: Warn
+    });
+
+    var init = function()
+    {
+      var display = document.createElement("canvas");
+      try
+      {
+        Object.defineProperty(this, "display", {
+          enumerable: true, get: function(){if(key)return display;else return undefined;}, set: Warn
+        });
+      }
+      catch(error)
+      {
+        new Exception("Double call", "Cannot initialize Canvas instance because it was already initilised.");
+        return;
+      }
+      key = true;
+      document.getElementById("Content").appendChild(this.display);
+      this.display.width = window.globalSize.x;
+      this.display.height = window.globalSize.y;
+      var context = this.display.getContext("2d");
+      Object.defineProperty(this, "context", {
+        enumerable: true, get: function(){return context;}, set: Warn
+      });
+      key = false;
+      var layer = window.canvases.length;
+      Object.defineProperty(this, "layer", {
+        enumerable: true, get: function(){return layer;}, set: Warn
+      });
+      key = true;
+      window.canvases.push(this);
+      key = false;
+    }
+    Object.defineProperty(this, "init", {
+      enumerable: true, get: function(){return init;}, set: Warn
+    });
+
+    this.init();
+
+    var update = function()
+    {
+      key = true;
+      this.display.width = window.globalSize.x;
+      this.display.height = window.globalSize.y;
+      key = false;
+    }
+    Object.defineProperty(this, "update", {
+      enumerable: true, get: function(){return update;}, set: Warn
+    });
+
+    this.draw = function(ctx){};
+
+    var updateDraw = function()
+    {
+      key = true;
+      this.clear();
+      this.draw(this);
+      key = false;
+    }
+    Object.defineProperty(this, "updateDraw", {
+      enumerable: true, get: function(){return updateDraw;}, set: Warn
+    });
+
+    var clear = function()
+    {
+      key = true;
+      var c = this.display.getContext("2d");
+      c.clearRect(0, 0, this.display.width, this.display.height);
+      key = false;
+    }
+    Object.defineProperty(this, "clear", {
+      enumerable: true, get: function(){if(key)return clear;else return undefined;}, set: Warn
+    });
   }
 
   //Shape objects
@@ -2082,8 +2164,14 @@ var sprite;
       };}, set: Warn
     });
 
-    var draw = function()
+    var draw = function(canvas)
     {
+      if(!isValueDefined(canvas) || !isValueDefined(canvas.typeOf) || canvas.typeOf() != "Canvas")
+      {
+        new Exception("Invalid value", "Passed value 'canvas' was not a value of type Canvas.");
+        return;
+      }
+      var ctx = canvas.context;
       if(!this.isValid)
       {
         new Exception("Invalid value", "Cannot initialise the object because this instance is invalid.", this);
@@ -2098,9 +2186,6 @@ var sprite;
     Object.defineProperty(this, "draw", {
       enumerable: true, get: function(){return draw;}, set: Warn
     });
-
-    if(this.isValid)
-      this.draw();
 
     var _delete = function(){this.display.remove();}
     Object.defineProperty(this, "delete", {
@@ -2203,8 +2288,14 @@ var sprite;
       };}, set: Warn
     });
 
-    var draw = function()
+    var draw = function(canvas)
     {
+      if(!isValueDefined(canvas) || !isValueDefined(canvas.typeOf) || canvas.typeOf() != "Canvas")
+      {
+        new Exception("Invalid value", "Passed value 'canvas' was not a value of type Canvas.");
+        return;
+      }
+      var ctx = canvas.context;
       if(!this.isValid)
       {
         new Exception("Invalid value", "Cannot draw the object because this instance is invalid.", this);
@@ -2220,9 +2311,6 @@ var sprite;
     Object.defineProperty(this, "draw", {
       enumerable: true, get: function(){return draw;}, set: Warn
     });
-
-    if(this.isValid)
-      this.draw();
 
     var _delete = function(){this.display.remove();};
     Object.defineProperty(this, "delete", {
@@ -2315,8 +2403,14 @@ var sprite;
         };}, set: Warn
       });
 
-    var draw = function()
+    var draw = function(canvas)
     {
+      if(!isValueDefined(canvas) || !isValueDefined(canvas.typeOf) || canvas.typeOf() != "Canvas")
+      {
+        new Exception("Invalid value", "Passed value 'canvas' was not a value of type Canvas.");
+        return;
+      }
+      var ctx = canvas.context;
       if(!this.isValid)
       {
         new Exception("Invalid value", "Cannot draw the object because this instance is invalid.", this);
@@ -2329,9 +2423,6 @@ var sprite;
     Object.defineProperty(this, "draw", {
       enumerable: true, get: function(){return draw;}, set: Warn
     });
-
-    if(this.isValid)
-      this.draw();
 
     var _delete = function(){this.display.remove();}
     Object.defineProperty(this, "delete", {
@@ -2424,8 +2515,14 @@ var sprite;
         };}, set: Warn
       });
 
-    var draw = function()
+    var draw = function(canvas)
     {
+      if(!isValueDefined(canvas) || !isValueDefined(canvas.typeOf) || canvas.typeOf() != "Canvas")
+      {
+        new Exception("Invalid value", "Passed value 'canvas' was not a value of type Canvas.");
+        return;
+      }
+      var ctx = canvas.context;
       if(!this.isValid)
       {
         new Exception("Invalid value", "Cannot draw the object because this instance is invalid.", this);
@@ -2460,7 +2557,6 @@ var sprite;
       }
       var Instance = this;
       img.src = this.url;
-      img.onload = function(){Instance.draw();}
     }
     Object.defineProperty(this, "init", {
       enumerable: true, get: function(){return init;}, set: Warn
@@ -2475,6 +2571,11 @@ var sprite;
     });
   }
 })();
+
+const isValueDefined = function(val)
+{
+  if(val === undefined || val === null || (typeof val == "number" && isNaN(val)))return false;return true;
+}
 
 const Exception = exception;
 exception = undefined;
@@ -2498,6 +2599,20 @@ delete(dir2d);
 const Vector2 = vector2;
 vector2 = undefined;
 delete(vector2);
+var gs = new Vector2(1500, 800);
+Object.defineProperty(window, "globalSize", {
+  enumerable: true, get: function(){return gs;}, set: function(s){
+    if(isValueDefined(s.typeOf) && s.typeOf() == "Vector2")
+    {
+      if(s.x >= 0 || s.y >= 0)
+        gs = v;
+      else
+        new Exception("Invalid value", "globalSize cannot have negative numbers.");
+    }
+    else
+      new Exception("Invalid value", "Passed value 's' was not a Vector2.");
+ }
+});
 const Vector3 = vector3;
 vector3 = undefined;
 delete(vector3);
@@ -2705,7 +2820,6 @@ const handleCommand = function(message)
 
 //Handle update
 var Update = function(){};
-var Draw = function(){};
 var _execute;
 (function(){
   var _Update;
@@ -2714,7 +2828,8 @@ var _execute;
     {
       clearInterval(_Update);
       Update();
-      Draw();
+      for(var i = 0; i < window.canvases.length; i++)
+        window.canvases[i].updateDraw(window.canvases[i]);
       _Update = setInterval(_u2, window.updateInterval);
     }
     catch(error)
@@ -2727,7 +2842,8 @@ var _execute;
     {
       clearInterval(_Update);
       Update();
-      Draw();
+      for(var i = 0; i < window.canvases.length; i++)
+        window.canvases[i].updateDraw(window.canvases[i]);
       _Update = setInterval(_u1, window.updateInterval);
     }
     catch(error)
@@ -2794,11 +2910,6 @@ const isElement = function(obj)
       (obj.nodeType===1) && (typeof obj.style === "object") &&
       (typeof obj.ownerDocument ==="object");
   }
-}
-
-const isValueDefined = function(val)
-{
-  if(val === undefined || val === null || (typeof val == "number" && isNaN(val)))return false;return true;
 }
 
 var random = {};
@@ -2911,10 +3022,4 @@ const map = function(value, min1, max1, min2, max2)
   }
   else
     new Exception("Unexpected value", "Cannot map value becauses one or more of the passed values weren't values of type number.");
-}
-
-const clearDraw = function()
-{
-  ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, 1500, 800);
 }
